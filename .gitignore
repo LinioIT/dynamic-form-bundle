@@ -1,0 +1,7 @@
+.DS_Store
+.git
+bin/
+composer.lock
+coverage.xml
+vendor/
+.idea/
