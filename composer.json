@@ -1,0 +1,24 @@
+{
+  "name": "linio/dynamic-form-bundle",
+  "description": "Generates symfony forms based on YAML configuration files",
+  "keywords": ["symfony", "symfony2", "dynamic", "forms"],
+  "type": "library",
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": "~5.4",
+    "symfony/framework-bundle": "~2.3",
+    "symfony/form": "~2.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.6.*",
+    "symfony/validator": "~2.3"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Linio\\DynamicFormBundle\\": ""
+    }
+  }
+}
