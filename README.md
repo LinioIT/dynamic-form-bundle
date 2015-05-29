@@ -72,7 +72,7 @@ dynamic_form:
             validators:
 ```
 ###Options
-Field options are the same as symfony, refer to the documentationtet
+Field options are the same as symfony, refer to the documentation
 
 
 ###Transformers
