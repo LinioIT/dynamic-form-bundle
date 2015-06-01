@@ -95,24 +95,8 @@ class FormFactory
      * @return string
      * @throws InexistentFormException
      */
-    public function getJsonConfiguration()
-    {
-        $configuration = [];
-
-        foreach ($this->configuration as $formName => $fieldConfiguration) {
-            $fields = [];
-
-            foreach ($fieldConfiguration as $field => $options) {
-                if (!$options['enabled']) {
-                    continue;
-                }
-
-                $fields[$field] = $options;
-            }
-
-            $configuration[$formName] = $fields;
-        }
-
-        return json_encode($configuration);
-    }
+     public function getJsonConfiguration($name)
+     {
+        return json_encode($this->configuration[$name]);
+     }
 }
