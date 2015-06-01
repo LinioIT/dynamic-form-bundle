@@ -56,6 +56,9 @@ return $this->render(
   ['form' => $form->createView(),]
 );
 ```
+The method `getJsonConfiguration()` takes the configuration from `app/config/config.yml`. and returns a JSON with the Form Configuration.
+
+
 ###Example
 Here's an example of a form named `new_user` with a single field called `first_name`:
 
