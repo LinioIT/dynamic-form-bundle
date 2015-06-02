@@ -7,7 +7,6 @@ use Linio\DynamicFormBundle\Form\FormFactory;
 use Prophecy\Argument;
 use Symfony\Component\Validator\Constraints\True;
 use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
-use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * @codeCoverageIgnore
@@ -121,10 +120,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'enabled' => true,
                     'type' => 'field1_type',
                     'transformer' => [
-                        'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
-                        'calls' => [
+                        "class" => 'Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer',
+                        "calls" => [
                             ['setUserFormat', ['d/m/Y']],
-                            ['setInputFormat', ['Y-m-d']]
+                            ["setInputFormat", ['Y-m-d']]
                         ],
                     ],
                 ],
@@ -207,29 +206,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
 
-        $this->assertJsonStringEqualsJsonString('{"john":{"email":{"enabled":true,"type":"email"}}}', $actual);
-    }
-}
-
-class MockTransformer implements DataTransformerInterface
-{
-    public function setUserFormat()
-    {
-
-    }
-
-    public function setInputFormat()
-    {
-
-    }
-
-    public function transform($value)
-    {
-
-    }
-
-    public function reverseTransform($value)
-    {
-
+        $this->assertJsonStringEqualsJsonString('{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}', $actual);
     }
 }

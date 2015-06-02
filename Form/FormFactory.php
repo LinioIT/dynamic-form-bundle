@@ -5,6 +5,7 @@ namespace Linio\DynamicFormBundle\Form;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FormFactory
 {
@@ -95,8 +96,9 @@ class FormFactory
      * @return string
      * @throws InexistentFormException
      */
-     public function getJsonConfiguration($name)
-     {
-        return json_encode($this->configuration[$name]);
-     }
+    public function getJsonConfiguration($name)
+    {
+        $response = new JsonResponse($this->configuration[$name]);
+        return $response;
+    }
 }
