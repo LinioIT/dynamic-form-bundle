@@ -120,8 +120,8 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'enabled' => true,
                     'type' => 'field1_type',
                     'transformer' => [
-                        "class" => 'Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer',
-                        "calls" => [
+                        'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
+                        'calls' => [
                             ['setUserFormat', ['d/m/Y']],
                             ["setInputFormat", ['Y-m-d']]
                         ],
@@ -207,5 +207,21 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
 
         $this->assertJsonStringEqualsJsonString('{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}', $actual);
+    }
+}
+
+class MockTransformer implements DataTransformerInterface
+{
+    public function setUserFormat()
+    {
+    }
+    public function setInputFormat()
+    {
+    }
+    public function transform($value)
+    {
+    }
+    public function reverseTransform($value)
+    {
     }
 }
