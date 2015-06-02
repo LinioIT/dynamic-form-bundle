@@ -205,7 +205,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $actual = $dynamicFormFactory->getJsonConfiguration();
+        $actual = $dynamicFormFactory->getJsonConfiguration('john');
 
         $this->assertJsonStringEqualsJsonString('{"john":{"email":{"enabled":true,"type":"email"}}}', $actual);
     }
