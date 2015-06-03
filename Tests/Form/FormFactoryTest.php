@@ -205,8 +205,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
-
-        $this->assertJsonStringEqualsJsonString('{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}', $actual);
+        $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
+        $this->assertEquals(Response::HTTP_OK, $actual->getStatusCode());
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\JsonResponse', $actual);
+        $this->assertEquals($expected, $actual->getContent());
     }
 }
 
