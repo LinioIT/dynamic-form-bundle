@@ -5,7 +5,7 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Form\FormFactory;
 
 use Prophecy\Argument;
-use Symfony\Component\Validator\Constraints\isTrue;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +77,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'enabled' => true,
                     'type' => 'field1_type',
                     'validators' => [
-                        'Symfony\Component\Validator\Constraints\isTrue' => [
+                        'Symfony\Component\Validator\Constraints\IsTrue' => [
                             'message' => 'The token is invalid.',
                         ],
                     ],
@@ -87,7 +87,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [
             'constraints' => [
-                new isTrue(['message' => 'The token is invalid.'])
+                new IsTrue(['message' => 'The token is invalid.'])
             ],
         ];
 
