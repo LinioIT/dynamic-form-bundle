@@ -87,7 +87,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [
             'constraints' => [
-                new True(['message' => 'The token is invalid.'])
+                new isTrue(['message' => 'The token is invalid.'])
             ],
         ];
 
