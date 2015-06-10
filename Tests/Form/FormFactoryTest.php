@@ -210,6 +210,16 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     */
+    public function testIsThrowingExceptionWhenGettingJSONFromAnInexistentForm()
+    {
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => []]);
+        $formFactory->getJsonConfiguration('bar');
+    }
 }
 
 class MockTransformer implements DataTransformerInterface

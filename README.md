@@ -34,17 +34,12 @@ run PHPUnit.
 
 Usage
 -----
-Register as a Service in your bundle
-
-```yaml
-- [setDynamicFormFactory, [@dynamic_form.factory]]
-```
-
 Add the bundle on `registerBundles()` at `AppKernel.php`
 
 ```php
 new Linio\DynamicFormBundle\DynamicFormBundle();
 ```
+The service `dynamic_form.factory` will be available.
 
 Create your form on the Configuration File. The YAML structure for the Form should follow the next structure:
 

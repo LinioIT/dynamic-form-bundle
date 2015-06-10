@@ -98,6 +98,10 @@ class FormFactory
      */
     public function getJsonConfiguration($name)
     {
+        if (!isset($this->configuration[$name])) {
+            throw new InexistentFormException();
+        }
+
         return json_encode($this->configuration[$name]);
     }
 }
