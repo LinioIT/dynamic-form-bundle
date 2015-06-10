@@ -98,7 +98,6 @@ class FormFactory
      */
     public function getJsonConfiguration($name)
     {
-        $response = new JsonResponse($this->configuration[$name]);
-        return $response;
+        return json_encode($this->configuration[$name]);
     }
 }

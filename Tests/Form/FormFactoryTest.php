@@ -125,7 +125,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                         'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
                         'calls' => [
                             ['setUserFormat', ['d/m/Y']],
-                            ["setInputFormat", ['Y-m-d']]
+                            ['setInputFormat', ['Y-m-d']]
                         ],
                     ],
                 ],
@@ -208,9 +208,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
         $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
-        $this->assertEquals(Response::HTTP_OK, $actual->getStatusCode());
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\JsonResponse', $actual);
-        $this->assertEquals($expected, $actual->getContent());
+        $this->assertEquals($expected, $actual);
     }
 }
 
