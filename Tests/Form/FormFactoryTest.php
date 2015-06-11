@@ -56,7 +56,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn('foo_form');
 
         $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createNamedBuilder('foo', ['foo_form_data'], ['foo_form_options'])
+        $formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
@@ -103,7 +103,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn('foo_form');
 
         $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createNamedBuilder('foo', [], [])
+        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
@@ -146,7 +146,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formFactory->setFormFactory($formFactoryMock->reveal());
         $formFactory->setConfiguration($formConfiguration);
 
-        $formFactoryMock->createNamedBuilder('foo', [], [])
+        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
