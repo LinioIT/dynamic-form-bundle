@@ -5,9 +5,10 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Form\FormFactory;
 
 use Prophecy\Argument;
-use Symfony\Component\Validator\Constraints\True;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @codeCoverageIgnore
@@ -76,7 +77,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'enabled' => true,
                     'type' => 'field1_type',
                     'validators' => [
-                        'Symfony\Component\Validator\Constraints\True' => [
+                        'Symfony\Component\Validator\Constraints\IsTrue' => [
                             'message' => 'The token is invalid.',
                         ],
                     ],
@@ -86,7 +87,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [
             'constraints' => [
-                new True(['message' => 'The token is invalid.'])
+                new IsTrue(['message' => 'The token is invalid.'])
             ],
         ];
 
@@ -205,9 +206,19 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $actual = $dynamicFormFactory->getJsonConfiguration();
+        $actual = $dynamicFormFactory->getJsonConfiguration('john');
+        $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
+        $this->assertEquals($expected, $actual);
+    }
 
-        $this->assertJsonStringEqualsJsonString('{"john":{"email":{"enabled":true,"type":"email"}}}', $actual);
+    /**
+     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     */
+    public function testIsThrowingExceptionWhenGettingJSONFromAnInexistentForm()
+    {
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => []]);
+        $formFactory->getJsonConfiguration('bar');
     }
 }
 
@@ -215,21 +226,14 @@ class MockTransformer implements DataTransformerInterface
 {
     public function setUserFormat()
     {
-
     }
-
     public function setInputFormat()
     {
-
     }
-
     public function transform($value)
     {
-
     }
-
     public function reverseTransform($value)
     {
-
     }
 }

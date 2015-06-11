@@ -25,6 +25,7 @@ The recommended way to install Linio Dynamic Form Bundle is [through composer](h
 Tests
 -----
 
+
 To run the test suite, you need install the dependencies via composer, then
 run PHPUnit.
 
@@ -33,6 +34,12 @@ run PHPUnit.
 
 Usage
 -----
+Add the bundle on `registerBundles()` at `AppKernel.php`
+
+```php
+new Linio\DynamicFormBundle\DynamicFormBundle();
+```
+The service `dynamic_form.factory` will be available.
 
 Create your form on the Configuration File. The YAML structure for the Form should follow the next structure:
 
@@ -49,12 +56,19 @@ The method `createform()` takes the form configuration named `new_user` from `ap
 ```php
 use Linio\DynamicFormBundle\DynamicFormAware;
 
-$form = $this->getDynamicFormFactory()->createForm('new_user');
-
-return $this->render(
-  'WebBundle:Default:dynamicForms.html.twig',
-  ['form' => $form->createView(),]
-);
+class TestController
+{
+	use DynamicFormAware;
+	
+	public function testAction()
+	{
+		$form = $this->getDynamicFormFactory()->createForm('new_user');
+		return $this->render(
+		  'WebBundle:Default:dynamicForms.html.twig',
+		  ['form' => $form->createView(),]
+		);
+	}
+}
 ```
 The method `getJsonConfiguration()` takes the configuration from `app/config/config.yml`. and returns a JSON with the Form Configuration.
 
