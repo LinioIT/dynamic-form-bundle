@@ -76,7 +76,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                 'field1' => [
                     'enabled' => true,
                     'type' => 'field1_type',
-                    'validators' => [
+                    'validation' => [
                         'Symfony\Component\Validator\Constraints\IsTrue' => [
                             'message' => 'The token is invalid.',
                         ],
