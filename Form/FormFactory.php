@@ -35,12 +35,12 @@ class FormFactory
         $this->configuration = $configuration;
     }
 
-
     /**
      * This method genetates a form based on the configuration file.
      * @param string $name The name of the Form
      * @param array $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\Form
      * @throws InexistentFormException
      */
@@ -50,7 +50,7 @@ class FormFactory
             throw new InexistentFormException();
         }
 
-        $formBuilder = $this->formFactory->createBuilder('form', $data, $options);
+        $formBuilder = $this->formFactory->createNamedBuilder($name, 'form', $data, $options);
 
 
         foreach ($this->configuration[$name] as $name => $fieldConfiguration) {
@@ -60,10 +60,10 @@ class FormFactory
 
             $fieldOptions = isset($fieldConfiguration['options']) ? $fieldConfiguration['options'] : [];
 
-            if (isset($fieldConfiguration['validators'])) {
+            if (isset($fieldConfiguration['validation'])) {
                 $constraints = [];
 
-                foreach ($fieldConfiguration['validators'] as $validatorName => $options) {
+                foreach ($fieldConfiguration['validation'] as $validatorName => $options) {
                     $constraints[] = new $validatorName($options);
                 }
 
@@ -71,7 +71,6 @@ class FormFactory
             }
 
             $field = $formBuilder->create($name, $fieldConfiguration['type'], $fieldOptions);
-
 
             if (isset($fieldConfiguration['transformer'])) {
                 $transformerConfiguration = $fieldConfiguration['transformer'];
@@ -91,7 +90,7 @@ class FormFactory
 
         return $formBuilder->getForm();
     }
-
+    
     /**
      * @return string
      * @throws InexistentFormException
