@@ -56,7 +56,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn('foo_form');
 
         $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createBuilder('form', ['foo_form_data'], ['foo_form_options'])
+        $formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
@@ -76,7 +76,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                 'field1' => [
                     'enabled' => true,
                     'type' => 'field1_type',
-                    'validators' => [
+                    'validation' => [
                         'Symfony\Component\Validator\Constraints\IsTrue' => [
                             'message' => 'The token is invalid.',
                         ],
@@ -103,7 +103,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn('foo_form');
 
         $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createBuilder('form', [], [])
+        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
@@ -146,7 +146,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formFactory->setFormFactory($formFactoryMock->reveal());
         $formFactory->setConfiguration($formConfiguration);
 
-        $formFactoryMock->createBuilder('form', [], [])
+        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
             ->shouldBeCalled()
             ->willReturn($formBuilderMock->reveal());
 
