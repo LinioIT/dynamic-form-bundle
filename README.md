@@ -130,3 +130,4 @@ dynamic_form:
 ## Release History
 
  * 2015-05-21   v1.0   First Version
+ * 2015-06-11   v1.0.1   Updated getJsonConfiguration() so it can receive form name parameter
