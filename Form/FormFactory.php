@@ -90,7 +90,7 @@ class FormFactory
 
         return $formBuilder->getForm();
     }
-    
+
     /**
      * @return string
      * @throws InexistentFormException
@@ -102,5 +102,23 @@ class FormFactory
         }
 
         return json_encode($this->configuration[$name]);
+    }
+
+    /**
+     * @param string $name The name of the Form
+     * @throws InexistentFormException
+     * @return array
+     */
+    public function getFormlyConfiguration($name)
+    {
+        $formlyConfig = [];
+
+        if (!isset($this->configuration[$name])) {
+            throw new InexistentFormException();
+        }
+
+        $formlyConfig = $this->formlyMapper->map($this->configuration[$name], $name);
+
+        return $formlyConfig;
     }
 }

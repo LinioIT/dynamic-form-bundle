@@ -2,14 +2,29 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
 class FormlyMapper
 {
+    /**
+     * @var CsrfTokenManagerInterface
+     */
+    protected $csrfTokenManager;
+
+    /**
+     * @param CsrfTokenManagerInterface $csrfTokenManager
+     */
+    public function setCsrfTokenManager(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
+
     /**
      * @param array $configuration
      *
      * @return array
      */
-    public function map(array $configuration)
+    public function map(array $configuration, $formName)
     {
         foreach ($configuration as $field => $config) {
             $fieldConfiguration = [];
@@ -37,6 +52,8 @@ class FormlyMapper
 
             $formlyConfiguration[] = $fieldConfiguration;
         }
+
+        $token = $this->csrfTokenManager->refreshToken($formName);
 
         return $formlyConfiguration;
     }

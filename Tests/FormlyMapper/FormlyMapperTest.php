@@ -11,7 +11,15 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsGettingFormlyJsonConfiguration()
     {
+        $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
+
+        $csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn('d44b121fc3524fe5cdc4f3feb31ceb78');
+
         $formlyMapper = new FormlyMapper();
+
+        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
 
         $configuration = [
             'width' => [
@@ -29,7 +37,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $actual = $formlyMapper->map($configuration);
+        $actual = $formlyMapper->map($configuration, 'new_user');
 
         $expected = [
             [
