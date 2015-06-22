@@ -4,3 +4,7 @@ services:
         calls:
             - [setFormFactory, [@form.factory]]
             - [setConfiguration, [%dynamic_form.configuration%]]
+            - [setFormlyMapper, [@formly.mapper]]
+
+    formly.mapper:
+    	class: Linio\DynamicFormBundle\FormlyMapper\FormlyMapper
