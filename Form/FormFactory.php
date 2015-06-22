@@ -6,9 +6,12 @@ use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Linio\DynamicFormBundle\FormlyMapper\FormlyAware;
 
 class FormFactory
 {
+    use FormlyAware;
+
     /**
      * @var SymfonyFormFactory
      */
