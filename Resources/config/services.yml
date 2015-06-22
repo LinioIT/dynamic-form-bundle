@@ -7,6 +7,6 @@ services:
             - [setFormlyMapper, [@formly.mapper]]
 
     formly.mapper:
-    	class: Linio\DynamicFormBundle\FormlyMapper\FormlyMapper
-    	calls:
-    		- [setCsrfTokenManager, [@security.csrf.token_manager]]
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyMapper
+        calls:
+            - [setCsrfTokenManager, [@security.csrf.token_manager]]
