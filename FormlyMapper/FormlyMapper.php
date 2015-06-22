@@ -55,6 +55,14 @@ class FormlyMapper
 
         $token = $this->csrfTokenManager->refreshToken($formName);
 
+        $tokenFieldConfiguration = [
+            'key' => '_token',
+            'type' => 'hidden',
+            'defaultValue' => $token->getValue(),
+        ];
+
+        $formlyConfiguration[] = $tokenFieldConfiguration;
+
         return $formlyConfiguration;
     }
 }

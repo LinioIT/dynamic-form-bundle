@@ -3,6 +3,7 @@
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @codeCoverageIgnore
@@ -13,9 +14,11 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
     {
         $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
 
+        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
+
         $csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn('d44b121fc3524fe5cdc4f3feb31ceb78');
+            ->willReturn($csrfToken);
 
         $formlyMapper = new FormlyMapper();
 
@@ -57,6 +60,11 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                     'placeholder' => 'Height',
                     'required' => true,
                 ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
             ],
         ];
 
