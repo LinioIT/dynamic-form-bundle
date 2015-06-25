@@ -10,7 +10,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  */
 class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsGettingFormlyJsonConfiguration()
+    public function testIsGettingFormlyConfiguration()
     {
         $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
 
