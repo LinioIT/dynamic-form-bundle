@@ -3,7 +3,8 @@
 namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 
 use Linio\DynamicFormBundle\Form\FormFactory;
-
+use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Prophecy\Argument;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
@@ -208,6 +209,58 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
         $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsGettingFormlyConfiguration()
+    {
+        $formFactory = new FormFactory();
+        $formlyMapper = new FormlyMapper();
+
+        $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
+
+        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
+
+        $csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($csrfToken);
+
+        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+
+        $formFactory->setFormlyMapper($formlyMapper);
+
+        $formFactory->setConfiguration([
+            'new_user' => [
+                'name' => [
+                    'type' => 'text',
+                    'options' => [
+                        'required' => true,
+                        'label' => 'Nombre'
+                    ],
+                ],
+            ]
+        ]);
+
+        $actual = $formFactory->getFormlyConfiguration('new_user');
+
+        $expected = [
+            [
+                'key' => 'name',
+                'type' => 'input',
+                'templateOptions' =>
+                [
+                    'label' => 'Nombre',
+                    'placeholder' => 'Nombre',
+                    'required' => true,
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
         $this->assertEquals($expected, $actual);
     }
 
