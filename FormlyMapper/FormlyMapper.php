@@ -26,31 +26,13 @@ class FormlyMapper
      */
     public function map(array $configuration, $formName)
     {
-        foreach ($configuration as $field => $config) {
-            $fieldConfiguration = [];
+        foreach ($configuration as $fieldName => $fieldConfiguration) {
+            $fieldConfiguration['name'] = $fieldName;
 
-            $fieldConfiguration['key'] = $field;
-            $fieldConfiguration['type'] = 'input';
+            $formlyField = FormlyFieldFactory::create($fieldConfiguration['type']);
+            $formlyField->setFieldConfiguration($fieldConfiguration);
 
-            if (isset($config['options'])) {
-                $templateOptions = [];
-
-                if (isset($config['options']['label'])) {
-                    $templateOptions['label'] = $config['options']['label'];
-                    $templateOptions['placeholder'] = $config['options']['label'];
-                } else {
-                    $templateOptions['label'] = ucfirst($field);
-                    $templateOptions['placeholder'] = ucfirst($field);
-                }
-
-                foreach ($config['options'] as $option => $value) {
-                    $templateOptions[$option] = $value;
-                }
-
-                $fieldConfiguration['templateOptions'] = ($templateOptions);
-            }
-
-            $formlyConfiguration[] = $fieldConfiguration;
+            $formlyConfiguration[] = $formlyField->getFieldConfiguration();
         }
 
         $token = $this->csrfTokenManager->refreshToken($formName);

@@ -47,6 +47,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'key' => 'width',
                 'type' => 'input',
                 'templateOptions' => [
+                    'type' => 'number',
                     'label' => 'Ancho',
                     'placeholder' => 'Ancho',
                     'required' => true,
@@ -56,6 +57,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'key' => 'height',
                 'type' => 'input',
                 'templateOptions' => [
+                    'type' => 'number',
                     'label' => 'Height',
                     'placeholder' => 'Height',
                     'required' => true,
