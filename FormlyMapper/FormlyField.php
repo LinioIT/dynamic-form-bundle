@@ -29,15 +29,16 @@ class FormlyField implements FormlyFieldInterface
         $templateOptions = [];
 
         if (isset($this->fieldConfiguration['options'])) {
+            foreach ($this->fieldConfiguration['options'] as $option => $value) {
+                $templateOptions[$option] = $value;
+            }
+
             if (isset($this->fieldConfiguration['options']['label'])) {
                 $templateOptions['label'] = ucfirst($this->fieldConfiguration['options']['label']);
             } else {
                 $templateOptions['label'] = ucfirst($this->fieldConfiguration['name']);
             }
 
-            foreach ($this->fieldConfiguration['options'] as $option => $value) {
-                $templateOptions[$option] = $value;
-            }
 
             $this->formlyFieldConfiguration['templateOptions'] = ($templateOptions);
         }

@@ -249,9 +249,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                 'type' => 'input',
                 'templateOptions' =>
                 [
-                    'label' => 'Nombre',
-                    'placeholder' => 'Nombre',
                     'required' => true,
+                    'label' => 'Nombre',
+                    'type' => 'text'
                 ],
             ],
             [
