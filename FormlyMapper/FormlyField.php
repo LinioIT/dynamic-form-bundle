@@ -39,7 +39,6 @@ class FormlyField implements FormlyFieldInterface
                 $templateOptions['label'] = ucfirst($this->fieldConfiguration['name']);
             }
 
-
             $this->formlyFieldConfiguration['templateOptions'] = ($templateOptions);
         }
     }

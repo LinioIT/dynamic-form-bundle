@@ -55,4 +55,50 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testIsGeneratingConfigurationWithTextField()
+    {
+        $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
+
+        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
+
+        $csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($csrfToken);
+
+        $formlyMapper = new FormlyMapper();
+
+        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+
+        $configuration = [
+            'name' => [
+                'type' => 'text',
+                'options' => [
+                    'required' => true,
+                    'label' => 'Nombre',
+                ],
+            ],
+        ];
+
+        $actual = $formlyMapper->map($configuration, 'new_user');
+
+        $expected = [
+            [
+                'key' => 'name',
+                'type' => 'input',
+                'templateOptions' => [
+                    'type' => 'text',
+                    'label' => 'Nombre',
+                    'required' => true,
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
+        $this->assertEquals($expected, $actual);
+    }
 }
