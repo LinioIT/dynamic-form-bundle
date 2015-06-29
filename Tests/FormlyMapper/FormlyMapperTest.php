@@ -101,4 +101,58 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testIsGeneratingConfigurationWithNumberRangeConstraint()
+    {
+        $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
+
+        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
+
+        $csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($csrfToken);
+
+        $formlyMapper = new FormlyMapper();
+
+        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+
+        $configuration = [
+            'age' => [
+                'type' => 'number',
+                'options' => [
+                    'required' => true,
+                    'label' => 'Edad',
+                ],
+                'validation' => [
+                    'Symfony\Component\Validator\Constraints\Range' => [
+                        'min' => 5,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ];
+
+        $actual = $formlyMapper->map($configuration, 'new_user');
+
+        $expected = [
+            [
+                'key' => 'age',
+                'type' => 'input',
+                'templateOptions' => [
+                    'type' => 'number',
+                    'label' => 'Edad',
+                    'required' => true,
+                    'min' => '5',
+                    'max' => '100',
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
+        $this->assertEquals($expected, $actual);
+    }
 }
