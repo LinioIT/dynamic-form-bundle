@@ -41,6 +41,15 @@ class FormlyField implements FormlyFieldInterface
 
             $this->formlyFieldConfiguration['templateOptions'] = ($templateOptions);
         }
+
+        if (isset($this->fieldConfiguration['validation'])) {
+            $validation = $this->fieldConfiguration['validation'];
+
+            if (isset($validation['Symfony\Component\Validator\Constraints\Regex'])) {
+                $regexValidator = $validation['Symfony\Component\Validator\Constraints\Regex'];
+                $this->formlyFieldConfiguration['templateOptions']['pattern'] = $regexValidator['pattern'];
+            }
+        }
     }
 
     /**
