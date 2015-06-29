@@ -11,31 +11,8 @@ class NumberField extends FormlyField
      */
     public function getFieldConfiguration()
     {
-        $fieldConfiguration = [];
+        $this->formlyFieldConfiguration['templateOptions']['type'] = 'number';
 
-        $fieldConfiguration['key'] = $this->fieldConfiguration['name'];
-        $fieldConfiguration['type'] = 'input';
-
-        $templateOptions = [];
-
-        $templateOptions['type'] = 'number';
-
-        if (isset($this->fieldConfiguration['options'])) {
-            if (isset($this->fieldConfiguration['options']['label'])) {
-                $templateOptions['label'] = ucfirst($this->fieldConfiguration['options']['label']);
-                $templateOptions['placeholder'] = ucfirst($this->fieldConfiguration['options']['label']);
-            } else {
-                $templateOptions['label'] = ucfirst($this->fieldConfiguration['name']);
-                $templateOptions['placeholder'] = ucfirst($this->fieldConfiguration['name']);
-            }
-
-            foreach ($this->fieldConfiguration['options'] as $option => $value) {
-                $templateOptions[$option] = $value;
-            }
-
-            $fieldConfiguration['templateOptions'] = ($templateOptions);
-        }
-
-        return $fieldConfiguration;
+        return $this->formlyFieldConfiguration;
     }
 }

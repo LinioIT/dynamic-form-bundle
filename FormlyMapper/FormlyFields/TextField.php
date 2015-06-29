@@ -11,6 +11,8 @@ class TextField extends FormlyField
      */
     public function getFieldConfiguration()
     {
-        return $this->configuration;
+        $this->formlyFieldConfiguration['templateOptions']['type'] = 'text';
+
+        return $this->formlyFieldConfiguration;
     }
 }

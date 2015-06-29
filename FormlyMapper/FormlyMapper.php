@@ -31,6 +31,7 @@ class FormlyMapper
 
             $formlyField = FormlyFieldFactory::create($fieldConfiguration['type']);
             $formlyField->setFieldConfiguration($fieldConfiguration);
+            $formlyField->initFieldConfiguration();
 
             $formlyConfiguration[] = $formlyField->getFieldConfiguration();
         }

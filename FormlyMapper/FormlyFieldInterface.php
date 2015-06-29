@@ -12,5 +12,10 @@ interface FormlyFieldInterface
     /**
      * @return array
      */
+    public function initFieldConfiguration();
+
+    /**
+     * @return array
+     */
     public function getFieldConfiguration();
 }

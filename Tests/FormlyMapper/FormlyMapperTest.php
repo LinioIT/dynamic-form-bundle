@@ -32,12 +32,6 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                     'label' => 'Ancho',
                 ],
             ],
-            'height' => [
-                'type' => 'number',
-                'options' => [
-                    'required' => true,
-                ],
-            ],
         ];
 
         $actual = $formlyMapper->map($configuration, 'new_user');
@@ -49,17 +43,6 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'templateOptions' => [
                     'type' => 'number',
                     'label' => 'Ancho',
-                    'placeholder' => 'Ancho',
-                    'required' => true,
-                ],
-            ],
-            [
-                'key' => 'height',
-                'type' => 'input',
-                'templateOptions' => [
-                    'type' => 'number',
-                    'label' => 'Height',
-                    'placeholder' => 'Height',
                     'required' => true,
                 ],
             ],
