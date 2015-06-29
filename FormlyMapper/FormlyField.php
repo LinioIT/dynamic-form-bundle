@@ -19,7 +19,7 @@ class FormlyField implements FormlyFieldInterface
     /**
      * This function generates the common configuration for all field types.
      */
-    public function initFieldConfiguration()
+    public function generateCommonConfiguration()
     {
         $this->formlyFieldConfiguration = [];
 
