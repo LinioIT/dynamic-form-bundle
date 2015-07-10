@@ -3,12 +3,8 @@
 namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 
 use Linio\DynamicFormBundle\Form\FormFactory;
-
-use Prophecy\Argument;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 /**
  * @codeCoverageIgnore
@@ -87,7 +83,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [
             'constraints' => [
-                new IsTrue(['message' => 'The token is invalid.'])
+                new IsTrue(['message' => 'The token is invalid.']),
             ],
         ];
 
@@ -125,7 +121,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                         'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
                         'calls' => [
                             ['setUserFormat', ['d/m/Y']],
-                            ['setInputFormat', ['Y-m-d']]
+                            ['setInputFormat', ['Y-m-d']],
                         ],
                     ],
                 ],
@@ -178,11 +174,11 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             'foo' => [
                 'email' => [
                     'enabled' => true,
-                    'type' => 'email'
+                    'type' => 'email',
                 ],
                 'password' => [
                     'enabled' => true,
-                    'type' => 'password'
+                    'type' => 'password',
                 ],
             ],
         ]);
@@ -197,13 +193,13 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             'john' => [
                 'email' => [
                     'enabled' => true,
-                    'type' => 'email'
+                    'type' => 'email',
                 ],
                 'password' => [
                     'enabled' => false,
-                    'type' => 'password'
+                    'type' => 'password',
                 ],
-            ]
+            ],
         ]);
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
