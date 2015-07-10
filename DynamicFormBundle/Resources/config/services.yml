@@ -1,6 +1,0 @@
-services:
-    dynamic_form.factory:
-        class: Linio\DynamicFormBundle\Form\FormFactory
-        calls:
-            - [setFormFactory, [@form.factory]]
-            - [setConfiguration, [%dynamic_form.configuration%]]
