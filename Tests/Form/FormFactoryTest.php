@@ -216,6 +216,16 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formFactory->setConfiguration(['foo' => []]);
         $formFactory->getJsonConfiguration('bar');
     }
+    public function testIsGettingJsonConfigurationForAllForms()
+    {
+        $expected = '{"foo":[],"bar":[]}';
+
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => [], 'bar' => []]);
+        $actual = $formFactory->getJsonConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
 }
 
 class MockTransformer implements DataTransformerInterface

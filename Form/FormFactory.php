@@ -111,8 +111,12 @@ class FormFactory
      *
      * @throws NotExistentFormException
      */
-    public function getJsonConfiguration($name)
+    public function getJsonConfiguration($name = null)
     {
+        if ($name === null) {
+            return json_encode($this->configuration);
+        }
+
         if (!isset($this->configuration[$name])) {
             throw new NotExistentFormException();
         }
