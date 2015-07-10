@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionWhenCreatingAnInexistentForm()
     {
@@ -169,7 +169,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionForInexistentForms()
     {
@@ -212,7 +212,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionWhenGettingJSONFromAnInexistentForm()
     {

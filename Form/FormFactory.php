@@ -4,7 +4,7 @@ namespace Linio\DynamicFormBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
-use Linio\DynamicFormBundle\Exception\InexistentFormException;
+use Linio\DynamicFormBundle\Exception\NotExistentFormException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,17 +50,18 @@ class FormFactory
 
     /**
      * This method genetates a form based on the configuration file.
-     * @param string $name The name of the Form
+     *
+*@param string $name The name of the Form
      * @param array $data
      * @param array $options
      *
      * @return FormBuilderInterface
-     * @throws InexistentFormException
+     * @throws NotExistentFormException
      */
     public function createBuilder($name, $data = [], $options = [])
     {
         if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException(sprintf('The form "%s" was not found.', $name));
+            throw new NotExistentFormException(sprintf('The form "%s" was not found.', $name));
         }
 
         $formBuilder = $this->formFactory->createNamedBuilder($name, 'form', $data, $options);
@@ -106,12 +107,12 @@ class FormFactory
     
     /**
      * @return string
-     * @throws InexistentFormException
+     * @throws NotExistentFormException
      */
     public function getJsonConfiguration($name)
     {
         if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException();
+            throw new NotExistentFormException();
         }
 
         return json_encode($this->configuration[$name]);
