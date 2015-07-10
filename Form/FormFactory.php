@@ -107,6 +107,8 @@ class FormFactory
     }
 
     /**
+     * @param string $name
+     *
      * @return string
      *
      * @throws NotExistentFormException
