@@ -5,3 +5,4 @@ composer.lock
 coverage.xml
 vendor/
 .idea/
+.php_cs.cache
