@@ -216,6 +216,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formFactory->setConfiguration(['foo' => []]);
         $formFactory->getJsonConfiguration('bar');
     }
+
     public function testIsGettingJsonConfigurationForAllForms()
     {
         $expected = '{"foo":[],"bar":[]}';
@@ -225,6 +226,15 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $actual = $formFactory->getJsonConfiguration();
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsCheckingIfTheFormExists()
+    {
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => []]);
+
+        $this->assertTrue($formFactory->has('foo'));
+        $this->assertFalse($formFactory->has('bar'));
     }
 }
 

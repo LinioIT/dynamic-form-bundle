@@ -119,10 +119,22 @@ class FormFactory
             return json_encode($this->configuration);
         }
 
-        if (!isset($this->configuration[$name])) {
+        if (!$this->has($name)) {
             throw new NotExistentFormException();
         }
 
         return json_encode($this->configuration[$name]);
+    }
+
+    /**
+     * Checks if a given form exists.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return isset($this->configuration[$name]);
     }
 }
