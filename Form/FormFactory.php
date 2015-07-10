@@ -36,37 +36,39 @@ class FormFactory
     }
 
     /**
-     * @param $name
-     * @param array $data
-     * @param array $options
+     * @param string $key     The key of the Form in the form configuration
+     * @param array  $data
+     * @param array  $options
+     * @param string $name    An name for the form. If empty, the key will be used
      *
      * @return FormInterface
      */
-    public function createForm($name, $data = [], $options = [])
+    public function createForm($key, $data = [], $options = [], $name = null)
     {
-        return $this->createBuilder($name, $data, $options)->getForm();
+        return $this->createBuilder($key, $data, $options, $name)->getForm();
     }
 
     /**
-     * This method genetates a form based on the configuration file.
+     * This method generates a form based on the configuration file.
      *
-     * @param string $name    The name of the Form
+     * @param string $key     The key of the Form in the form configuration
      * @param array  $data
      * @param array  $options
+     * @param string $name    An name for the form. If empty, the key will be used
      *
      * @return FormBuilderInterface
      *
      * @throws NotExistentFormException
      */
-    public function createBuilder($name, $data = [], $options = [])
+    public function createBuilder($key, $data = [], $options = [], $name = null)
     {
-        if (!isset($this->configuration[$name])) {
-            throw new NotExistentFormException(sprintf('The form "%s" was not found.', $name));
+        if (!isset($this->configuration[$key])) {
+            throw new NotExistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
-        $formBuilder = $this->formFactory->createNamedBuilder($name, 'form', $data, $options);
+        $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, 'form', $data, $options);
 
-        foreach ($this->configuration[$name] as $name => $fieldConfiguration) {
+        foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
             if (!$fieldConfiguration['enabled']) {
                 continue;
             }
@@ -83,7 +85,7 @@ class FormFactory
                 $fieldOptions['constraints'] = $constraints;
             }
 
-            $field = $formBuilder->create($name, $fieldConfiguration['type'], $fieldOptions);
+            $field = $formBuilder->create($key, $fieldConfiguration['type'], $fieldOptions);
 
             if (isset($fieldConfiguration['transformer'])) {
                 $transformerConfiguration = $fieldConfiguration['transformer'];
