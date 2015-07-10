@@ -47,7 +47,7 @@ class FormFactory
     public function createForm($name, $data = [], $options = [])
     {
         if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException();
+            throw new InexistentFormException(sprintf('The form "%s" was not found.', $name));
         }
 
         $formBuilder = $this->formFactory->createNamedBuilder($name, 'form', $data, $options);
