@@ -2,11 +2,12 @@
 
 namespace Linio\DynamicFormBundle\Form;
 
+use Linio\DynamicFormBundle\Exception\NotExistentFormException;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyAware;
+use Symfony\Component\Form\FormInterface;
 
 class FormFactory
 {
@@ -39,24 +40,39 @@ class FormFactory
     }
 
     /**
-     * This method genetates a form based on the configuration file.
-     * @param string $name The name of the Form
-     * @param array $data
-     * @param array $options
+     * @param string $key     The key of the Form in the form configuration
+     * @param array  $data
+     * @param array  $options
+     * @param string $name    An name for the form. If empty, the key will be used
      *
-     * @return \Symfony\Component\Form\Form
-     * @throws InexistentFormException
+     * @return FormInterface
      */
-    public function createForm($name, $data = [], $options = [])
+    public function createForm($key, $data = [], $options = [], $name = null)
     {
-        if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException();
+        return $this->createBuilder($key, $data, $options, $name)->getForm();
+    }
+
+    /**
+     * This method generates a form based on the configuration file.
+     *
+     * @param string $key     The key of the Form in the form configuration
+     * @param array  $data
+     * @param array  $options
+     * @param string $name    An name for the form. If empty, the key will be used
+     *
+     * @return FormBuilderInterface
+     *
+     * @throws NotExistentFormException
+     */
+    public function createBuilder($key, $data = [], $options = [], $name = null)
+    {
+        if (!isset($this->configuration[$key])) {
+            throw new NotExistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
-        $formBuilder = $this->formFactory->createNamedBuilder($name, 'form', $data, $options);
+        $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, 'form', $data, $options);
 
-
-        foreach ($this->configuration[$name] as $name => $fieldConfiguration) {
+        foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
             if (!$fieldConfiguration['enabled']) {
                 continue;
             }
@@ -73,7 +89,7 @@ class FormFactory
                 $fieldOptions['constraints'] = $constraints;
             }
 
-            $field = $formBuilder->create($name, $fieldConfiguration['type'], $fieldOptions);
+            $field = $formBuilder->create($key, $fieldConfiguration['type'], $fieldOptions);
 
             if (isset($fieldConfiguration['transformer'])) {
                 $transformerConfiguration = $fieldConfiguration['transformer'];
@@ -91,17 +107,24 @@ class FormFactory
             $formBuilder->add($field);
         }
 
-        return $formBuilder->getForm();
+        return $formBuilder;
     }
 
     /**
+     * @param string $name
+     *
      * @return string
-     * @throws InexistentFormException
+     *
+     * @throws NotExistentFormException
      */
-    public function getJsonConfiguration($name)
+    public function getJsonConfiguration($name = null)
     {
-        if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException();
+        if ($name === null) {
+            return json_encode($this->configuration);
+        }
+
+        if (!$this->has($name)) {
+            throw new NotExistentFormException();
         }
 
         return json_encode($this->configuration[$name]);
@@ -109,7 +132,9 @@ class FormFactory
 
     /**
      * @param string $name The name of the Form
+     *
      * @throws InexistentFormException
+     *
      * @return array
      */
     public function getFormlyConfiguration($name)
@@ -123,5 +148,17 @@ class FormFactory
         $formlyConfig = $this->formlyMapper->map($this->configuration[$name], $name);
 
         return $formlyConfig;
+    }
+
+    /**
+     * Checks if a given form exists.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return isset($this->configuration[$name]);
     }
 }

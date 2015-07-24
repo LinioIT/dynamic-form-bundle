@@ -5,11 +5,8 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Prophecy\Argument;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 /**
  * @codeCoverageIgnore
@@ -17,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionWhenCreatingAnInexistentForm()
     {
@@ -88,7 +85,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [
             'constraints' => [
-                new IsTrue(['message' => 'The token is invalid.'])
+                new IsTrue(['message' => 'The token is invalid.']),
             ],
         ];
 
@@ -126,7 +123,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                         'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
                         'calls' => [
                             ['setUserFormat', ['d/m/Y']],
-                            ['setInputFormat', ['Y-m-d']]
+                            ['setInputFormat', ['Y-m-d']],
                         ],
                     ],
                 ],
@@ -170,7 +167,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionForInexistentForms()
     {
@@ -179,11 +176,11 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             'foo' => [
                 'email' => [
                     'enabled' => true,
-                    'type' => 'email'
+                    'type' => 'email',
                 ],
                 'password' => [
                     'enabled' => true,
-                    'type' => 'password'
+                    'type' => 'password',
                 ],
             ],
         ]);
@@ -198,13 +195,13 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             'john' => [
                 'email' => [
                     'enabled' => true,
-                    'type' => 'email'
+                    'type' => 'email',
                 ],
                 'password' => [
                     'enabled' => false,
-                    'type' => 'password'
+                    'type' => 'password',
                 ],
-            ]
+            ],
         ]);
 
         $actual = $dynamicFormFactory->getJsonConfiguration('john');
@@ -235,10 +232,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'type' => 'text',
                     'options' => [
                         'required' => true,
-                        'label' => 'Nombre'
+                        'label' => 'Nombre',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         $actual = $formFactory->getFormlyConfiguration('new_user');
@@ -247,11 +244,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 'key' => 'name',
                 'type' => 'input',
-                'templateOptions' =>
-                [
+                'templateOptions' => [
                     'required' => true,
                     'label' => 'Nombre',
-                    'type' => 'text'
+                    'type' => 'text',
                 ],
             ],
             [
@@ -265,13 +261,33 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
      */
     public function testIsThrowingExceptionWhenGettingJSONFromAnInexistentForm()
     {
         $formFactory = new FormFactory();
         $formFactory->setConfiguration(['foo' => []]);
         $formFactory->getJsonConfiguration('bar');
+    }
+
+    public function testIsGettingJsonConfigurationForAllForms()
+    {
+        $expected = '{"foo":[],"bar":[]}';
+
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => [], 'bar' => []]);
+        $actual = $formFactory->getJsonConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsCheckingIfTheFormExists()
+    {
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration(['foo' => []]);
+
+        $this->assertTrue($formFactory->has('foo'));
+        $this->assertFalse($formFactory->has('bar'));
     }
 }
 
