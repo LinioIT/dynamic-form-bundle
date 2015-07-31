@@ -4,17 +4,17 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
-use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use \Symfony\Component\Form\FormBuilder;
+use \Symfony\Component\Form\FormFactory as SymfonyFormFactory;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-/**
- * @codeCoverageIgnore
- */
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
      */
     public function testIsThrowingExceptionWhenCreatingAnInexistentForm()
     {
@@ -25,6 +25,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCreatingASimpleForm()
     {
+        $formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
+        $formBuilderMock = $this->prophesize(FormBuilder::class);
+
         $formConfiguration = [
             'foo' => [
                 'field1' => [
@@ -39,10 +42,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $formData = 'form_foo_data';
-        $formOptions = 'form_foo_options';
+        $formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
+            ->shouldBeCalled()
+            ->willReturn($formBuilderMock->reveal());
 
-        $formBuilderMock = $this->prophesize('\Symfony\Component\Form\FormBuilder');
         $formBuilderMock->create('field1', 'field1_type', ['field1_options'])
             ->shouldBeCalled()
             ->willReturn('field1_instance');
@@ -52,11 +55,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $formBuilderMock->getForm()
             ->willReturn('foo_form');
-
-        $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
-            ->shouldBeCalled()
-            ->willReturn($formBuilderMock->reveal());
 
         $formFactory = new FormFactory();
         $formFactory->setFormFactory($formFactoryMock->reveal());
@@ -69,6 +67,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCreatingFormWithValidators()
     {
+        $formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
+        $formBuilderMock = $this->prophesize(FormBuilder::class);
+
         $formConfiguration = [
             'foo' => [
                 'field1' => [
@@ -89,7 +90,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $formBuilderMock = $this->prophesize('\Symfony\Component\Form\FormBuilder');
+        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
+            ->shouldBeCalled()
+            ->willReturn($formBuilderMock->reveal());
+
         $formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
             ->shouldBeCalled()
             ->willReturn('field1_instance');
@@ -100,20 +104,21 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formBuilderMock->getForm()
             ->willReturn('foo_form');
 
-        $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
-            ->shouldBeCalled()
-            ->willReturn($formBuilderMock->reveal());
-
         $formFactory = new FormFactory();
         $formFactory->setFormFactory($formFactoryMock->reveal());
         $formFactory->setConfiguration($formConfiguration);
 
-        $formFactory->createForm('foo');
+        $actual = $formFactory->createForm('foo');
+
+        $this->assertEquals('foo_form', $actual);
     }
 
     public function testIsCreatingFormWithTransformers()
     {
+        $formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
+        $formBuilderMock = $this->prophesize(FormBuilder::class);
+        $fieldOneMock = $this->prophesize(FormBuilder::class);
+
         $formConfiguration = [
             'foo' => [
                 'field1' => [
@@ -130,19 +135,11 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $expectedFieldOptions = [];
-
         $bornDateTransformer = new $formConfiguration['foo']['field1']['transformer']['class']();
         $bornDateTransformer->setUserFormat(['d/m/Y']);
         $bornDateTransformer->setInputFormat(['Y-m-d']);
 
-        $formFactoryMock = $this->prophesize('\Symfony\Component\Form\FormFactory');
-        $formBuilderMock = $this->prophesize('\Symfony\Component\Form\FormBuilder');
-        $fieldOneMock = $this->prophesize('\Symfony\Component\Form\FormBuilder');
-
-        $formFactory = new FormFactory();
-        $formFactory->setFormFactory($formFactoryMock->reveal());
-        $formFactory->setConfiguration($formConfiguration);
+        $expectedFieldOptions = [];
 
         $formFactoryMock->createNamedBuilder('foo', 'form', [], [])
             ->shouldBeCalled()
@@ -161,38 +158,20 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $formBuilderMock->getForm()
             ->willReturn('foo_form');
 
+        $formFactory = new FormFactory();
+        $formFactory->setFormFactory($formFactoryMock->reveal());
+        $formFactory->setConfiguration($formConfiguration);
+
         $actual = $formFactory->createForm('foo');
 
         $this->assertEquals('foo_form', $actual);
     }
 
-    /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
-     */
-    public function testIsThrowingExceptionForInexistentForms()
-    {
-        $dynamicFormFactory = new FormFactory();
-        $dynamicFormFactory->setConfiguration([
-            'foo' => [
-                'email' => [
-                    'enabled' => true,
-                    'type' => 'email',
-                ],
-                'password' => [
-                    'enabled' => true,
-                    'type' => 'password',
-                ],
-            ],
-        ]);
-
-        $actual = $dynamicFormFactory->createForm('nope', [], []);
-    }
-
     public function testIsGettingJsonConfiguration()
     {
-        $dynamicFormFactory = new FormFactory();
-        $dynamicFormFactory->setConfiguration([
-            'john' => [
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration([
+            'foo' => [
                 'email' => [
                     'enabled' => true,
                     'type' => 'email',
@@ -204,41 +183,59 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ]);
 
-        $actual = $dynamicFormFactory->getJsonConfiguration('john');
+        $actual = $formFactory->getJsonConfiguration('foo');
         $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsGettingFormlyConfiguration()
+    public function testIsHandlingNullName()
     {
         $formFactory = new FormFactory();
-        $formlyMapper = new FormlyMapper();
-
-        $csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
-
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
-            ->shouldBeCalled()
-            ->willReturn($csrfToken);
-
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
-
-        $formFactory->setFormlyMapper($formlyMapper);
-
         $formFactory->setConfiguration([
-            'new_user' => [
-                'name' => [
-                    'type' => 'text',
-                    'options' => [
-                        'required' => true,
-                        'label' => 'Nombre',
-                    ],
+            'foo' => [
+                'email' => [
+                    'enabled' => true,
+                    'type' => 'email',
+                ],
+                'password' => [
+                    'enabled' => false,
+                    'type' => 'password',
                 ],
             ],
         ]);
 
-        $actual = $formFactory->getFormlyConfiguration('new_user');
+        $actual = $formFactory->getJsonConfiguration(null);
+        $expected = '{"foo":{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}}';
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     */
+    public function testIsHandlingNotExistenFormException()
+    {
+        $formFactory = new FormFactory();
+        $formFactory->setConfiguration([
+            'foo' => [
+                'email' => [
+                    'enabled' => true,
+                    'type' => 'email',
+                ],
+                'password' => [
+                    'enabled' => false,
+                    'type' => 'password',
+                ],
+            ],
+        ]);
+
+        $formFactory->getJsonConfiguration('bar');
+    }
+
+    public function testIsGettingFormlyConfiguration()
+    {
+        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
+
+        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
 
         $expected = [
             [
@@ -257,37 +254,41 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
+        $csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($csrfToken);
+
+        $formlyMapper = new FormlyMapper();
+        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+
+        $formFactory = new FormFactory();
+        $formFactory->setFormlyMapper($formlyMapper);
+
+        $formFactory->setConfiguration([
+            'new_user' => [
+                'name' => [
+                    'type' => 'text',
+                    'options' => [
+                        'required' => true,
+                        'label' => 'Nombre',
+                    ],
+                ],
+            ],
+        ]);
+
+        $actual = $formFactory->getFormlyConfiguration('new_user');
+
         $this->assertEquals($expected, $actual);
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\NotExistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
      */
     public function testIsThrowingExceptionWhenGettingJSONFromAnInexistentForm()
     {
         $formFactory = new FormFactory();
         $formFactory->setConfiguration(['foo' => []]);
-        $formFactory->getJsonConfiguration('bar');
-    }
-
-    public function testIsGettingJsonConfigurationForAllForms()
-    {
-        $expected = '{"foo":[],"bar":[]}';
-
-        $formFactory = new FormFactory();
-        $formFactory->setConfiguration(['foo' => [], 'bar' => []]);
-        $actual = $formFactory->getJsonConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testIsCheckingIfTheFormExists()
-    {
-        $formFactory = new FormFactory();
-        $formFactory->setConfiguration(['foo' => []]);
-
-        $this->assertTrue($formFactory->has('foo'));
-        $this->assertFalse($formFactory->has('bar'));
+        $formFactory->getFormlyConfiguration('bar');
     }
 }
 

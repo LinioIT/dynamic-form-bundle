@@ -2,11 +2,10 @@
 
 namespace Linio\DynamicFormBundle\Form;
 
-use Linio\DynamicFormBundle\Exception\NotExistentFormException;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyAware;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
 
 class FormFactory
@@ -62,12 +61,12 @@ class FormFactory
      *
      * @return FormBuilderInterface
      *
-     * @throws NotExistentFormException
+     * @throws InexistentFormException
      */
     public function createBuilder($key, $data = [], $options = [], $name = null)
     {
         if (!isset($this->configuration[$key])) {
-            throw new NotExistentFormException(sprintf('The form "%s" was not found.', $key));
+            throw new InexistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
         $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, 'form', $data, $options);
@@ -115,7 +114,7 @@ class FormFactory
      *
      * @return string
      *
-     * @throws NotExistentFormException
+     * @throws InexistentFormException
      */
     public function getJsonConfiguration($name = null)
     {
@@ -124,7 +123,7 @@ class FormFactory
         }
 
         if (!$this->has($name)) {
-            throw new NotExistentFormException();
+            throw new InexistentFormException();
         }
 
         return json_encode($this->configuration[$name]);
@@ -139,15 +138,13 @@ class FormFactory
      */
     public function getFormlyConfiguration($name)
     {
-        $formlyConfig = [];
-
         if (!isset($this->configuration[$name])) {
             throw new InexistentFormException();
         }
 
         $formlyConfig = $this->formlyMapper->map($this->configuration[$name], $name);
 
-        return $formlyConfig;
+        return (array) $formlyConfig;
     }
 
     /**
