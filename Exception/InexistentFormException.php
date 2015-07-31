@@ -2,6 +2,7 @@
 
 namespace Linio\DynamicFormBundle\Exception;
 
-class NotExistentFormException extends \Exception
+
+class InexistentFormException extends \Exception
 {
 }
