@@ -128,7 +128,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'validation' => [
                     'Symfony\Component\Validator\Constraints\Regex' => [
                         'pattern' => '^[0-9]{2}$',
-                        'message'=> 'Invalid allowed age',
+                        'message' => 'Invalid allowed age',
                     ],
                 ],
             ],
