@@ -2,6 +2,9 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
+/**
+ * @codeCoverageIgnore
+ */
 trait FormlyAware
 {
     /**
