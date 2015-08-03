@@ -3,15 +3,29 @@
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ObjectProphecy
+     */
+    protected $csrfTokenManagerMock;
+
+    /**
+     * @var CsrfToken
+     */
+    protected $csrfToken;
+
+    /**
+     * @var FormlyMapper
+     */
+    protected $formlyMapper;
+
     public function testIsFormlyNumberField()
     {
-        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-
         $configuration = [
             'width' => [
                 'type' => 'number',
@@ -39,24 +53,19 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
+        $this->csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn($csrfToken);
+            ->willReturn($this->csrfToken);
 
-        $formlyMapper = new FormlyMapper();
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
 
-        $actual = $formlyMapper->map($configuration, 'new_user');
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testIsFormlyRangeConstraint()
     {
-        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-
         $configuration = [
             'age' => [
                 'type' => 'number',
@@ -100,24 +109,19 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
+        $this->csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn($csrfToken);
+            ->willReturn($this->csrfToken);
 
-        $formlyMapper = new FormlyMapper();
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
 
-        $actual = $formlyMapper->map($configuration, 'new_user');
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testIsFormlyRegexConstraint()
     {
-        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-
         $configuration = [
             'age' => [
                 'type' => 'number',
@@ -155,24 +159,19 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
+        $this->csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn($csrfToken);
+            ->willReturn($this->csrfToken);
 
-        $formlyMapper = new FormlyMapper();
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
 
-        $actual = $formlyMapper->map($configuration, 'new_user');
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testIsFormlyTextField()
     {
-        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-
         $configuration = [
             'name' => [
                 'type' => 'text',
@@ -200,24 +199,19 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
+        $this->csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn($csrfToken);
+            ->willReturn($this->csrfToken);
 
-        $formlyMapper = new FormlyMapper();
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
 
-        $actual = $formlyMapper->map($configuration, 'new_user');
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testIsFormlyNotBlankConstraint()
     {
-        $csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-
         $configuration = [
             'name' => [
                 'type' => 'text',
@@ -253,17 +247,143 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
-
-        $csrfTokenManagerMock->refreshToken('new_user')
+        $this->csrfTokenManagerMock->refreshToken('new_user')
             ->shouldBeCalled()
-            ->willReturn($csrfToken);
+            ->willReturn($this->csrfToken);
 
-        $formlyMapper = new FormlyMapper();
-        $formlyMapper->setCsrfTokenManager($csrfTokenManagerMock->reveal());
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
 
-        $actual = $formlyMapper->map($configuration, 'new_user');
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsFormlyTextArea()
+    {
+        $configuration = [
+            'name' => [
+                'type' => 'textarea',
+                'options' => [
+                    'required' => true,
+                    'label' => 'Name',
+                ],
+            ],
+        ];
+
+        $expected = [
+            [
+                'key' => 'name',
+                'type' => 'textarea',
+                'templateOptions' => [
+                    'type' => 'textarea',
+                    'label' => 'Name',
+                    'required' => true,
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
+        $this->csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($this->csrfToken);
+
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
+
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsFormlyDate()
+    {
+        $configuration = [
+            'name' => [
+                'type' => 'date',
+                'options' => [
+                    'required' => true,
+                    'label' => 'Name',
+                ],
+            ],
+        ];
+
+        $expected = [
+            [
+                'key' => 'name',
+                'type' => 'input',
+                'templateOptions' => [
+                    'type' => 'date',
+                    'label' => 'Name',
+                    'required' => true,
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
+        $this->csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($this->csrfToken);
+
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
+
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsFormlyCheckbox()
+    {
+        $configuration = [
+            'name' => [
+                'type' => 'checkbox',
+                'options' => [
+                    'required' => true,
+                    'label' => 'Name',
+                ],
+            ],
+        ];
+
+        $expected = [
+            [
+                'key' => 'name',
+                'type' => 'checkbox',
+                'templateOptions' => [
+                    'type' => 'checkbox',
+                    'label' => 'Name',
+                    'required' => true,
+                    'options' => [],
+                ],
+            ],
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw',
+            ],
+        ];
+
+        $this->csrfTokenManagerMock->refreshToken('new_user')
+            ->shouldBeCalled()
+            ->willReturn($this->csrfToken);
+
+        $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
+
+        $actual = $this->formlyMapper->map($configuration, 'new_user');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function setup()
+    {
+        $this->csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
+        $this->csrfToken = new CsrfToken('new_user', 'bBKGCw4PKzaxanCnPPXy_aIZwNB5T6mccPKZl7XfWZw');
+
+        $this->formlyMapper = new FormlyMapper();
     }
 }
