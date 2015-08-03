@@ -5,11 +5,11 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use \Symfony\Component\Form\FormBuilder;
-use \Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
 {
