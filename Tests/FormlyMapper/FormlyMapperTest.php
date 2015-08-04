@@ -346,6 +346,20 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     'required' => true,
                     'label' => 'Name',
+                    'options' => [
+                        [
+                            'value' => '1',
+                            'text' => 'Op1',
+                        ],
+                        [
+                            'value' => '2',
+                            'text' => 'Op2',
+                        ],
+                        [
+                            'value' => '3',
+                            'text' => 'Op3',
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -358,7 +372,20 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                     'type' => 'checkbox',
                     'label' => 'Name',
                     'required' => true,
-                    'options' => [],
+                    'options' => [
+                        [
+                            'value' => '1',
+                            'text' => 'Op1',
+                        ],
+                        [
+                            'value' => '2',
+                            'text' => 'Op2',
+                        ],
+                        [
+                            'value' => '3',
+                            'text' => 'Op3',
+                        ],
+                    ],
                 ],
             ],
             [

@@ -13,7 +13,10 @@ class CheckboxField extends FormlyField
     {
         $this->formlyFieldConfiguration['type'] = 'checkbox';
         $this->formlyFieldConfiguration['templateOptions']['type'] = 'checkbox';
-        $this->formlyFieldConfiguration['templateOptions']['options'] = [];
+        if (isset($this->fieldConfiguration['options']['options'])) {
+            $choices = $this->fieldConfiguration['options']['options'];
+            $this->formlyFieldConfiguration['templateOptions']['options'] = $choices;
+        }
 
         return $this->formlyFieldConfiguration;
     }
