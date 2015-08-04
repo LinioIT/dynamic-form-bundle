@@ -10,7 +10,7 @@ interface FormlyFieldInterface
     public function setFieldConfiguration(array $configuration);
 
     /**
-     * @return array
+     * @return void
      */
     public function generateCommonConfiguration();
 

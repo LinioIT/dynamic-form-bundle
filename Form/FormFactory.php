@@ -3,15 +3,12 @@
 namespace Linio\DynamicFormBundle\Form;
 
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
-use Linio\DynamicFormBundle\FormlyMapper\FormlyAware;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
 
 class FormFactory
 {
-    use FormlyAware;
-
     /**
      * @var SymfonyFormFactory
      */
@@ -127,24 +124,6 @@ class FormFactory
         }
 
         return json_encode($this->configuration[$name]);
-    }
-
-    /**
-     * @param string $name The name of the Form
-     *
-     * @throws InexistentFormException
-     *
-     * @return array
-     */
-    public function getFormlyConfiguration($name)
-    {
-        if (!isset($this->configuration[$name])) {
-            throw new InexistentFormException();
-        }
-
-        $formlyConfig = $this->formlyMapper->map($this->configuration[$name], $name);
-
-        return (array) $formlyConfig;
     }
 
     /**

@@ -2,10 +2,19 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
-class FormlyField implements FormlyFieldInterface
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+
+abstract class FormlyField implements FormlyFieldInterface
 {
+    /**
+     * @var array
+     */
     protected $fieldConfiguration;
 
+    /**
+     * @var array
+     */
     protected $formlyFieldConfiguration;
 
     /**
@@ -38,33 +47,30 @@ class FormlyField implements FormlyFieldInterface
                 $templateOptions['label'] = ucfirst($this->fieldConfiguration['options']['label']);
             }
 
-            $this->formlyFieldConfiguration['templateOptions'] = ($templateOptions);
+            $this->formlyFieldConfiguration['templateOptions'] = $templateOptions;
         }
 
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
-            if (isset($validation['Symfony\Component\Validator\Constraints\NotBlank'])) {
-                $constraint = $validation['Symfony\Component\Validator\Constraints\NotBlank'];
+            $notBlankConstraintClass = NotBlank::class;
+
+            if (isset($validation[$notBlankConstraintClass])) {
+                $constraint = $validation[$notBlankConstraintClass];
                 if (isset ($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
             }
 
-            if (isset($validation['Symfony\Component\Validator\Constraints\Regex'])) {
-                $constraint = $validation['Symfony\Component\Validator\Constraints\Regex'];
+            $regexConstraintClass = Regex::class;
+
+            if (isset($validation[$regexConstraintClass])) {
+                $constraint = $validation[$regexConstraintClass];
                 $this->formlyFieldConfiguration['templateOptions']['pattern'] = $constraint['pattern'];
                 if (isset ($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
             }
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getFieldConfiguration()
-    {
     }
 }

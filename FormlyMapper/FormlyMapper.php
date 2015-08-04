@@ -2,6 +2,11 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
+use Linio\DynamicFormBundle\Exception\FormlyMapperException;
+use Linio\DynamicFormBundle\Exception\InexistentFormException;
+use Linio\DynamicFormBundle\Form\FormFactory;
+use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class FormlyMapper
@@ -12,6 +17,11 @@ class FormlyMapper
     protected $csrfTokenManager;
 
     /**
+     * @var FormFactory
+     */
+    protected $formFactory;
+
+    /**
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
     public function setCsrfTokenManager(CsrfTokenManagerInterface $csrfTokenManager)
@@ -20,31 +30,51 @@ class FormlyMapper
     }
 
     /**
-     * @param array $configuration
+     * @param FormFactory $formFactory
+     */
+    public function setFormFactory(FormFactory $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @param string $formName
      *
      * @return array
+     * @throws FormlyMapperException
      */
-    public function map(array $configuration, $formName)
+    public function map($formName = null)
     {
-        foreach ($configuration as $fieldName => $fieldConfiguration) {
-            $fieldConfiguration['name'] = $fieldName;
+        $formlyConfiguration = [];
 
-            $formlyField = FormlyFieldFactory::create($fieldConfiguration['type']);
-            $formlyField->setFieldConfiguration($fieldConfiguration);
-            $formlyField->generateCommonConfiguration();
+        try {
+            $configuration = $this->formFactory->getJsonConfiguration($formName);
 
-            $formlyConfiguration[] = $formlyField->getFieldConfiguration();
+            foreach ($configuration as $fieldName => $fieldConfiguration) {
+                $fieldConfiguration['name'] = $fieldName;
+
+                $formlyField = FormlyFieldFactory::getFormField($fieldConfiguration['type']);
+                $formlyField->setFieldConfiguration($fieldConfiguration);
+                $formlyField->generateCommonConfiguration();
+
+                $formlyConfiguration[] = $formlyField->getFieldConfiguration();
+            }
+
+            $formName = (!empty($formName)) ? $formName :'form';
+
+            $token = $this->csrfTokenManager->refreshToken($formName);
+
+            $tokenFieldConfiguration = [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => $token->getValue(),
+            ];
+
+            $formlyConfiguration[] = $tokenFieldConfiguration;
+
+        } catch(Exception $e) {
+            throw new FormlyMapperException($e->getMessage());
         }
-
-        $token = $this->csrfTokenManager->refreshToken($formName);
-
-        $tokenFieldConfiguration = [
-            'key' => '_token',
-            'type' => 'hidden',
-            'defaultValue' => $token->getValue(),
-        ];
-
-        $formlyConfiguration[] = $tokenFieldConfiguration;
 
         return $formlyConfiguration;
     }
