@@ -4,7 +4,7 @@ namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
-class CheckboxField extends FormlyField
+class ChoiceField extends FormlyField
 {
     /**
      * @return array

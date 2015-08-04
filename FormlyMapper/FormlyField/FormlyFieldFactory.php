@@ -1,54 +1,34 @@
 <?php
 
-namespace Linio\DynamicFormBundle\FormlyMapper\FormlyFields;
+namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\Exception\InexistentFormlyFieldException;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
+use Linio\DynamicFormBundle\FormlyMapper\FormlyFieldInterface;
 
 class FormlyFieldFactory
 {
+    /**
+     * @var FormlyFieldInterface[]
+     */
+    protected $formlyFields;
 
     /**
-     * @param string $type
-     *
-     * @return FormlyField
-     *
-     * @throws \ReflectionException
-     * @throws InexistentFormlyFieldException
+     * @param                      $alias
+     * @param FormlyFieldInterface $formlyField
      */
-    public function getFormField($type)
+    public function addFormlyField($alias, FormlyFieldInterface $formlyField)
     {
-        $formlyFieldClassName = $this->getFullClassName($type);
-
-        $fieldClass = new \ReflectionClass($formlyFieldClassName);
-
-        if (!$fieldClass->isSubclassOf(__NAMESPACE__ . '\FormlyField')) {
-            throw new InexistentFormlyFieldException();
-        }
-
-        $fieldInstance = $fieldClass->newInstance();
-
-        return $fieldInstance;
+        $this->formlyFields[$alias] = $formlyField;
     }
 
     /**
-     * @param string $type
+     * @param $alias
      *
-     * @return string
+     * @return bool
      */
-    protected function getFullClassName($type)
+    public function has($alias)
     {
-        $className = [];
-
-        $className[] = __NAMESPACE__ . '\\';
-        $classNameWords = explode(' ', $type);
-
-        foreach ($classNameWords as $word) {
-            $className[] = ucfirst($word);
-        }
-
-        $className[] = 'Field';
-
-        return implode('', $className);
+        return isset($this->formlyFields[$alias]);
     }
 }
