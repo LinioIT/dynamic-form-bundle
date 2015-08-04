@@ -1,6 +1,6 @@
 <?php
 
-namespace Linio\DynamicFormBundle\FormlyMapper\FormlyFields;
+namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
