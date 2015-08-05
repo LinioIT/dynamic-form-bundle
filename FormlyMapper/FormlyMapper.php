@@ -2,11 +2,10 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
-use Linio\DynamicFormBundle\Exception\FormlyMapperException;
 use Linio\DynamicFormBundle\Exception\InexistentFormException;
+use Linio\DynamicFormBundle\Exception\FormlyMapperException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class FormlyMapper
@@ -20,6 +19,11 @@ class FormlyMapper
      * @var FormFactory
      */
     protected $formFactory;
+
+    /**
+     * @var FormlyFieldFactory
+     */
+    protected $formlyFieldFactory;
 
     /**
      * @param CsrfTokenManagerInterface $csrfTokenManager
@@ -38,6 +42,14 @@ class FormlyMapper
     }
 
     /**
+     * @param FormlyFieldFactory $formlyFieldFactory
+     */
+    public function setFormlyFieldFactory(FormlyFieldFactory $formlyFieldFactory)
+    {
+        $this->formlyFieldFactory = $formlyFieldFactory;
+    }
+
+    /**
      * @param string $formName
      *
      * @return array
@@ -53,7 +65,7 @@ class FormlyMapper
             foreach ($configuration as $fieldName => $fieldConfiguration) {
                 $fieldConfiguration['name'] = $fieldName;
 
-                $formlyField = FormlyFieldFactory::getFormField($fieldConfiguration['type']);
+                $formlyField = $this->formlyFieldFactory->getFormlyField($fieldConfiguration['type']);
                 $formlyField->setFieldConfiguration($fieldConfiguration);
                 $formlyField->generateCommonConfiguration();
 
@@ -72,7 +84,7 @@ class FormlyMapper
 
             $formlyConfiguration[] = $tokenFieldConfiguration;
 
-        } catch(Exception $e) {
+        } catch(InexistentFormException $e) {
             throw new FormlyMapperException($e->getMessage());
         }
 
