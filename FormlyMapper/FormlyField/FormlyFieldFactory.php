@@ -2,12 +2,21 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
-use Linio\DynamicFormBundle\Exception\InexistentFormlyFieldException;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyFieldInterface;
 
 class FormlyFieldFactory
 {
+    /**
+     * @var array
+     */
+    protected $fieldConfiguration;
+
+    /**
+     * @var array
+     */
+    protected $formlyFieldConfiguration;
+
     /**
      * @var FormlyFieldInterface[]
      */
@@ -30,5 +39,15 @@ class FormlyFieldFactory
     public function has($alias)
     {
         return isset($this->formlyFields[$alias]);
+    }
+
+    /**
+     * @param $alias
+     *
+     * @return FormlyFieldInterface
+     */
+    public function getFormlyField($alias)
+    {
+        return $this->formlyFields[$alias];
     }
 }
