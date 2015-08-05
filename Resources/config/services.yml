@@ -10,6 +10,7 @@ services:
         calls:
             - [setCsrfTokenManager, [@security.csrf.token_manager]]
             - [setFormFactory, [@dynamic_form.factory]]
+            - [setFormlyFieldFactory, [@container.formly_field]]
 
     container.formly_field:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory
