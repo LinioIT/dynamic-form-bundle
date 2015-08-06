@@ -83,6 +83,44 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testIsRegexConstraint()
+    {
+        $fieldConfiguration = [
+            'name' => 'age',
+            'type' => 'number',
+            'options' => [
+                'required' => true,
+                'label' => 'Age',
+            ],
+            'validation' => [
+                'Symfony\Component\Validator\Constraints\Regex' => [
+                    'pattern' => '^[0-9]{2}$',
+                    'message' => 'Invalid allowed age',
+                ],
+            ],
+        ];
+
+        $expected = [
+            'key' => 'age',
+            'type' => 'input',
+            'templateOptions' => [
+                'type' => 'number',
+                'label' => 'Age',
+                'required' => true,
+                'pattern' => '^[0-9]{2}$',
+            ],
+            'validation' => [
+                'messages' => 'Invalid allowed age',
+            ],
+        ];
+
+        $this->formlyField->setFieldConfiguration($fieldConfiguration);
+        $this->formlyField->generateCommonConfiguration();
+        $actual = $this->formlyField->getFieldConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
+
     public function setup()
     {
         $this->formlyField = new NumberField();
