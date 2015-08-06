@@ -11,10 +11,21 @@ class ChoiceField extends FormlyField
      */
     public function getFieldConfiguration()
     {
-        $this->formlyFieldConfiguration['type'] = 'checkbox';
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'checkbox';
+        $type = 'select';
+        if (isset($this->fieldConfiguration['options']['expanded']) && $this->fieldConfiguration['options']['expanded'] === true) {
+            $type = 'radio';
+
+            if (isset($this->fieldConfiguration['options']['multiple']) && $this->fieldConfiguration['options']['multiple'] === true) {
+                $type = 'checkbox';
+            }
+        }
+
+        $this->formlyFieldConfiguration['type'] = $type;
+        $this->formlyFieldConfiguration['templateOptions']['type'] = $type;
+
         if (isset($this->fieldConfiguration['options']['options'])) {
             $choices = $this->fieldConfiguration['options']['options'];
+
             $this->formlyFieldConfiguration['templateOptions']['options'] = $choices;
         }
 
