@@ -4,7 +4,7 @@ namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
-class TextAreaField extends FormlyField
+class TextareaField extends FormlyField
 {
     /**
      * @return array
