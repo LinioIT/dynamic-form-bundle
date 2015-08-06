@@ -20,6 +20,11 @@ class TextareaFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
                 'label' => 'Comments',
             ],
+            'validation' => [
+                'Symfony\Component\Validator\Constraints\NotBlank' => [
+                    'message' => 'Comments field is mandatory',
+                ],
+            ],
         ];
 
         $expected = [
@@ -29,6 +34,9 @@ class TextareaFieldTest extends \PHPUnit_Framework_TestCase
                 'type' => 'textarea',
                 'label' => 'Comments',
                 'required' => true,
+            ],
+            'validation' => [
+                'messages' => 'Comments field is mandatory',
             ],
         ];
 

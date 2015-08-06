@@ -11,7 +11,7 @@ class DateFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected $formlyField;
 
-    public function testIsAddingTextareaFields()
+    public function testIsAddingDateFields()
     {
         $fieldConfiguration = [
             'name' => 'birthday',
@@ -19,6 +19,12 @@ class DateFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Birthday',
+            ],
+            'validation' => [
+                'Symfony\Component\Validator\Constraints\Regex' => [
+                    'pattern' => '^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$',
+                    'message' => 'The birthday field must follow the pattern "yyyy-MM-dd"',
+                ],
             ],
         ];
 
@@ -29,6 +35,10 @@ class DateFieldTest extends \PHPUnit_Framework_TestCase
                 'type' => 'date',
                 'label' => 'Birthday',
                 'required' => true,
+                'pattern' => '^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$',
+            ],
+            'validation' => [
+                'messages' => 'The birthday field must follow the pattern "yyyy-MM-dd"',
             ],
         ];
 

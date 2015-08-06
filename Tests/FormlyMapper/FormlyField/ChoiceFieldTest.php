@@ -22,15 +22,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -46,15 +46,73 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
+                    ],
+                ],
+            ],
+        ];
+
+        $this->formlyField->setFieldConfiguration($fieldConfiguration);
+        $this->formlyField->generateCommonConfiguration();
+        $actual = $this->formlyField->getFieldConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsAddingSelectMultipleChoice()
+    {
+        $fieldConfiguration = [
+            'name' => 'option',
+            'type' => 'choice',
+            'options' => [
+                'required' => true,
+                'label' => 'Option',
+                'multiple' => true,
+                'options' => [
+                    [
+                        'value' => '1',
+                        'text' => 'Option 1',
+                    ],
+                    [
+                        'value' => '2',
+                        'text' => 'Option 2',
+                    ],
+                    [
+                        'value' => '3',
+                        'text' => 'Option 3',
+                    ],
+                ],
+            ],
+        ];
+
+        $expected = [
+            'key' => 'option',
+            'type' => 'select',
+            'templateOptions' => [
+                'type' => 'multiple',
+                'label' => 'Option',
+                'required' => true,
+                'multiple' => true,
+                'options' => [
+                    [
+                        'value' => '1',
+                        'text' => 'Option 1',
+                    ],
+                    [
+                        'value' => '2',
+                        'text' => 'Option 2',
+                    ],
+                    [
+                        'value' => '3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -79,15 +137,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -104,15 +162,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -137,15 +195,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -162,15 +220,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -196,15 +254,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -222,15 +280,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -256,15 +314,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],
@@ -282,15 +340,15 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'options' => [
                     [
                         'value' => '1',
-                        'text' => 'Op1',
+                        'text' => 'Option 1',
                     ],
                     [
                         'value' => '2',
-                        'text' => 'Op2',
+                        'text' => 'Option 2',
                     ],
                     [
                         'value' => '3',
-                        'text' => 'Op3',
+                        'text' => 'Option 3',
                     ],
                 ],
             ],

@@ -20,8 +20,16 @@ class ChoiceField extends FormlyField
             }
         }
 
+        $typeOptions = $type;
+
+        if (!isset($this->fieldConfiguration['options']['expanded'])) {
+            if (isset($this->fieldConfiguration['options']['multiple']) && $this->fieldConfiguration['options']['multiple'] === true) {
+                $typeOptions = 'multiple';
+            }
+        }
+
         $this->formlyFieldConfiguration['type'] = $type;
-        $this->formlyFieldConfiguration['templateOptions']['type'] = $type;
+        $this->formlyFieldConfiguration['templateOptions']['type'] = $typeOptions;
 
         if (isset($this->fieldConfiguration['options']['options'])) {
             $choices = $this->fieldConfiguration['options']['options'];
