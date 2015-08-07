@@ -19,6 +19,8 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Option',
+                'expanded' => false,
+                'multiple' => false,
                 'choices' => [
                     [
                         'value' => '1',
@@ -43,6 +45,8 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'type' => 'select',
                 'label' => 'Option',
                 'required' => true,
+                'expanded' => false,
+                'multiple' => false,
                 'options' => [
                     [
                         'value' => '1',
@@ -136,6 +140,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
                 'label' => 'Option',
                 'expanded' => true,
+                'multiple' => false,
                 'choices' => [
                     [
                         'value' => '1',
@@ -161,6 +166,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'label' => 'Option',
                 'required' => true,
                 'expanded' => true,
+                'multiple' => false,
                 'options' => [
                     [
                         'value' => '1',
