@@ -12,18 +12,26 @@ class ChoiceField extends FormlyField
     public function getFieldConfiguration()
     {
         $type = 'select';
-        if (isset($this->fieldConfiguration['options']['expanded']) && $this->fieldConfiguration['options']['expanded'] === true) {
-            $type = 'radio';
+        $typeOptions = $type;
+        $expanded = false;
+        $multiple = false;
 
-            if (isset($this->fieldConfiguration['options']['multiple']) && $this->fieldConfiguration['options']['multiple'] === true) {
-                $type = 'checkbox';
-            }
+        if (isset($this->fieldConfiguration['options']['expanded'])) {
+            $expanded = $this->fieldConfiguration['options']['expanded'];
         }
 
-        $typeOptions = $type;
+        if (isset($this->fieldConfiguration['options']['multiple'])) {
+            $multiple = $this->fieldConfiguration['options']['multiple'];
+        }
 
-        if (!isset($this->fieldConfiguration['options']['expanded']) || $this->fieldConfiguration['options']['expanded'] === false) {
-            if (isset($this->fieldConfiguration['options']['multiple']) && $this->fieldConfiguration['options']['multiple'] === true) {
+        if ($expanded === true) {
+            $type = 'radio';
+            if ($multiple === true) {
+                $type = 'checkbox';
+            }
+            $typeOptions = $type;
+        } else {
+            if ($multiple === true) {
                 $typeOptions = 'multiple';
             }
         }
@@ -31,10 +39,11 @@ class ChoiceField extends FormlyField
         $this->formlyFieldConfiguration['type'] = $type;
         $this->formlyFieldConfiguration['templateOptions']['type'] = $typeOptions;
 
-        if (isset($this->fieldConfiguration['options']['options'])) {
-            $choices = $this->fieldConfiguration['options']['options'];
+        if (isset($this->fieldConfiguration['options']['choices'])) {
+            $choices = $this->fieldConfiguration['options']['choices'];
 
             $this->formlyFieldConfiguration['templateOptions']['options'] = $choices;
+            unset($this->formlyFieldConfiguration['templateOptions']['choices']);
         }
 
         return $this->formlyFieldConfiguration;
