@@ -75,6 +75,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Option',
+                'expanded' => false,
                 'multiple' => true,
                 'options' => [
                     [
@@ -100,6 +101,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'type' => 'multiple',
                 'label' => 'Option',
                 'required' => true,
+                'expanded' => false,
                 'multiple' => true,
                 'options' => [
                     [
@@ -183,64 +185,6 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsNoAddingRadioChoice()
-    {
-        $fieldConfiguration = [
-            'name' => 'option',
-            'type' => 'choice',
-            'options' => [
-                'required' => true,
-                'label' => 'Option',
-                'expanded' => false,
-                'options' => [
-                    [
-                        'value' => '1',
-                        'text' => 'Option 1',
-                    ],
-                    [
-                        'value' => '2',
-                        'text' => 'Option 2',
-                    ],
-                    [
-                        'value' => '3',
-                        'text' => 'Option 3',
-                    ],
-                ],
-            ],
-        ];
-
-        $expected = [
-            'key' => 'option',
-            'type' => 'select',
-            'templateOptions' => [
-                'type' => 'select',
-                'label' => 'Option',
-                'required' => true,
-                'expanded' => false,
-                'options' => [
-                    [
-                        'value' => '1',
-                        'text' => 'Option 1',
-                    ],
-                    [
-                        'value' => '2',
-                        'text' => 'Option 2',
-                    ],
-                    [
-                        'value' => '3',
-                        'text' => 'Option 3',
-                    ],
-                ],
-            ],
-        ];
-
-        $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $this->formlyField->generateCommonConfiguration();
-        $actual = $this->formlyField->getFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
     public function testIsAddingCheckboxChoice()
     {
         $fieldConfiguration = [
@@ -277,66 +221,6 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
-                'options' => [
-                    [
-                        'value' => '1',
-                        'text' => 'Option 1',
-                    ],
-                    [
-                        'value' => '2',
-                        'text' => 'Option 2',
-                    ],
-                    [
-                        'value' => '3',
-                        'text' => 'Option 3',
-                    ],
-                ],
-            ],
-        ];
-
-        $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $this->formlyField->generateCommonConfiguration();
-        $actual = $this->formlyField->getFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testIsNoAddingCheckboxChoice()
-    {
-        $fieldConfiguration = [
-            'name' => 'option',
-            'type' => 'choice',
-            'options' => [
-                'required' => true,
-                'label' => 'Option',
-                'expanded' => true,
-                'multiple' => false,
-                'options' => [
-                    [
-                        'value' => '1',
-                        'text' => 'Option 1',
-                    ],
-                    [
-                        'value' => '2',
-                        'text' => 'Option 2',
-                    ],
-                    [
-                        'value' => '3',
-                        'text' => 'Option 3',
-                    ],
-                ],
-            ],
-        ];
-
-        $expected = [
-            'key' => 'option',
-            'type' => 'radio',
-            'templateOptions' => [
-                'type' => 'radio',
-                'label' => 'Option',
-                'required' => true,
-                'expanded' => true,
-                'multiple' => false,
                 'options' => [
                     [
                         'value' => '1',
