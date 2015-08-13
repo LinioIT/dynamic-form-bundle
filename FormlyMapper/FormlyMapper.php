@@ -60,7 +60,7 @@ class FormlyMapper
         $formlyConfiguration = [];
 
         try {
-            $configuration = $this->formFactory->getJsonConfiguration($formName);
+            $configuration = (array) $this->formFactory->getJsonConfiguration($formName);
 
             foreach ($configuration as $fieldName => $fieldConfiguration) {
                 $fieldConfiguration['name'] = $fieldName;

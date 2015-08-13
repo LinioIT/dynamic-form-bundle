@@ -33,12 +33,6 @@ services:
         tags:
             - {name: formly_field, alias: number}
 
-    formly_field.textarea:
-        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\TextareaField
-        lazy: true
-        tags:
-            - {name: formly_field, alias: textarea}
-
     formly_field.text:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\TextField
         lazy: true
