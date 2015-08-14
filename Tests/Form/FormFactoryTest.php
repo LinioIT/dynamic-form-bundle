@@ -118,7 +118,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCreatingFormWithTransformers()
     {
-        $fieldOneMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
+        $fieldOneMock = $this->prophesize(FormBuilder::class);
 
         $formConfiguration = [
             'foo' => [
