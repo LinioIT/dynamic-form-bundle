@@ -2,14 +2,9 @@
 
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper;
 
-use Linio\DynamicFormBundle\Exception\InexistentFormException;
-use Linio\DynamicFormBundle\Form\FormFactory;
-use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
-use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -128,7 +123,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->formFactoryMock->getJsonConfiguration($formName)
             ->shouldBeCalled()
-            ->willThrow(InexistentFormException::class);
+            ->willThrow('Linio\DynamicFormBundle\Exception\InexistentFormException');
 
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());
 
@@ -138,10 +133,10 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->csrfToken = new CsrfToken('foo', 'bar');
-        $this->csrfTokenManagerMock = $this->prophesize(CsrfTokenManagerInterface::class);
-        $this->formFactoryMock = $this->prophesize(FormFactory::class);
-        $this->formlyFieldFactoryMock = $this->prophesize(FormlyFieldFactory::class);
-        $this->formlyFieldMock = $this->prophesize(FormlyField::class);
+        $this->csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
+        $this->formFactoryMock = $this->prophesize('Linio\DynamicFormBundle\Form\FormFactory');
+        $this->formlyFieldFactoryMock = $this->prophesize('Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory');
+        $this->formlyFieldMock = $this->prophesize('Linio\DynamicFormBundle\FormlyMapper\FormlyField');
 
         $this->formlyMapper = new FormlyMapper();
     }

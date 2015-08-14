@@ -5,8 +5,6 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
@@ -118,7 +116,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCreatingFormWithTransformers()
     {
-        $fieldOneMock = $this->prophesize(FormBuilder::class);
+        $fieldOneMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
 
         $formConfiguration = [
             'foo' => [
@@ -230,8 +228,8 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->formBuilderMock = $this->prophesize(FormBuilder::class);
-        $this->formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
+        $this->formBuilderMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
+        $this->formFactoryMock = $this->prophesize('Symfony\Component\Form\FormFactory');
 
         $this->formFactory = new FormFactory();
     }

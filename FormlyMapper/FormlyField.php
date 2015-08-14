@@ -2,9 +2,6 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
-
 abstract class FormlyField implements FormlyFieldInterface
 {
     /**
@@ -53,7 +50,7 @@ abstract class FormlyField implements FormlyFieldInterface
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
-            $notBlankConstraintClass = NotBlank::class;
+            $notBlankConstraintClass = 'Symfony\Component\Validator\Constraints\NotBlank';
 
             if (isset($validation[$notBlankConstraintClass])) {
                 $constraint = $validation[$notBlankConstraintClass];
@@ -62,7 +59,7 @@ abstract class FormlyField implements FormlyFieldInterface
                 }
             }
 
-            $regexConstraintClass = Regex::class;
+            $regexConstraintClass = 'Symfony\Component\Validator\Constraints\Regex';
 
             if (isset($validation[$regexConstraintClass])) {
                 $constraint = $validation[$regexConstraintClass];
