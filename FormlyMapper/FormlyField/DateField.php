@@ -15,5 +15,4 @@ class DateField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

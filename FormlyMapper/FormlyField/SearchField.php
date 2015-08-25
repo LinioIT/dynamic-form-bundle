@@ -15,5 +15,4 @@ class SearchField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

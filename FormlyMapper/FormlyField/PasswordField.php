@@ -15,5 +15,4 @@ class PasswordField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

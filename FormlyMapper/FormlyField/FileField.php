@@ -16,5 +16,4 @@ class FileField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

@@ -15,5 +15,4 @@ class EntityField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

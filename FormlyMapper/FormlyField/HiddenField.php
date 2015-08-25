@@ -15,5 +15,4 @@ class HiddenField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

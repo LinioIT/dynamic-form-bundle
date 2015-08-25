@@ -15,7 +15,5 @@ class TextareaField extends FormlyField
         $this->formlyFieldConfiguration['templateOptions']['type'] = 'textarea';
 
         return $this->formlyFieldConfiguration;
-
     }
-
 }

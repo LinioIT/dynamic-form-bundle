@@ -48,5 +48,4 @@ class ChoiceField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

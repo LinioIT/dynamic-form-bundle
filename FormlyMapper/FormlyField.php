@@ -21,7 +21,7 @@ abstract class FormlyField implements FormlyFieldInterface
     {
         $this->fieldConfiguration = $fieldConfiguration;
     }
-    
+
     public function generateCommonConfiguration()
     {
         $this->formlyFieldConfiguration = [];

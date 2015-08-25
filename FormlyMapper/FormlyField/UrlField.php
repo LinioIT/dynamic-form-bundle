@@ -15,5 +15,4 @@ class UrlField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }

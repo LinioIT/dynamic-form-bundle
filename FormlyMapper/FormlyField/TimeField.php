@@ -15,5 +15,4 @@ class TimeField extends FormlyField
 
         return $this->formlyFieldConfiguration;
     }
-
 }
