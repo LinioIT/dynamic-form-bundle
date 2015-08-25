@@ -24,7 +24,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected $formFactoryMock;
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
      */
     public function testIsThrowingExceptionWhenCreatingAnInexistentForm()
     {
@@ -206,7 +206,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\InexistentFormException
+     * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
      */
     public function testIsHandlingNotExistenFormException()
     {

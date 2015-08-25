@@ -2,7 +2,7 @@
 
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
-use Linio\DynamicFormBundle\Exception\InexistentFormException;
+use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\FormlyMapperException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
@@ -84,7 +84,7 @@ class FormlyMapper
 
             $formlyConfiguration[] = $tokenFieldConfiguration;
 
-        } catch(InexistentFormException $e) {
+        } catch(NonExistentFormException $e) {
             throw new FormlyMapperException($e->getMessage());
         }
 

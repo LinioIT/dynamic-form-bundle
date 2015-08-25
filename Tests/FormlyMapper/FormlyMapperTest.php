@@ -117,13 +117,13 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Linio\DynamicFormBundle\Exception\FormlyMapperException
      */
-    public function testIsHandlingInexistentFormException()
+    public function testIsThrowingNonExistentFormException()
     {
         $formName = 'foo';
 
         $this->formFactoryMock->getJsonConfiguration($formName)
             ->shouldBeCalled()
-            ->willThrow('Linio\DynamicFormBundle\Exception\InexistentFormException');
+            ->willThrow('Linio\DynamicFormBundle\Exception\NonExistentFormException');
 
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());
 
