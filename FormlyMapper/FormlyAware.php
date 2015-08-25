@@ -8,14 +8,12 @@ namespace Linio\DynamicFormBundle\FormlyMapper;
 trait FormlyAware
 {
     /**
-     * @var formlyMapper
+     * @var FormlyMapper
      */
     protected $formlyMapper;
 
     /**
-     * [setFormlyMapper description].
-     *
-     * @param FormlyMapper $formlyMapper [description]
+     * @param FormlyMapper $formlyMapper
      */
     public function setFormlyMapper(FormlyMapper $formlyMapper)
     {
@@ -23,9 +21,7 @@ trait FormlyAware
     }
 
     /**
-     * [getFormlyMapper description].
-     *
-     * @return [type] [description]
+     * @return FormlyMapper
      */
     public function getFormlyMapper()
     {
