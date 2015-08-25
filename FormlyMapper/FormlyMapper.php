@@ -72,7 +72,7 @@ class FormlyMapper
                 $formlyConfiguration[] = $formlyField->getFieldConfiguration();
             }
 
-            $formName = (!empty($formName)) ? $formName :'form';
+            $formName = (!empty($formName)) ? $formName : 'form';
 
             $token = $this->csrfTokenManager->refreshToken($formName);
 
