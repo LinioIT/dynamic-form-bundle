@@ -23,7 +23,7 @@ class FormlyFieldFactory
     protected $formlyFields;
 
     /**
-     * @param                      $alias
+     * @param int                  $alias
      * @param FormlyFieldInterface $formlyField
      */
     public function addFormlyField($alias, FormlyFieldInterface $formlyField)
@@ -32,7 +32,7 @@ class FormlyFieldFactory
     }
 
     /**
-     * @param $alias
+     * @param  int $alias
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class FormlyFieldFactory
     }
 
     /**
-     * @param $alias
+     * @param int                   $alias
      *
      * @return FormlyFieldInterface
      */
