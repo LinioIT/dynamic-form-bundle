@@ -32,7 +32,7 @@ class FormlyFieldFactory
     }
 
     /**
-     * @param  int $alias
+     * @param int $alias
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class FormlyFieldFactory
     }
 
     /**
-     * @param int                   $alias
+     * @param int $alias
      *
      * @return FormlyFieldInterface
      */

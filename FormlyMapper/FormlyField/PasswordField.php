@@ -7,12 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class PasswordField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'password';
+        return 'password';
+    }
 
-        return $this->formlyFieldConfiguration;
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

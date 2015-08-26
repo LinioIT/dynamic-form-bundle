@@ -7,12 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class TextField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'text';
+        return 'text';
+    }
 
-        return $this->formlyFieldConfiguration;
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

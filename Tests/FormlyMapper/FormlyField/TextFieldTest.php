@@ -33,8 +33,7 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $this->formlyField->generateCommonConfiguration();
-        $actual = $this->formlyField->getFieldConfiguration();
+        $actual = $this->formlyField->getFormlyFieldConfiguration();
 
         $this->assertEquals($expected, $actual);
     }
@@ -69,8 +68,7 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $this->formlyField->generateCommonConfiguration();
-        $actual = $this->formlyField->getFieldConfiguration();
+        $actual = $this->formlyField->getFormlyFieldConfiguration();
 
         $this->assertEquals($expected, $actual);
     }

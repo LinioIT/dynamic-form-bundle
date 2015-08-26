@@ -7,11 +7,20 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class ChoiceField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $type = 'select';
+        return 'select';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        $type = $this->getTemplateFieldType();
+
         $typeOptions = $type;
         $expanded = false;
         $multiple = false;
@@ -24,14 +33,14 @@ class ChoiceField extends FormlyField
             $multiple = $this->fieldConfiguration['options']['multiple'];
         }
 
-        if ($expanded === true) {
+        if ($expanded) {
             $type = 'radio';
-            if ($multiple === true) {
+            if ($multiple) {
                 $type = 'checkbox';
             }
             $typeOptions = $type;
         } else {
-            if ($multiple === true) {
+            if ($multiple) {
                 $typeOptions = 'multiple';
             }
         }
@@ -41,11 +50,8 @@ class ChoiceField extends FormlyField
 
         if (isset($this->fieldConfiguration['options']['choices'])) {
             $choices = $this->fieldConfiguration['options']['choices'];
-
             $this->formlyFieldConfiguration['templateOptions']['options'] = $choices;
             unset($this->formlyFieldConfiguration['templateOptions']['choices']);
         }
-
-        return $this->formlyFieldConfiguration;
     }
 }

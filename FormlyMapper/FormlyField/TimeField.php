@@ -7,12 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class TimeField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'time';
+        return 'time';
+    }
 
-        return $this->formlyFieldConfiguration;
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

@@ -7,13 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class EmailField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'email';
-
-        return $this->formlyFieldConfiguration;
+        return 'email';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        // TODO: Implement generateSpecificConfiguration() method.
+    }
 }

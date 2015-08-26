@@ -7,13 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class FileField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['type'] = 'file';
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'file';
+        return 'file';
+    }
 
-        return $this->formlyFieldConfiguration;
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        $this->formlyFieldConfiguration['type'] = $this->getTemplateFieldType();
     }
 }

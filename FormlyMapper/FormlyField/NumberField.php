@@ -7,12 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class NumberField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'number';
+        return 'number';
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
@@ -32,7 +38,5 @@ class NumberField extends FormlyField
                 }
             }
         }
-
-        return $this->formlyFieldConfiguration;
     }
 }

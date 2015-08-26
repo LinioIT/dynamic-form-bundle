@@ -7,12 +7,18 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 class UrlField extends FormlyField
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFieldConfiguration()
+    public function getTemplateFieldType()
     {
-        $this->formlyFieldConfiguration['templateOptions']['type'] = 'url';
+        return 'url';
+    }
 
-        return $this->formlyFieldConfiguration;
+    /**
+     * {@inheritdoc}
+     */
+    public function generateSpecificConfiguration()
+    {
+        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

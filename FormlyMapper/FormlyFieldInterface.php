@@ -10,12 +10,17 @@ interface FormlyFieldInterface
     public function setFieldConfiguration(array $configuration);
 
     /**
-     * @return void
-     */
-    public function generateCommonConfiguration();
-
-    /**
      * @return array
      */
-    public function getFieldConfiguration();
+    public function getFormlyFieldConfiguration();
+
+    /**
+     * @return string
+     */
+    public function getTemplateFieldType();
+
+    /**
+     * @return void
+     */
+    public function generateSpecificConfiguration();
 }

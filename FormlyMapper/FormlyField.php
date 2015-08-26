@@ -22,19 +22,18 @@ abstract class FormlyField implements FormlyFieldInterface
         $this->fieldConfiguration = $fieldConfiguration;
     }
 
-    public function generateCommonConfiguration()
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormlyFieldConfiguration()
     {
         $this->formlyFieldConfiguration = [];
 
         $this->formlyFieldConfiguration['key'] = $this->fieldConfiguration['name'];
         $this->formlyFieldConfiguration['type'] = 'input';
 
-        $templateOptions = [];
-
         if (isset($this->fieldConfiguration['options'])) {
-            foreach ($this->fieldConfiguration['options'] as $option => $value) {
-                $templateOptions[$option] = $value;
-            }
+            $templateOptions = $this->fieldConfiguration['options'];
 
             $templateOptions['label'] = ucfirst($this->fieldConfiguration['name']);
             if (isset($this->fieldConfiguration['options']['label'])) {
@@ -51,7 +50,7 @@ abstract class FormlyField implements FormlyFieldInterface
 
             if (isset($validation[$notBlankConstraintClass])) {
                 $constraint = $validation[$notBlankConstraintClass];
-                if (isset ($constraint['message'])) {
+                if (isset($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
             }
@@ -61,10 +60,15 @@ abstract class FormlyField implements FormlyFieldInterface
             if (isset($validation[$regexConstraintClass])) {
                 $constraint = $validation[$regexConstraintClass];
                 $this->formlyFieldConfiguration['templateOptions']['pattern'] = $constraint['pattern'];
-                if (isset ($constraint['message'])) {
+                if (isset($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
             }
         }
+
+        $this->formlyFieldConfiguration['templateOptions']['type'] = $this->getTemplateFieldType();
+        $this->generateSpecificConfiguration();
+
+        return $this->formlyFieldConfiguration;
     }
 }

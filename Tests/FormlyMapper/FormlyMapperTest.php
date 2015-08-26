@@ -94,10 +94,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         $this->formlyFieldMock->setFieldConfiguration($fieldConfiguration)
             ->shouldBeCalled();
 
-        $this->formlyFieldMock->generateCommonConfiguration()
-            ->shouldBeCalled();
-
-        $this->formlyFieldMock->getFieldConfiguration()
+        $this->formlyFieldMock->getFormlyFieldConfiguration()
             ->shouldBeCalled()
             ->willReturn($formlyConfiguration);
 

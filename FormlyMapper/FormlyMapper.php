@@ -57,8 +57,6 @@ class FormlyMapper
      */
     public function map($formName = null)
     {
-        $formlyConfiguration = [];
-
         try {
             $configuration = (array) $this->formFactory->getJsonConfiguration($formName);
 
@@ -67,9 +65,8 @@ class FormlyMapper
 
                 $formlyField = $this->formlyFieldFactory->getFormlyField($fieldConfiguration['type']);
                 $formlyField->setFieldConfiguration($fieldConfiguration);
-                $formlyField->generateCommonConfiguration();
 
-                $formlyConfiguration[] = $formlyField->getFieldConfiguration();
+                $formlyConfiguration[] = $formlyField->getFormlyFieldConfiguration();
             }
 
             $formName = (!empty($formName)) ? $formName : 'form';
