@@ -13,18 +13,18 @@ trait FormlyAware
     protected $formlyMapper;
 
     /**
-     * @param FormlyMapper $formlyMapper
-     */
-    public function setFormlyMapper(FormlyMapper $formlyMapper)
-    {
-        $this->formlyMapper = $formlyMapper;
-    }
-
-    /**
      * @return FormlyMapper
      */
     public function getFormlyMapper()
     {
         return $this->formlyMapper;
+    }
+
+    /**
+     * @param FormlyMapper $formlyMapper
+     */
+    public function setFormlyMapper(FormlyMapper $formlyMapper)
+    {
+        $this->formlyMapper = $formlyMapper;
     }
 }
