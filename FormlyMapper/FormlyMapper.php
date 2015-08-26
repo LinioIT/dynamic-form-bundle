@@ -57,6 +57,8 @@ class FormlyMapper
      */
     public function map($formName = null)
     {
+        $formlyConfiguration = [];
+
         try {
             $configuration = (array) $this->formFactory->getJsonConfiguration($formName);
 

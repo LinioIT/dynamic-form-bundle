@@ -19,19 +19,16 @@ class FormlyFieldFactoryTest extends \PHPUnit_Framework_TestCase
     public function testIsHasTheFormlyField()
     {
         $alias = 'number';
-        $formlyField = new NumberField();
+
         $formlyFieldFactory = new FormlyFieldFactory();
-        $formlyFieldFactory->addFormlyField($alias, $formlyField);
         $formlyFieldFactory->has($alias);
     }
 
     public function testIsGettingTheFormlyFieldInstance()
     {
         $alias = 'number';
-        $formlyField = new NumberField();
 
         $formlyFieldFactory = new FormlyFieldFactory();
-        $formlyFieldFactory->addFormlyField($alias, $formlyField);
         $formlyFieldFactory->getFormlyField($alias);
     }
 }
