@@ -9,16 +9,8 @@ class SearchField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'search';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateSpecificConfiguration()
-    {
-        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

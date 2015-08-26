@@ -9,16 +9,8 @@ class TimeField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'time';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateSpecificConfiguration()
-    {
-        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

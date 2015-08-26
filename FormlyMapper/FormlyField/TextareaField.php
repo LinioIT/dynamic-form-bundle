@@ -9,7 +9,7 @@ class TextareaField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'textarea';
     }
@@ -17,8 +17,8 @@ class TextareaField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function generateSpecificConfiguration()
+    public function buildFieldTypeConfiguration()
     {
-        $this->formlyFieldConfiguration['type'] = $this->getTemplateFieldType();
+        $this->formlyFieldConfiguration['type'] = $this->getFieldType();
     }
 }

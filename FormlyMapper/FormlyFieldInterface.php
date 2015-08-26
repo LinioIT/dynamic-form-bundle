@@ -17,10 +17,10 @@ interface FormlyFieldInterface
     /**
      * @return string
      */
-    public function getTemplateFieldType();
+    public function getFieldType();
 
     /**
      * @return void
      */
-    public function generateSpecificConfiguration();
+    public function buildFieldTypeConfiguration();
 }

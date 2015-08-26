@@ -9,7 +9,7 @@ class FileField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'file';
     }
@@ -17,8 +17,8 @@ class FileField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function generateSpecificConfiguration()
+    public function buildFieldTypeConfiguration()
     {
-        $this->formlyFieldConfiguration['type'] = $this->getTemplateFieldType();
+        $this->formlyFieldConfiguration['type'] = $this->getFieldType();
     }
 }

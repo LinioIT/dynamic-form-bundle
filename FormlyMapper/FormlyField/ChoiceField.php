@@ -9,7 +9,7 @@ class ChoiceField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'select';
     }
@@ -17,9 +17,9 @@ class ChoiceField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function generateSpecificConfiguration()
+    public function buildFieldTypeConfiguration()
     {
-        $type = $this->getTemplateFieldType();
+        $type = $this->getFieldType();
 
         $typeOptions = $type;
         $expanded = false;

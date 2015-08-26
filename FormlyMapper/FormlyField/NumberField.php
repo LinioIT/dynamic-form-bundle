@@ -9,7 +9,7 @@ class NumberField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'number';
     }
@@ -17,7 +17,7 @@ class NumberField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function generateSpecificConfiguration()
+    public function buildFieldTypeConfiguration()
     {
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];

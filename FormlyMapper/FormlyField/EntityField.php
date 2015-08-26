@@ -9,16 +9,8 @@ class EntityField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'hidden';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateSpecificConfiguration()
-    {
-        // TODO: Implement generateSpecificConfiguration() method.
     }
 }

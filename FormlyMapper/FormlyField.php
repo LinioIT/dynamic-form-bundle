@@ -12,7 +12,7 @@ abstract class FormlyField implements FormlyFieldInterface
     /**
      * @var array
      */
-    protected $formlyFieldConfiguration;
+    protected $formlyFieldConfiguration = [];
 
     /**
      * @param array $fieldConfiguration
@@ -27,8 +27,14 @@ abstract class FormlyField implements FormlyFieldInterface
      */
     public function getFormlyFieldConfiguration()
     {
-        $this->formlyFieldConfiguration = [];
+        return $this->buildConfiguration();
+    }
 
+    /**
+     * @return array
+     */
+    protected function buildConfiguration()
+    {
         $this->formlyFieldConfiguration['key'] = $this->fieldConfiguration['name'];
         $this->formlyFieldConfiguration['type'] = 'input';
 
@@ -66,9 +72,18 @@ abstract class FormlyField implements FormlyFieldInterface
             }
         }
 
-        $this->formlyFieldConfiguration['templateOptions']['type'] = $this->getTemplateFieldType();
-        $this->generateSpecificConfiguration();
+        $this->formlyFieldConfiguration['templateOptions']['type'] = $this->getFieldType();
+
+        $this->buildFieldTypeConfiguration();
 
         return $this->formlyFieldConfiguration;
+    }
+
+    /**
+     * @return void
+     */
+    public function buildFieldTypeConfiguration()
+    {
+        // TODO: Implement buildFieldTypeConfiguration() method.
     }
 }

@@ -9,16 +9,8 @@ class UrlField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getTemplateFieldType()
+    public function getFieldType()
     {
         return 'url';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generateSpecificConfiguration()
-    {
-        // TODO: Implement generateSpecificConfiguration() method.
     }
 }
