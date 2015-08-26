@@ -9,7 +9,7 @@ class TimeField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getFieldType()
+    protected function getFieldType()
     {
         return 'time';
     }

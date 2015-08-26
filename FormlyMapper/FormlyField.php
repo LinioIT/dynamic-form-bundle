@@ -40,8 +40,8 @@ abstract class FormlyField implements FormlyFieldInterface
 
         if (isset($this->fieldConfiguration['options'])) {
             $templateOptions = $this->fieldConfiguration['options'];
-
             $templateOptions['label'] = ucfirst($this->fieldConfiguration['name']);
+
             if (isset($this->fieldConfiguration['options']['label'])) {
                 $templateOptions['label'] = ucfirst($this->fieldConfiguration['options']['label']);
             }
@@ -51,11 +51,11 @@ abstract class FormlyField implements FormlyFieldInterface
 
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
-
             $notBlankConstraintClass = 'Symfony\Component\Validator\Constraints\NotBlank';
 
             if (isset($validation[$notBlankConstraintClass])) {
                 $constraint = $validation[$notBlankConstraintClass];
+
                 if (isset($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
@@ -66,6 +66,7 @@ abstract class FormlyField implements FormlyFieldInterface
             if (isset($validation[$regexConstraintClass])) {
                 $constraint = $validation[$regexConstraintClass];
                 $this->formlyFieldConfiguration['templateOptions']['pattern'] = $constraint['pattern'];
+
                 if (isset($constraint['message'])) {
                     $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
                 }
@@ -80,10 +81,12 @@ abstract class FormlyField implements FormlyFieldInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getFieldType(){}
+
+    /**
      * @return void
      */
-    public function buildFieldTypeConfiguration()
-    {
-        // TODO: Implement buildFieldTypeConfiguration() method.
-    }
+    protected function buildFieldTypeConfiguration(){}
 }

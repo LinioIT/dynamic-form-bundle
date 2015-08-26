@@ -9,7 +9,7 @@ class EmailField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getFieldType()
+    protected function getFieldType()
     {
         return 'email';
     }

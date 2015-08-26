@@ -13,14 +13,4 @@ interface FormlyFieldInterface
      * @return array
      */
     public function getFormlyFieldConfiguration();
-
-    /**
-     * @return string
-     */
-    public function getFieldType();
-
-    /**
-     * @return void
-     */
-    public function buildFieldTypeConfiguration();
 }

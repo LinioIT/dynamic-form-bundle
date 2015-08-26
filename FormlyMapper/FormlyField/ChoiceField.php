@@ -9,7 +9,7 @@ class ChoiceField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getFieldType()
+    protected function getFieldType()
     {
         return 'select';
     }
@@ -17,7 +17,7 @@ class ChoiceField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function buildFieldTypeConfiguration()
+    protected function buildFieldTypeConfiguration()
     {
         $type = $this->getFieldType();
 
@@ -35,9 +35,11 @@ class ChoiceField extends FormlyField
 
         if ($expanded) {
             $type = 'radio';
+
             if ($multiple) {
                 $type = 'checkbox';
             }
+
             $typeOptions = $type;
         } else {
             if ($multiple) {
@@ -51,6 +53,7 @@ class ChoiceField extends FormlyField
         if (isset($this->fieldConfiguration['options']['choices'])) {
             $choices = $this->fieldConfiguration['options']['choices'];
             $this->formlyFieldConfiguration['templateOptions']['options'] = $choices;
+
             unset($this->formlyFieldConfiguration['templateOptions']['choices']);
         }
     }

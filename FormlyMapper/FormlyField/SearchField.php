@@ -9,7 +9,7 @@ class SearchField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getFieldType()
+    protected function getFieldType()
     {
         return 'search';
     }

@@ -9,7 +9,7 @@ class NumberField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function getFieldType()
+    protected function getFieldType()
     {
         return 'number';
     }
@@ -17,23 +17,22 @@ class NumberField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    public function buildFieldTypeConfiguration()
+    protected function buildFieldTypeConfiguration()
     {
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
             if (isset($validation['Symfony\Component\Validator\Constraints\Range'])) {
                 $constraint = $validation['Symfony\Component\Validator\Constraints\Range'];
-
                 $this->formlyFieldConfiguration['templateOptions']['min'] = $constraint['min'];
 
-                if (isset ($constraint['minMessage'])) {
+                if (isset($constraint['minMessage'])) {
                     $this->formlyFieldConfiguration['validation']['messages']['min'] = $constraint['minMessage'];
                 }
 
                 $this->formlyFieldConfiguration['templateOptions']['max'] = $constraint['max'];
 
-                if (isset ($constraint['maxMessage'])) {
+                if (isset($constraint['maxMessage'])) {
                     $this->formlyFieldConfiguration['validation']['messages']['max'] =  $constraint['maxMessage'];
                 }
             }
