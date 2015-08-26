@@ -71,21 +71,21 @@ class FormlyMapper
                 $formlyConfiguration[] = $formlyField->getFormlyFieldConfiguration();
             }
 
-            $formName = (!empty($formName)) ? $formName : 'form';
-
-            $token = $this->csrfTokenManager->refreshToken($formName);
-
-            $tokenFieldConfiguration = [
-                'key' => '_token',
-                'type' => 'hidden',
-                'defaultValue' => $token->getValue(),
-            ];
-
-            $formlyConfiguration[] = $tokenFieldConfiguration;
-
         } catch(NonExistentFormException $e) {
             throw new FormlyMapperException($e->getMessage());
         }
+
+        $formName = (!empty($formName)) ? $formName : 'form';
+
+        $token = $this->csrfTokenManager->refreshToken($formName);
+
+        $tokenFieldConfiguration = [
+            'key' => '_token',
+            'type' => 'hidden',
+            'defaultValue' => $token->getValue(),
+        ];
+
+        $formlyConfiguration[] = $tokenFieldConfiguration;
 
         return $formlyConfiguration;
     }
