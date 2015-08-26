@@ -83,7 +83,7 @@ abstract class FormlyField implements FormlyFieldInterface
     /**
      * @return string
      */
-    protected function getFieldType(){}
+    abstract protected function getFieldType();
 
     /**
      * @return void
