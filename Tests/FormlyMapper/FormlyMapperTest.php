@@ -84,22 +84,18 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formFactoryMock->getJsonConfiguration($formName)
-            ->shouldBeCalled()
             ->willReturn($configuration);
 
         $this->formlyFieldFactoryMock->getFormlyField($formType)
-            ->shouldBeCalled()
             ->willReturn($this->formlyFieldMock->reveal());
 
         $this->formlyFieldMock->setFieldConfiguration($fieldConfiguration)
             ->shouldBeCalled();
 
         $this->formlyFieldMock->getFormlyFieldConfiguration()
-            ->shouldBeCalled()
             ->willReturn($formlyConfiguration);
 
         $this->csrfTokenManagerMock->refreshToken($formName)
-            ->shouldBeCalled()
             ->willReturn($this->csrfToken);
 
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());
@@ -119,7 +115,6 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         $formName = 'foo';
 
         $this->formFactoryMock->getJsonConfiguration($formName)
-            ->shouldBeCalled()
             ->willThrow('Linio\DynamicFormBundle\Exception\NonExistentFormException');
 
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());

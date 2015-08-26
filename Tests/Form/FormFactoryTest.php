@@ -49,11 +49,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
-            ->shouldBeCalled()
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', ['field1_options'])
-            ->shouldBeCalled()
             ->willReturn('field1_instance');
 
         $this->formBuilderMock->add('field1_instance')
@@ -93,11 +91,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formFactoryMock->createNamedBuilder('foo', 'form', [], [])
-            ->shouldBeCalled()
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
-            ->shouldBeCalled()
             ->willReturn('field1_instance');
 
         $this->formBuilderMock->add('field1_instance')
@@ -141,11 +137,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $expectedFieldOptions = [];
 
         $this->formFactoryMock->createNamedBuilder('foo', 'form', [], [])
-            ->shouldBeCalled()
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
-            ->shouldBeCalled()
             ->willReturn($fieldOneMock->reveal());
 
         $fieldOneMock->addModelTransformer($bornDateTransformer)
