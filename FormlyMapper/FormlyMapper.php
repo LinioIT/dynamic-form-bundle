@@ -61,7 +61,11 @@ class FormlyMapper
 
         try {
             $configuration = (array) $this->formFactory->getJsonConfiguration($formName);
+        } catch(NonExistentFormException $e) {
+            throw new FormlyMapperException($e->getMessage());
+        }
 
+        if (!empty($configuration)) {
             foreach ($configuration as $fieldName => $fieldConfiguration) {
                 $fieldConfiguration['name'] = $fieldName;
 
@@ -70,9 +74,6 @@ class FormlyMapper
 
                 $formlyConfiguration[] = $formlyField->getFormlyFieldConfiguration();
             }
-
-        } catch(NonExistentFormException $e) {
-            throw new FormlyMapperException($e->getMessage());
         }
 
         $formName = (!empty($formName)) ? $formName : 'form';
