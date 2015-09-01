@@ -4,3 +4,85 @@ services:
         calls:
             - [setFormFactory, [@form.factory]]
             - [setConfiguration, [%dynamic_form.configuration%]]
+
+    dynamic_form.formly_mapper:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyMapper
+        calls:
+            - [setCsrfTokenManager, [@security.csrf.token_manager]]
+            - [setFormFactory, [@dynamic_form.factory]]
+            - [setFormlyFieldFactory, [@container.formly_field]]
+
+    container.formly_field:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory
+
+    formly_field.choice:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\ChoiceField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: choice}
+
+    formly_field.date:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\DateField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: date}
+
+    formly_field.email:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\EmailField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: email}
+
+    formly_field.entity:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\EntityField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: entity}
+
+    formly_field.file:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\FileField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: file}
+
+    formly_field.hidden:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\HiddenField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: hidden}
+
+    formly_field.number:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: number}
+
+    formly_field.password:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\PasswordField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: password}
+
+    formly_field.search:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\SearchField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: search}
+
+    formly_field.text:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\TextField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: text}
+
+    formly_field.textarea:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\TextareaField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: textarea}
+
+    formly_field.time:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\TimeField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: time}

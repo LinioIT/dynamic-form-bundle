@@ -24,7 +24,7 @@ trait DynamicFormAware
     /**
      * @param FormFactory $dynamicFormFactory
      */
-    public function setDynamicFormFactory($dynamicFormFactory)
+    public function setDynamicFormFactory(FormFactory $dynamicFormFactory)
     {
         $this->dynamicFormFactory = $dynamicFormFactory;
     }
