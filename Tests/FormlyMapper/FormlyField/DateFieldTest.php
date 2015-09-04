@@ -38,7 +38,9 @@ class DateFieldTest extends \PHPUnit_Framework_TestCase
                 'pattern' => '^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$',
             ],
             'validation' => [
-                'messages' => 'The birthday field must follow the pattern "yyyy-MM-dd"',
+                'messages' => [
+                    'regex' => 'The birthday field must follow the pattern "yyyy-MM-dd"',
+                ],
             ],
         ];
 

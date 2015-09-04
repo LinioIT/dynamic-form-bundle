@@ -36,7 +36,9 @@ class SearchFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
             ],
             'validation' => [
-                'messages' => 'Search field is mandatory',
+                'messages' => [
+                    'blank' => 'Search field is mandatory',
+                ],
             ],
         ];
 

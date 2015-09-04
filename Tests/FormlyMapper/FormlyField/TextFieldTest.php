@@ -63,7 +63,9 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
             ],
             'validation' => [
-                'messages' => 'Name is mandatory',
+                'messages' => [
+                    'blank' => 'Name is mandatory',
+                ],
             ],
         ];
 

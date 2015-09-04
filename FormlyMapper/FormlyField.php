@@ -57,7 +57,7 @@ abstract class FormlyField implements FormlyFieldInterface
                 $constraint = $validation[$notBlankConstraintClass];
 
                 if (isset($constraint['message'])) {
-                    $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
+                    $this->formlyFieldConfiguration['validation']['messages']['blank'] = $constraint['message'];
                 }
             }
 
@@ -68,7 +68,7 @@ abstract class FormlyField implements FormlyFieldInterface
                 $this->formlyFieldConfiguration['templateOptions']['pattern'] = $constraint['pattern'];
 
                 if (isset($constraint['message'])) {
-                    $this->formlyFieldConfiguration['validation']['messages'] = $constraint['message'];
+                    $this->formlyFieldConfiguration['validation']['messages']['regex'] = $constraint['message'];
                 }
             }
         }
