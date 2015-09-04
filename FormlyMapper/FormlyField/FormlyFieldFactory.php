@@ -48,6 +48,10 @@ class FormlyFieldFactory
      */
     public function getFormlyField($alias)
     {
-        return $this->formlyFields[$alias];
+        if ($this->has($alias)) {
+            return $this->formlyFields[$alias];
+        }
+
+        return $this->formlyFields['default'];
     }
 }
