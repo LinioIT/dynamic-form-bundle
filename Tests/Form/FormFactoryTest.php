@@ -159,9 +159,9 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsGettingJsonConfiguration()
+    public function testIsGettingConfiguration()
     {
-        $this->formFactory->setConfiguration([
+        $configuration = [
             'foo' => [
                 'email' => [
                     'enabled' => true,
@@ -172,16 +172,20 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'type' => 'password',
                 ],
             ],
-        ]);
+        ];
 
-        $actual = $this->formFactory->getJsonConfiguration('foo');
-        $expected = '{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}';
+        $this->formFactory->setConfiguration($configuration);
+
+        $expected = $configuration['foo'];
+
+        $actual = $this->formFactory->getConfiguration('foo');
+
         $this->assertEquals($expected, $actual);
     }
 
     public function testIsHandlingNullName()
     {
-        $this->formFactory->setConfiguration([
+        $configuration = [
             'foo' => [
                 'email' => [
                     'enabled' => true,
@@ -192,11 +196,13 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'type' => 'password',
                 ],
             ],
-        ]);
+        ];
 
-        $actual = $this->formFactory->getJsonConfiguration(null);
-        $expected = '{"foo":{"email":{"enabled":true,"type":"email"},"password":{"enabled":false,"type":"password"}}}';
-        $this->assertEquals($expected, $actual);
+        $this->formFactory->setConfiguration($configuration);
+
+        $actual = $this->formFactory->getConfiguration(null);
+
+        $this->assertEquals($configuration, $actual);
     }
 
     /**
@@ -204,7 +210,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsHandlingNotExistenFormException()
     {
-        $this->formFactory->setConfiguration([
+        $configuration = [
             'foo' => [
                 'email' => [
                     'enabled' => true,
@@ -215,9 +221,11 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'type' => 'password',
                 ],
             ],
-        ]);
+        ];
 
-        $this->formFactory->getJsonConfiguration('bar');
+        $this->formFactory->setConfiguration($configuration);
+
+        $this->formFactory->getConfiguration('bar');
     }
 
     public function setup()

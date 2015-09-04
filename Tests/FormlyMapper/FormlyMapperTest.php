@@ -53,6 +53,12 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
+        $this->formFactoryMock->getConfiguration($formName)
+            ->willReturn($configuration);
+
+        $this->formlyFieldFactoryMock->getFormlyField($formType)
+            ->willReturn($this->formlyFieldMock->reveal());
+
         $fieldConfiguration = [
             'name' => 'width',
             'type' => 'number',
@@ -61,6 +67,9 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
                 'label' => 'Width',
             ],
         ];
+
+        $this->formlyFieldMock->setFieldConfiguration($fieldConfiguration)
+            ->shouldBeCalled();
 
         $formlyConfiguration = [
             [
@@ -74,24 +83,6 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $expected = [
-            $formlyConfiguration,
-            [
-                'key' => '_token',
-                'type' => 'hidden',
-                'defaultValue' => 'bar',
-            ],
-        ];
-
-        $this->formFactoryMock->getJsonConfiguration($formName)
-            ->willReturn($configuration);
-
-        $this->formlyFieldFactoryMock->getFormlyField($formType)
-            ->willReturn($this->formlyFieldMock->reveal());
-
-        $this->formlyFieldMock->setFieldConfiguration($fieldConfiguration)
-            ->shouldBeCalled();
-
         $this->formlyFieldMock->getFormlyFieldConfiguration()
             ->willReturn($formlyConfiguration);
 
@@ -101,6 +92,15 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());
         $this->formlyMapper->setFormlyFieldFactory($this->formlyFieldFactoryMock->reveal());
         $this->formlyMapper->setCsrfTokenManager($this->csrfTokenManagerMock->reveal());
+
+        $expected = [
+            $formlyConfiguration,
+            [
+                'key' => '_token',
+                'type' => 'hidden',
+                'defaultValue' => 'bar',
+            ],
+        ];
 
         $actual = $this->formlyMapper->map($formName);
 
@@ -114,7 +114,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
     {
         $formName = 'foo';
 
-        $this->formFactoryMock->getJsonConfiguration($formName)
+        $this->formFactoryMock->getConfiguration($formName)
             ->willThrow('Linio\DynamicFormBundle\Exception\NonExistentFormException');
 
         $this->formlyMapper->setFormFactory($this->formFactoryMock->reveal());
