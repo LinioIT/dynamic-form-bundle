@@ -13,6 +13,16 @@ class CompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $this->loadFormlyFields($container);
+        $this->loadDataProviders($container);
+
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function loadFormlyFields(ContainerBuilder $container)
+    {
         if (!$container->hasDefinition('container.formly_field')) {
             return;
         }
@@ -23,6 +33,21 @@ class CompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
                 $containerDefinition->addMethodCall('addFormlyField', [$attributes['alias'], new Reference($id)]);
+            }
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function loadDataProviders(ContainerBuilder $container)
+    {
+        $containerDefinition = $container->getDefinition('dynamic_form.factory');
+        $taggedServices = $container->findTaggedServiceIds('dynamic_form.data_provider');
+
+        foreach ($taggedServices as $id => $tags) {
+            foreach ($tags as $attributes) {
+                $containerDefinition->addMethodCall('addDataProvider', [$attributes['alias'], new Reference($id)]);
             }
         }
     }

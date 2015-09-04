@@ -2,6 +2,7 @@
 
 namespace Linio\DynamicFormBundle\Form;
 
+use Linio\DynamicFormBundle\DataProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
@@ -20,6 +21,11 @@ class FormFactory
     protected $configuration;
 
     /**
+     * @var DataProvider[]
+     */
+    protected $dataProviders = [];
+
+    /**
      * @param SymfonyFormFactory $formFactory
      */
     public function setFormFactory(SymfonyFormFactory $formFactory)
@@ -33,6 +39,15 @@ class FormFactory
     public function setConfiguration(array $configuration)
     {
         $this->configuration = $configuration;
+    }
+
+    /**
+     * @param string       $alias
+     * @param DataProvider $dataProvider
+     */
+    public function addDataProvider($alias, DataProvider $dataProvider)
+    {
+        $this->dataProviders[$alias] = $dataProvider;
     }
 
     /**
@@ -75,6 +90,10 @@ class FormFactory
 
             $fieldOptions = isset($fieldConfiguration['options']) ? $fieldConfiguration['options'] : [];
 
+            if (isset($fieldConfiguration['data_provider'])) {
+                $fieldOptions['choices'] = $this->loadDataProvider($fieldConfiguration['data_provider'])->getData();
+            }
+
             if (isset($fieldConfiguration['validation'])) {
                 $constraints = [];
 
@@ -104,6 +123,20 @@ class FormFactory
         }
 
         return $formBuilder;
+    }
+
+    /**
+     * @param string $alias
+     *
+     * @return DataProvider
+     */
+    public function loadDataProvider($alias)
+    {
+        if (!isset($this->dataProviders[$alias])) {
+            throw new NotExistentDataProviderException();
+        }
+
+        return $this->dataProviders[$alias];
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Linio\DynamicFormBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Linio\DynamicFormBundle\DataProvider;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -30,6 +31,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('enabled')
                             ->defaultFalse()
                         ->end()
+
                         ->scalarNode('type')
                             ->isRequired()
                         ->end()
@@ -41,6 +43,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
 
                         ->variableNode('validation')
+                        ->end()
+
+                        ->scalarNode('data_provider')
                         ->end()
                     ->end()
                 ->end()
