@@ -27,6 +27,12 @@ services:
         tags:
             - {name: formly_field, alias: date}
 
+    formly_field.default:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\DefaultField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: default}
+
     formly_field.email:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\EmailField
         lazy: true
@@ -50,6 +56,12 @@ services:
         lazy: true
         tags:
             - {name: formly_field, alias: hidden}
+
+    formly_field.integer:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\IntegerField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: integer}
 
     formly_field.number:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField
@@ -86,3 +98,9 @@ services:
         lazy: true
         tags:
             - {name: formly_field, alias: time}
+
+    formly_field.url:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\UrlField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: url}
