@@ -109,21 +109,21 @@ class FormFactory
     /**
      * @param string $name
      *
-     * @return string
+     * @return array
      *
      * @throws NonExistentFormException
      */
-    public function getJsonConfiguration($name = null)
+    public function getConfiguration($name = null)
     {
         if ($name === null) {
-            return json_encode($this->configuration);
+            return $this->configuration;
         }
 
         if (!$this->has($name)) {
             throw new NonExistentFormException();
         }
 
-        return json_encode($this->configuration[$name]);
+        return $this->configuration[$name];
     }
 
     /**

@@ -38,7 +38,9 @@ class PasswordFieldTest extends \PHPUnit_Framework_TestCase
                 'pattern' => '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$',
             ],
             'validation' => [
-                'messages' => 'Password must have 1 capital letter, 1 lower case letter, 1 digit or special character and must be longer than 8 characters',
+                'messages' => [
+                    'regex' => 'Password must have 1 capital letter, 1 lower case letter, 1 digit or special character and must be longer than 8 characters',
+                ],
             ],
         ];
 

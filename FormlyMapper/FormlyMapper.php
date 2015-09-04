@@ -60,7 +60,7 @@ class FormlyMapper
         $formlyConfiguration = [];
 
         try {
-            $configuration = (array) $this->formFactory->getJsonConfiguration($formName);
+            $configuration = (array) $this->formFactory->getConfiguration($formName);
         } catch(NonExistentFormException $e) {
             throw new FormlyMapperException($e->getMessage());
         }

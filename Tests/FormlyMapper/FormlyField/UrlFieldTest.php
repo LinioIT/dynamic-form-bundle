@@ -21,8 +21,7 @@ class UrlFieldTest extends \PHPUnit_Framework_TestCase
                 'label' => 'URL',
             ],
             'validation' => [
-                'Symfony\Component\Validator\Constraints\Regex' => [
-                    'pattern' => '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$',
+                'Symfony\Component\Validator\Constraints\Url' => [
                     'message' => 'The url do not have the correct format',
                 ],
             ],
@@ -35,10 +34,11 @@ class UrlFieldTest extends \PHPUnit_Framework_TestCase
                 'type' => 'url',
                 'label' => 'URL',
                 'required' => true,
-                'pattern' => '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$',
             ],
             'validation' => [
-                'messages' => 'The url do not have the correct format',
+                'messages' => [
+                    'url' => 'The url do not have the correct format',
+                ],
             ],
         ];
 

@@ -36,7 +36,9 @@ class TextareaFieldTest extends \PHPUnit_Framework_TestCase
                 'required' => true,
             ],
             'validation' => [
-                'messages' => 'Comments field is mandatory',
+                'messages' => [
+                    'blank' => 'Comments field is mandatory',
+                ],
             ],
         ];
 

@@ -108,7 +108,9 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
                 'pattern' => '^[0-9]{2}$',
             ],
             'validation' => [
-                'messages' => 'Invalid allowed age',
+                'messages' => [
+                    'regex' => 'Invalid allowed age',
+                ],
             ],
         ];
 

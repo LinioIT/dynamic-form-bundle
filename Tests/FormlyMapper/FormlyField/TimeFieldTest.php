@@ -38,7 +38,9 @@ class TimeFieldTest extends \PHPUnit_Framework_TestCase
                 'pattern' => '^[0-9]{2}\:[0-9]{2}\:[0-9]{2}$',
             ],
             'validation' => [
-                'messages' => 'The time must follow the pattern hh:mm:ss',
+                'messages' => [
+                    'regex' => 'The time must follow the pattern hh:mm:ss',
+                ],
             ],
         ];
 

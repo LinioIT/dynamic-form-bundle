@@ -38,7 +38,9 @@ class EmailFieldTest extends \PHPUnit_Framework_TestCase
                 'pattern' => '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i',
             ],
             'validation' => [
-                'messages' => 'The email do not have the correct format',
+                'messages' => [
+                    'regex' => 'The email do not have the correct format',
+                ],
             ],
         ];
 

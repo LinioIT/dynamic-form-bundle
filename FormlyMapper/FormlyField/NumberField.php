@@ -24,13 +24,13 @@ class NumberField extends FormlyField
 
             if (isset($validation['Symfony\Component\Validator\Constraints\Range'])) {
                 $constraint = $validation['Symfony\Component\Validator\Constraints\Range'];
-                $this->formlyFieldConfiguration['templateOptions']['min'] = $constraint['min'];
+                $this->formlyFieldConfiguration['templateOptions']['min'] = isset($constraint['min']) ? $constraint['min'] : '';
 
                 if (isset($constraint['minMessage'])) {
                     $this->formlyFieldConfiguration['validation']['messages']['min'] = $constraint['minMessage'];
                 }
 
-                $this->formlyFieldConfiguration['templateOptions']['max'] = $constraint['max'];
+                $this->formlyFieldConfiguration['templateOptions']['max'] = isset($constraint['max']) ? $constraint['max'] : '';
 
                 if (isset($constraint['maxMessage'])) {
                     $this->formlyFieldConfiguration['validation']['messages']['max'] =  $constraint['maxMessage'];

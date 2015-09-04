@@ -43,7 +43,9 @@ class EntityFieldTest extends \PHPUnit_Framework_TestCase
                 'multiple' => false,
             ],
             'validation' => [
-                'messages' => 'Invalid entity Id',
+                'messages' => [
+                    'regex' => 'Invalid entity Id',
+                ],
             ],
         ];
 
