@@ -35,8 +35,14 @@ abstract class FormlyField implements FormlyFieldInterface
      */
     protected function buildConfiguration()
     {
+        $this->formlyFieldConfiguration = [];
         $this->formlyFieldConfiguration['key'] = $this->fieldConfiguration['name'];
         $this->formlyFieldConfiguration['type'] = 'input';
+
+        if (isset($this->fieldConfiguration['options']['data'])) {
+            $this->formlyFieldConfiguration['defaultValue'] = $this->fieldConfiguration['options']['data'];
+            unset($this->fieldConfiguration['options']['data']);
+        }
 
         if (isset($this->fieldConfiguration['options'])) {
             $templateOptions = $this->fieldConfiguration['options'];
