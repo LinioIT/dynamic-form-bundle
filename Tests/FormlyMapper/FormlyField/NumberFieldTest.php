@@ -19,12 +19,14 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Width',
+                'data' => 255,
             ],
         ];
 
         $expected = [
             'key' => 'width',
             'type' => 'input',
+            'defaultValue' => 255,
             'templateOptions' => [
                 'type' => 'number',
                 'label' => 'Width',
@@ -46,10 +48,11 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Age',
+                'data' => 18,
             ],
             'validation' => [
                 'Symfony\Component\Validator\Constraints\Range' => [
-                    'min' => 5,
+                    'min' => 18,
                     'max' => 100,
                     'minMessage' => 'Min length minimum value should be at last {{ limit }}',
                     'maxMessage' => 'Max length maximum value should be at maximum {{ limit }}',
@@ -60,12 +63,13 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'key' => 'age',
             'type' => 'input',
+            'defaultValue' => 18,
             'templateOptions' => [
                 'type' => 'number',
                 'label' => 'Age',
                 'required' => true,
-                'min' => '5',
-                'max' => '100',
+                'min' => 18,
+                'max' => 100,
             ],
             'validation' => [
                 'messages' => [
@@ -89,6 +93,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
             'options' => [
                 'required' => true,
                 'label' => 'Age',
+                'data' => 18,
             ],
             'validation' => [
                 'Symfony\Component\Validator\Constraints\Regex' => [
@@ -101,6 +106,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'key' => 'age',
             'type' => 'input',
+            'defaultValue' => 18,
             'templateOptions' => [
                 'type' => 'number',
                 'label' => 'Age',
