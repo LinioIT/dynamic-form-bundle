@@ -4,6 +4,8 @@ namespace Linio\DynamicFormBundle\Form;
 
 use Linio\DynamicFormBundle\DataProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
+use Linio\DynamicFormBundle\Exception\NotExistentDataProviderException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -24,6 +26,11 @@ class FormFactory
      * @var DataProvider[]
      */
     protected $dataProviders = [];
+
+    /**
+     * @var array
+     */
+    protected $eventSubscribers = [];
 
     /**
      * @param SymfonyFormFactory $formFactory
@@ -48,6 +55,19 @@ class FormFactory
     public function addDataProvider($alias, DataProvider $dataProvider)
     {
         $this->dataProviders[$alias] = $dataProvider;
+    }
+
+    /**
+     * @param string                   $formName
+     * @param EventSubscriberInterface $eventSubscriber
+     */
+    public function addEventSubscriber($formName, EventSubscriberInterface $eventSubscriber)
+    {
+        if (!isset($this->eventSubscribers[$formName])) {
+            $this->eventSubscribers[$formName] = [];
+        }
+
+        $this->eventSubscribers[$formName][] = $eventSubscriber;
     }
 
     /**
@@ -82,6 +102,12 @@ class FormFactory
         }
 
         $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, 'form', $data, $options);
+
+        if (isset($this->eventSubscribers[$key])) {
+            foreach ($this->eventSubscribers[$key] as $eventSubscriber) {
+                $formBuilder->addEventSubscriber($eventSubscriber);
+            }
+        }
 
         foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
             if (!$fieldConfiguration['enabled']) {
@@ -129,6 +155,8 @@ class FormFactory
      * @param string $alias
      *
      * @return DataProvider
+     *
+     * @throws NotExistentDataProviderException
      */
     public function loadDataProvider($alias)
     {
