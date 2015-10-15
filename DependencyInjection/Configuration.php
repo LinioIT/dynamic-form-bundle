@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                 ->prototype('array')
                     ->children()
                         ->booleanNode('enabled')
-                            ->defaultFalse()
+                            ->defaultTrue()
                         ->end()
 
                         ->scalarNode('type')
