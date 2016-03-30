@@ -2,15 +2,15 @@ services:
     dynamic_form.factory:
         class: Linio\DynamicFormBundle\Form\FormFactory
         calls:
-            - [setFormFactory, [@form.factory]]
-            - [setConfiguration, [%dynamic_form.configuration%]]
+            - [setFormFactory, ["@form.factory"]]
+            - [setConfiguration, ["%dynamic_form.configuration%"]]
 
     dynamic_form.formly_mapper:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyMapper
         calls:
-            - [setCsrfTokenManager, [@security.csrf.token_manager]]
-            - [setFormFactory, [@dynamic_form.factory]]
-            - [setFormlyFieldFactory, [@container.formly_field]]
+            - [setCsrfTokenManager, ["@security.csrf.token_manager"]]
+            - [setFormFactory, ["@dynamic_form.factory"]]
+            - [setFormlyFieldFactory, ["@container.formly_field"]]
 
     container.formly_field:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory
