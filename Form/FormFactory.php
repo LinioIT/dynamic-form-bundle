@@ -3,6 +3,7 @@
 namespace Linio\DynamicFormBundle\Form;
 
 use Linio\DynamicFormBundle\DataProvider;
+use Linio\DynamicFormBundle\HelpMessageProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\NotExistentDataProviderException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,6 +34,11 @@ class FormFactory
     protected $eventSubscribers = [];
 
     /**
+     * @var HelpMessageProvider[]
+     */
+    protected $helpMessageProviders = [];
+
+    /**
      * @param SymfonyFormFactory $formFactory
      */
     public function setFormFactory(SymfonyFormFactory $formFactory)
@@ -55,6 +61,15 @@ class FormFactory
     public function addDataProvider($alias, DataProvider $dataProvider)
     {
         $this->dataProviders[$alias] = $dataProvider;
+    }
+
+    /**
+     * @param string $alias
+     * @param HelpMessageProvider $helpMessageProvider
+     */
+    public function addHelpMessageProvider($alias, HelpMessageProvider $helpMessageProvider)
+    {
+        $this->helpMessageProviders[$alias] = $helpMessageProvider;
     }
 
     /**
@@ -120,6 +135,10 @@ class FormFactory
                 $fieldOptions['choices'] = $this->loadDataProvider($fieldConfiguration['data_provider'])->getData();
             }
 
+            if (isset($fieldConfiguration['help_message_provider'])) {
+                $fieldOptions['help'] = $this->loadHelpMessageProvider($fieldConfiguration['help_message_provider'])->getHelpMessage($fieldOptions['help']);
+            }
+
             if (isset($fieldConfiguration['validation'])) {
                 $constraints = [];
 
@@ -165,6 +184,22 @@ class FormFactory
         }
 
         return $this->dataProviders[$alias];
+    }
+
+    /**
+     * @param string $alias
+     *
+     * @return HelpMessageProvider
+     *
+     * @throws NotExistentDataProviderException
+     */
+    public function loadHelpMessageProvider($alias)
+    {
+        if (!isset($this->helpMessageProviders[$alias])) {
+            throw new NotExistentDataProviderException();
+        }
+
+        return $this->helpMessageProviders[$alias];
     }
 
     /**
