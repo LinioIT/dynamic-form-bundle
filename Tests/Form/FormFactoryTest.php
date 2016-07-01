@@ -23,6 +23,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      * @var ObjectProphecy
      */
     protected $formFactoryMock;
+
     /**
      * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
      */
@@ -159,6 +160,51 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
+    public function testIsCreatingFormWithHelpMessages()
+    {
+        $formConfiguration = [
+            'foo' => [
+                'field1' => [
+                    'enabled' => true,
+                    'type' => 'field1_type',
+                    'help_message_provider' => 'cache',
+                    'options' => [
+                        'help' => 'cms:message',
+                    ],
+                ],
+            ],
+        ];
+
+        $helpMessageProviderMock = $this->prophesize('Linio\DynamicFormBundle\HelpMessageProvider');
+
+        $helpMessageProviderMock->getHelpMessage('cms:message')
+            ->shouldBeCalled()
+            ->willReturn('message');
+
+        $this->formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], $formConfiguration)
+            ->shouldBeCalled()
+            ->willReturn($this->formBuilderMock->reveal());
+
+        $this->formBuilderMock->create('field1', 'field1_type', ['help' => 'message'])
+            ->shouldBeCalled()
+            ->willReturn('field1_instance');
+
+        $this->formBuilderMock->add('field1_instance')
+            ->shouldBeCalled();
+
+        $this->formBuilderMock->getForm()
+            ->shouldBeCalled()
+            ->willReturn('foo_form');
+
+        $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
+        $this->formFactory->setConfiguration($formConfiguration);
+        $this->formFactory->addHelpMessageProvider('cache', $helpMessageProviderMock->reveal());
+
+        $actual = $this->formFactory->createForm('foo', ['foo_form_data'], $formConfiguration);
+
+        $this->assertEquals('foo_form', $actual);
+    }
+
     public function testIsGettingConfiguration()
     {
         $configuration = [
@@ -242,12 +288,15 @@ class MockTransformer implements DataTransformerInterface
     public function setUserFormat()
     {
     }
+
     public function setInputFormat()
     {
     }
+
     public function transform($value)
     {
     }
+
     public function reverseTransform($value)
     {
     }

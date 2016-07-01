@@ -16,6 +16,7 @@ class CompilerPass implements CompilerPassInterface
         $this->loadFormlyFields($container);
         $this->loadDataProviders($container);
         $this->loadSubscribers($container);
+        $this->loadHelpMessageProviders($container);
     }
 
     /**
@@ -63,6 +64,21 @@ class CompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
                 $containerDefinition->addMethodCall('addEventSubscriber', [$attributes['form_name'], new Reference($id)]);
+            }
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function loadHelpMessageProviders(ContainerBuilder $container)
+    {
+        $containerDefinition = $container->getDefinition('dynamic_form.factory');
+        $taggedServices = $container->findTaggedServiceIds('dynamic_form.help_message_provider');
+
+        foreach ($taggedServices as $id => $tags) {
+            foreach ($tags as $attributes) {
+                $containerDefinition->addMethodCall('addHelpMessageProvider', [$attributes['alias'], new Reference($id)]);
             }
         }
     }

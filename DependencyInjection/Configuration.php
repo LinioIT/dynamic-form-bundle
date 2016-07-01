@@ -47,6 +47,9 @@ class Configuration implements ConfigurationInterface
 
                         ->scalarNode('data_provider')
                         ->end()
+
+                        ->scalarNode('help_message_provider')
+                        ->end()
                     ->end()
                 ->end()
             ->end()

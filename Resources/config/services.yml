@@ -104,3 +104,8 @@ services:
         lazy: true
         tags:
             - {name: formly_field, alias: url}
+
+    form.type_extension.help_message:
+        class: Linio\DynamicFormBundle\Form\Extension\HelpMessageTypeExtension
+        tags:
+            - {name: form.type_extension, alias: Symfony\Component\Form\Extension\Core\Type\FormType}
