@@ -274,6 +274,33 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->formFactory->getConfiguration('bar');
     }
 
+    public function testIsCreatingValidator()
+    {
+        $formConfiguration = [
+            'foo' => [
+                'field1' => [
+                    'enabled' => true,
+                    'type' => 'field1_type',
+                    'validation' => [
+                        'Symfony\Component\Validator\Constraints\IsTrue' => [
+                            'message' => 'The token is invalid.',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedFieldOptions = [
+            'constraints' => [
+                new IsTrue(['message' => 'The token is invalid.']),
+            ],
+        ];
+
+        $this->formFactory->setConfiguration($formConfiguration);
+        $validator = $this->formFactory->createValidator('foo', new MockValidatedClass());
+        $this->assertEmpty($validator->validate(new MockValidatedClass()));
+    }
+
     public function setup()
     {
         $this->formBuilderMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
@@ -300,4 +327,9 @@ class MockTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
     }
+}
+
+class MockValidatedClass
+{
+    public $field1 = true;
 }
