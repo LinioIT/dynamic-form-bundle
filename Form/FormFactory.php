@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Validation;
 
 class FormFactory
 {
@@ -168,6 +169,42 @@ class FormFactory
         }
 
         return $formBuilder;
+    }
+
+    /**
+     * This method generates a validator based on the configuration file.
+     *
+     * @param string $key The key of the Form in the form configuration
+     * @param mixed $object Object which is the target of the validator
+     *
+     * @return ValidatorInterface
+     *
+     * @throws NonExistentFormException
+     */
+    public function createValidator($key, $object)
+    {
+        if (!isset($this->configuration[$key])) {
+            throw new NonExistentFormException(sprintf('The form "%s" was not found.', $key));
+        }
+
+        $validator = Validation::createValidatorBuilder()->getValidator();
+        $metadata = $validator->getMetadataFor(get_class($object));
+
+        foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
+            if (!$fieldConfiguration['enabled']) {
+                continue;
+            }
+
+            if (!isset($fieldConfiguration['validation'])) {
+                continue;
+            }
+
+            foreach ($fieldConfiguration['validation'] as $validatorName => $options) {
+                $metadata->addPropertyConstraint($key, new $validatorName($options));
+            }
+        }
+
+        return $validator;
     }
 
     /**
