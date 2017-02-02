@@ -7,6 +7,7 @@ use Linio\DynamicFormBundle\HelpMessageProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\NotExistentDataProviderException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -117,7 +118,7 @@ class FormFactory
             throw new NonExistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
-        $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, 'form', $data, $options);
+        $formBuilder = $this->formFactory->createNamedBuilder($name ?: $key, FormType::class, $data, $options);
 
         if (isset($this->eventSubscribers[$key])) {
             foreach ($this->eventSubscribers[$key] as $eventSubscriber) {

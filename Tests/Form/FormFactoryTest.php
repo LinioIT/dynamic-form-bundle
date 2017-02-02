@@ -2,9 +2,14 @@
 
 namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 
+use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Form\FormFactory;
+use Linio\DynamicFormBundle\HelpMessageProvider;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
@@ -49,7 +54,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $this->formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], ['foo_form_options'])
+        $this->formFactoryMock->createNamedBuilder('foo', FormType::class, ['foo_form_data'], ['foo_form_options'])
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', ['field1_options'])
@@ -91,7 +96,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $this->formFactoryMock->createNamedBuilder('foo', 'form', [], [])
+        $this->formFactoryMock->createNamedBuilder('foo', FormType::class, [], [])
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
@@ -113,7 +118,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCreatingFormWithTransformers()
     {
-        $fieldOneMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
+        $fieldOneMock = $this->prophesize(FormBuilder::class);
 
         $formConfiguration = [
             'foo' => [
@@ -121,7 +126,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                     'enabled' => true,
                     'type' => 'field1_type',
                     'transformer' => [
-                        'class' => 'Linio\DynamicFormBundle\Tests\Form\FormFactoryTest\MockTransformer',
+                        'class' => MockTransformer::class,
                         'calls' => [
                             ['setUserFormat', ['d/m/Y']],
                             ['setInputFormat', ['Y-m-d']],
@@ -137,7 +142,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedFieldOptions = [];
 
-        $this->formFactoryMock->createNamedBuilder('foo', 'form', [], [])
+        $this->formFactoryMock->createNamedBuilder('foo', FormType::class, [], [])
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
@@ -175,13 +180,13 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $helpMessageProviderMock = $this->prophesize('Linio\DynamicFormBundle\HelpMessageProvider');
+        $helpMessageProviderMock = $this->prophesize(HelpMessageProvider::class);
 
         $helpMessageProviderMock->getHelpMessage('cms:message')
             ->shouldBeCalled()
             ->willReturn('message');
 
-        $this->formFactoryMock->createNamedBuilder('foo', 'form', ['foo_form_data'], $formConfiguration)
+        $this->formFactoryMock->createNamedBuilder('foo', FormType::class, ['foo_form_data'], $formConfiguration)
             ->shouldBeCalled()
             ->willReturn($this->formBuilderMock->reveal());
 
@@ -251,9 +256,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($configuration, $actual);
     }
 
-    /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
-     */
     public function testIsHandlingNotExistenFormException()
     {
         $configuration = [
@@ -270,6 +272,8 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->formFactory->setConfiguration($configuration);
+
+        $this->expectException(NonExistentFormException::class);
 
         $this->formFactory->getConfiguration('bar');
     }
@@ -303,8 +307,8 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->formBuilderMock = $this->prophesize('Symfony\Component\Form\FormBuilder');
-        $this->formFactoryMock = $this->prophesize('Symfony\Component\Form\FormFactory');
+        $this->formBuilderMock = $this->prophesize(FormBuilder::class);
+        $this->formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
 
         $this->formFactory = new FormFactory();
     }
