@@ -5,21 +5,18 @@
   "type": "library",
   "license": "BSD-3-Clause",
   "require": {
-    "php": ">=5.4",
-    "symfony/framework-bundle": ">=2.3",
-    "symfony/form": ">=2.3"
+    "php": ">=7.1",
+    "symfony/form": "^2.8|^3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.6.*",
-    "symfony/validator": "~2.3",
-    "fabpot/php-cs-fixer": "~1.9"
-  },
-  "config": {
-    "bin-dir": "bin"
+    "phpunit/phpunit": "^5.7",
+    "symfony/validator": "^2.8|^3.0",
+    "friendsofphp/php-cs-fixer": "^2.0",
+    "symfony/security": "^2.8|^3.0"
   },
   "autoload": {
     "psr-4": {
-      "Linio\\DynamicFormBundle\\": ""
+      "Linio\\DynamicFormBundle\\": "src/"
     }
   }
 }

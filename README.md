@@ -10,14 +10,14 @@ Dynamic Form Bundle
 
 Getting Started
 -------
-This plugin requires Symfony `2.6.*`
+This plugin requires Symfony `^2.8|^3.0`
 
 The recommended way to install Linio Dynamic Form Bundle is [through composer](http://getcomposer.org).
 
 ```JSON
 {
     "require": {
-        "linio/dynamic-form-bundle": "~1.0"
+        "linio/dynamic-form-bundle": "~2.0"
     }
 }
 ```
@@ -30,7 +30,7 @@ To run the test suite, you need install the dependencies via composer, then
 run PHPUnit.
 
     $ composer install
-    $ phpunit
+    $ vendor/bin/phpunit
 
 Usage
 -----
@@ -51,7 +51,7 @@ Create your form on the Configuration File. The YAML structure for the Form shou
 |           \---Field Transformer
 |           \---Field Validators
 ```
-The method `createform()` takes the form configuration named `new_user` from `app/config/config.yml`. 
+The method `createform()` takes the form configuration named `new_user` from `app/config/config.yml`.
 
 ```php
 use Linio\DynamicFormBundle\DynamicFormAware;
@@ -59,7 +59,7 @@ use Linio\DynamicFormBundle\DynamicFormAware;
 class TestController
 {
 	use DynamicFormAware;
-	
+
 	public function testAction()
 	{
 		$form = $this->getDynamicFormFactory()->createForm('new_user');
@@ -99,11 +99,11 @@ When using transformers write both the class where it is defined and the calls y
 ```yaml
 dynamic_form:
     new_user:
-        first_name:
+        birthday:
             enabled: true
             type: text
             transformer:
-              class: 'Linio\Frontend\CustomerBundle\Form\DataTransformer\BornDateTransformer'
+              class: 'Linio\Frontend\CustomerBundle\Form\DataTransformer\BirthdayTransformer'
               calls:
                   - [setUserFormat, ['d/m/Y']]
                   - [setInputFormat, ['Y-m-d']]
@@ -127,7 +127,3 @@ dynamic_form:
                   max: 50
 ```
 
-## Release History
-
- * 2015-05-21   v1.0   First Version
- * 2015-06-11   v1.0.1   Updated getJsonConfiguration() so it can receive form name parameter
