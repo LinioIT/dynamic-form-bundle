@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\TextField;
@@ -11,7 +13,7 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected $formlyField;
 
-    public function testIsAddingTextFields()
+    public function testIsAddingTextFields(): void
     {
         $fieldConfiguration = [
             'name' => 'name',
@@ -38,7 +40,7 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsNotBlankConstraint()
+    public function testIsNotBlankConstraint(): void
     {
         $fieldConfiguration = [
             'name' => 'name',
@@ -75,7 +77,7 @@ class TextFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->formlyField = new TextField();
     }

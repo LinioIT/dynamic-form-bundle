@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
@@ -17,7 +19,7 @@ class FileField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    protected function buildFieldTypeConfiguration()
+    protected function buildFieldTypeConfiguration(): void
     {
         $this->formlyFieldConfiguration['type'] = $this->getFieldType();
     }

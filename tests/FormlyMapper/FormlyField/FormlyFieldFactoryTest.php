@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\DefaultField;
@@ -8,7 +10,7 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField;
 
 class FormlyFieldFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsHasTheFormlyField()
+    public function testIsHasTheFormlyField(): void
     {
         $alias = 'number';
         $formlyField = new NumberField();
@@ -21,7 +23,7 @@ class FormlyFieldFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($actual);
     }
 
-    public function testIsGettingSpecificFormlyFieldInstance()
+    public function testIsGettingSpecificFormlyFieldInstance(): void
     {
         $alias = 'number';
         $formlyField = new NumberField();
@@ -34,7 +36,7 @@ class FormlyFieldFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Linio\DynamicFormBundle\FormlyMapper\FormlyFieldInterface', $actual);
     }
 
-    public function testIsGettingDefaultFormlyFieldInstance()
+    public function testIsGettingDefaultFormlyFieldInstance(): void
     {
         $formlyFieldFactory = new FormlyFieldFactory();
 

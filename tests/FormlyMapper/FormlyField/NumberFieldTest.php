@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField;
@@ -11,7 +13,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected $formlyField;
 
-    public function testIsAddingNumberFields()
+    public function testIsAddingNumberFields(): void
     {
         $fieldConfiguration = [
             'name' => 'width',
@@ -40,7 +42,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsRangeConstraint()
+    public function testIsRangeConstraint(): void
     {
         $fieldConfiguration = [
             'name' => 'age',
@@ -85,7 +87,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsRegexConstraint()
+    public function testIsRegexConstraint(): void
     {
         $fieldConfiguration = [
             'name' => 'age',
@@ -126,7 +128,7 @@ class NumberFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->formlyField = new NumberField();
     }

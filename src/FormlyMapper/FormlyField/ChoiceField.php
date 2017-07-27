@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
@@ -17,7 +19,7 @@ class ChoiceField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    protected function buildFieldTypeConfiguration()
+    protected function buildFieldTypeConfiguration(): void
     {
         $type = $this->getFieldType();
 

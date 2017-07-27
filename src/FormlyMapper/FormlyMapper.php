@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
-use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\FormlyMapperException;
+use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -28,7 +30,7 @@ class FormlyMapper
     /**
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
-    public function setCsrfTokenManager(CsrfTokenManagerInterface $csrfTokenManager)
+    public function setCsrfTokenManager(CsrfTokenManagerInterface $csrfTokenManager): void
     {
         $this->csrfTokenManager = $csrfTokenManager;
     }
@@ -36,7 +38,7 @@ class FormlyMapper
     /**
      * @param FormFactory $formFactory
      */
-    public function setFormFactory(FormFactory $formFactory)
+    public function setFormFactory(FormFactory $formFactory): void
     {
         $this->formFactory = $formFactory;
     }
@@ -44,7 +46,7 @@ class FormlyMapper
     /**
      * @param FormlyFieldFactory $formlyFieldFactory
      */
-    public function setFormlyFieldFactory(FormlyFieldFactory $formlyFieldFactory)
+    public function setFormlyFieldFactory(FormlyFieldFactory $formlyFieldFactory): void
     {
         $this->formlyFieldFactory = $formlyFieldFactory;
     }
@@ -52,8 +54,9 @@ class FormlyMapper
     /**
      * @param string $formName
      *
-     * @return array
      * @throws FormlyMapperException
+     *
+     * @return array
      */
     public function map($formName = null)
     {
@@ -61,7 +64,7 @@ class FormlyMapper
 
         try {
             $configuration = (array) $this->formFactory->getConfiguration($formName);
-        } catch(NonExistentFormException $e) {
+        } catch (NonExistentFormException $e) {
             throw new FormlyMapperException($e->getMessage());
         }
 

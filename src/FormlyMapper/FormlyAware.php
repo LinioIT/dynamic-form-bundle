@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
 /**
@@ -23,7 +25,7 @@ trait FormlyAware
     /**
      * @param FormlyMapper $formlyMapper
      */
-    public function setFormlyMapper(FormlyMapper $formlyMapper)
+    public function setFormlyMapper(FormlyMapper $formlyMapper): void
     {
         $this->formlyMapper = $formlyMapper;
     }

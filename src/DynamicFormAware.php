@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle;
 
 use Linio\DynamicFormBundle\Form\FormFactory;
@@ -24,7 +27,7 @@ trait DynamicFormAware
     /**
      * @param FormFactory $dynamicFormFactory
      */
-    public function setDynamicFormFactory(FormFactory $dynamicFormFactory)
+    public function setDynamicFormFactory(FormFactory $dynamicFormFactory): void
     {
         $this->dynamicFormFactory = $dynamicFormFactory;
     }

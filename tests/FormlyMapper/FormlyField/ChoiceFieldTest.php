@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\ChoiceField;
@@ -21,7 +23,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected $expected = [];
 
-    public function testIsAddingSelectChoice()
+    public function testIsAddingSelectChoice(): void
     {
         $fieldConfiguration = [
             'name' => 'option',
@@ -80,7 +82,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsAddingSelectMultipleChoice()
+    public function testIsAddingSelectMultipleChoice(): void
     {
         $fieldConfiguration = [
             'name' => 'option',
@@ -139,7 +141,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsAddingRadioChoice()
+    public function testIsAddingRadioChoice(): void
     {
         $fieldConfiguration = [
             'name' => 'option',
@@ -198,7 +200,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsAddingCheckboxChoice()
+    public function testIsAddingCheckboxChoice(): void
     {
         $fieldConfiguration = [
             'name' => 'option',
@@ -257,7 +259,7 @@ class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->formlyField = new ChoiceField();
     }

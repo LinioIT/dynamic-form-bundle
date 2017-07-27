@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper;
 
 abstract class FormlyField implements FormlyFieldInterface
@@ -17,7 +19,7 @@ abstract class FormlyField implements FormlyFieldInterface
     /**
      * @param array $fieldConfiguration
      */
-    public function setFieldConfiguration(array $fieldConfiguration)
+    public function setFieldConfiguration(array $fieldConfiguration): void
     {
         $this->fieldConfiguration = $fieldConfiguration;
     }
@@ -91,8 +93,7 @@ abstract class FormlyField implements FormlyFieldInterface
      */
     abstract protected function getFieldType();
 
-    /**
-     * @return void
-     */
-    protected function buildFieldTypeConfiguration(){}
+    protected function buildFieldTypeConfiguration(): void
+    {
+    }
 }

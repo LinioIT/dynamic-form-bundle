@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper;
 
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
@@ -42,7 +44,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
      */
     protected $formlyMapper;
 
-    public function testIsMappingCorrectly()
+    public function testIsMappingCorrectly(): void
     {
         $formName = 'foo';
         $formType = 'number';
@@ -114,7 +116,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Linio\DynamicFormBundle\Exception\FormlyMapperException
      */
-    public function testIsThrowingNonExistentFormException()
+    public function testIsThrowingNonExistentFormException(): void
     {
         $formName = 'foo';
 
@@ -126,7 +128,7 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         $this->formlyMapper->map($formName);
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->csrfToken = new CsrfToken('foo', 'bar');
         $this->csrfTokenManagerMock = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');

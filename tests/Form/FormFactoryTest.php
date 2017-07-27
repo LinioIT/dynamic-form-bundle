@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
@@ -32,13 +34,13 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
      */
-    public function testIsThrowingExceptionWhenCreatingAnInexistentForm()
+    public function testIsThrowingExceptionWhenCreatingAnInexistentForm(): void
     {
         $this->formFactory->setConfiguration(['foo' => []]);
         $this->formFactory->createForm('bar');
     }
 
-    public function testIsCreatingASimpleForm()
+    public function testIsCreatingASimpleForm(): void
     {
         $formConfiguration = [
             'foo' => [
@@ -74,7 +76,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsCreatingFormWithValidators()
+    public function testIsCreatingFormWithValidators(): void
     {
         $formConfiguration = [
             'foo' => [
@@ -116,7 +118,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsCreatingFormWithTransformers()
+    public function testIsCreatingFormWithTransformers(): void
     {
         $fieldOneMock = $this->prophesize(FormBuilder::class);
 
@@ -165,7 +167,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsCreatingFormWithHelpMessages()
+    public function testIsCreatingFormWithHelpMessages(): void
     {
         $formConfiguration = [
             'foo' => [
@@ -210,7 +212,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsGettingConfiguration()
+    public function testIsGettingConfiguration(): void
     {
         $configuration = [
             'foo' => [
@@ -234,7 +236,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIsHandlingNullName()
+    public function testIsHandlingNullName(): void
     {
         $configuration = [
             'foo' => [
@@ -256,7 +258,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($configuration, $actual);
     }
 
-    public function testIsHandlingNotExistenFormException()
+    public function testIsHandlingNotExistenFormException(): void
     {
         $configuration = [
             'foo' => [
@@ -278,7 +280,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->formFactory->getConfiguration('bar');
     }
 
-    public function testIsCreatingValidator()
+    public function testIsCreatingValidator(): void
     {
         $formConfiguration = [
             'foo' => [
@@ -305,7 +307,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($validator->validate(new MockValidatedClass()));
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->formBuilderMock = $this->prophesize(FormBuilder::class);
         $this->formFactoryMock = $this->prophesize(SymfonyFormFactory::class);
@@ -316,19 +318,19 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
 class MockTransformer implements DataTransformerInterface
 {
-    public function setUserFormat()
+    public function setUserFormat(): void
     {
     }
 
-    public function setInputFormat()
+    public function setInputFormat(): void
     {
     }
 
-    public function transform($value)
+    public function transform($value): void
     {
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): void
     {
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\SearchField;
@@ -11,7 +13,7 @@ class SearchFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected $formlyField;
 
-    public function testIsAddingSearchFields()
+    public function testIsAddingSearchFields(): void
     {
         $fieldConfiguration = [
             'name' => 'search',
@@ -48,7 +50,7 @@ class SearchFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function setup()
+    public function setup(): void
     {
         $this->formlyField = new SearchField();
     }

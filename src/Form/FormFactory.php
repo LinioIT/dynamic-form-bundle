@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\Form;
 
 use Linio\DynamicFormBundle\DataProvider;
-use Linio\DynamicFormBundle\HelpMessageProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\NotExistentDataProviderException;
+use Linio\DynamicFormBundle\HelpMessageProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +45,7 @@ class FormFactory
     /**
      * @param SymfonyFormFactory $formFactory
      */
-    public function setFormFactory(SymfonyFormFactory $formFactory)
+    public function setFormFactory(SymfonyFormFactory $formFactory): void
     {
         $this->formFactory = $formFactory;
     }
@@ -51,7 +53,7 @@ class FormFactory
     /**
      * @param array $configuration
      */
-    public function setConfiguration(array $configuration)
+    public function setConfiguration(array $configuration): void
     {
         $this->configuration = $configuration;
     }
@@ -60,7 +62,7 @@ class FormFactory
      * @param string       $alias
      * @param DataProvider $dataProvider
      */
-    public function addDataProvider($alias, DataProvider $dataProvider)
+    public function addDataProvider($alias, DataProvider $dataProvider): void
     {
         $this->dataProviders[$alias] = $dataProvider;
     }
@@ -69,7 +71,7 @@ class FormFactory
      * @param string $alias
      * @param HelpMessageProvider $helpMessageProvider
      */
-    public function addHelpMessageProvider($alias, HelpMessageProvider $helpMessageProvider)
+    public function addHelpMessageProvider($alias, HelpMessageProvider $helpMessageProvider): void
     {
         $this->helpMessageProviders[$alias] = $helpMessageProvider;
     }
@@ -78,7 +80,7 @@ class FormFactory
      * @param string                   $formName
      * @param EventSubscriberInterface $eventSubscriber
      */
-    public function addEventSubscriber($formName, EventSubscriberInterface $eventSubscriber)
+    public function addEventSubscriber($formName, EventSubscriberInterface $eventSubscriber): void
     {
         if (!isset($this->eventSubscribers[$formName])) {
             $this->eventSubscribers[$formName] = [];
@@ -108,9 +110,9 @@ class FormFactory
      * @param array  $options
      * @param string $name    An name for the form. If empty, the key will be used
      *
-     * @return FormBuilderInterface
-     *
      * @throws NonExistentFormException
+     *
+     * @return FormBuilderInterface
      */
     public function createBuilder($key, $data = [], $options = [], $name = null)
     {
@@ -131,7 +133,7 @@ class FormFactory
                 continue;
             }
 
-            $fieldOptions = isset($fieldConfiguration['options']) ? $fieldConfiguration['options'] : [];
+            $fieldOptions = $fieldConfiguration['options'] ?? [];
 
             if (isset($fieldConfiguration['data_provider'])) {
                 $fieldOptions['choices'] = $this->loadDataProvider($fieldConfiguration['data_provider'])->getData();
@@ -178,9 +180,9 @@ class FormFactory
      * @param string $key The key of the Form in the form configuration
      * @param mixed $object Object which is the target of the validator
      *
-     * @return ValidatorInterface
-     *
      * @throws NonExistentFormException
+     *
+     * @return ValidatorInterface
      */
     public function createValidator($key, $object)
     {
@@ -211,9 +213,9 @@ class FormFactory
     /**
      * @param string $alias
      *
-     * @return DataProvider
-     *
      * @throws NotExistentDataProviderException
+     *
+     * @return DataProvider
      */
     public function loadDataProvider($alias)
     {
@@ -227,9 +229,9 @@ class FormFactory
     /**
      * @param string $alias
      *
-     * @return HelpMessageProvider
-     *
      * @throws NotExistentDataProviderException
+     *
+     * @return HelpMessageProvider
      */
     public function loadHelpMessageProvider($alias)
     {
@@ -243,9 +245,9 @@ class FormFactory
     /**
      * @param string $name
      *
-     * @return array
-     *
      * @throws NonExistentFormException
+     *
+     * @return array
      */
     public function getConfiguration($name = null)
     {

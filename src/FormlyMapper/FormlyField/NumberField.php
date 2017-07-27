@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
@@ -17,7 +19,7 @@ class NumberField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    protected function buildFieldTypeConfiguration()
+    protected function buildFieldTypeConfiguration(): void
     {
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
@@ -38,7 +40,7 @@ class NumberField extends FormlyField
                 }
 
                 if (isset($constraint['maxMessage'])) {
-                    $this->formlyFieldConfiguration['validation']['messages']['max'] =  $constraint['maxMessage'];
+                    $this->formlyFieldConfiguration['validation']['messages']['max'] = $constraint['maxMessage'];
                 }
             }
         }

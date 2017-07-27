@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Linio\DynamicFormBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -11,7 +13,7 @@ class CompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->loadFormlyFields($container);
         $this->loadDataProviders($container);
@@ -22,7 +24,7 @@ class CompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function loadFormlyFields(ContainerBuilder $container)
+    public function loadFormlyFields(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('container.formly_field')) {
             return;
@@ -41,7 +43,7 @@ class CompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function loadDataProviders(ContainerBuilder $container)
+    public function loadDataProviders(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');
         $taggedServices = $container->findTaggedServiceIds('dynamic_form.data_provider');
@@ -56,7 +58,7 @@ class CompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function loadSubscribers(ContainerBuilder $container)
+    public function loadSubscribers(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');
         $taggedServices = $container->findTaggedServiceIds('dynamic_form.event_subscriber');
@@ -71,7 +73,7 @@ class CompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function loadHelpMessageProviders(ContainerBuilder $container)
+    public function loadHelpMessageProviders(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');
         $taggedServices = $container->findTaggedServiceIds('dynamic_form.help_message_provider');

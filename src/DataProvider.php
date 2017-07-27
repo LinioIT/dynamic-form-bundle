@@ -1,7 +1,8 @@
 <?php
 
-namespace Linio\DynamicFormBundle;
+declare(strict_types=1);
 
+namespace Linio\DynamicFormBundle;
 
 interface DataProvider
 {
