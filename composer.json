@@ -18,5 +18,10 @@
     "psr-4": {
       "Linio\\DynamicFormBundle\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Linio\\DynamicFormBundle\\": "tests/"
+    }
   }
 }
