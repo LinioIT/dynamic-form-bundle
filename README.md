@@ -73,7 +73,7 @@ class TestController
 The method `getJsonConfiguration()` takes the configuration from `app/config/config.yml`. and returns a JSON with the Form Configuration.
 
 
-###Example
+### Example
 Here's an example of a form named `new_user` with a single field called `first_name`:
 
 ```yaml
@@ -88,11 +88,11 @@ dynamic_form:
             transformers:
             validators:
 ```
-###Options
+### Options
 Field options are the same as symfony, refer to the documentation
 
 
-###Transformers
+### Transformers
 
 When using transformers write both the class where it is defined and the calls you need.
 
@@ -109,7 +109,7 @@ dynamic_form:
                   - [setInputFormat, ['Y-m-d']]
 ```
 
-###Validators
+### Validators
 
 When using validators call each validator constraint and its parameters like shown down below.
 
