@@ -27,25 +27,16 @@ class FormlyMapper
      */
     protected $formlyFieldFactory;
 
-    /**
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     */
     public function setCsrfTokenManager(CsrfTokenManagerInterface $csrfTokenManager): void
     {
         $this->csrfTokenManager = $csrfTokenManager;
     }
 
-    /**
-     * @param FormFactory $formFactory
-     */
     public function setFormFactory(FormFactory $formFactory): void
     {
         $this->formFactory = $formFactory;
     }
 
-    /**
-     * @param FormlyFieldFactory $formlyFieldFactory
-     */
     public function setFormlyFieldFactory(FormlyFieldFactory $formlyFieldFactory): void
     {
         $this->formlyFieldFactory = $formlyFieldFactory;

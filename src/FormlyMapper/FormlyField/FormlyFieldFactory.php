@@ -25,7 +25,6 @@ class FormlyFieldFactory
 
     /**
      * @param int                  $alias
-     * @param FormlyFieldInterface $formlyField
      */
     public function addFormlyField($alias, FormlyFieldInterface $formlyField): void
     {

@@ -42,17 +42,11 @@ class FormFactory
      */
     protected $helpMessageProviders = [];
 
-    /**
-     * @param SymfonyFormFactory $formFactory
-     */
     public function setFormFactory(SymfonyFormFactory $formFactory): void
     {
         $this->formFactory = $formFactory;
     }
 
-    /**
-     * @param array $configuration
-     */
     public function setConfiguration(array $configuration): void
     {
         $this->configuration = $configuration;
@@ -60,7 +54,6 @@ class FormFactory
 
     /**
      * @param string       $alias
-     * @param DataProvider $dataProvider
      */
     public function addDataProvider($alias, DataProvider $dataProvider): void
     {
@@ -69,7 +62,6 @@ class FormFactory
 
     /**
      * @param string $alias
-     * @param HelpMessageProvider $helpMessageProvider
      */
     public function addHelpMessageProvider($alias, HelpMessageProvider $helpMessageProvider): void
     {
@@ -78,7 +70,6 @@ class FormFactory
 
     /**
      * @param string                   $formName
-     * @param EventSubscriberInterface $eventSubscriber
      */
     public function addEventSubscriber($formName, EventSubscriberInterface $eventSubscriber): void
     {
@@ -251,7 +242,7 @@ class FormFactory
      */
     public function getConfiguration($name = null)
     {
-        if ($name === null) {
+        if (null === $name) {
             return $this->configuration;
         }
 
