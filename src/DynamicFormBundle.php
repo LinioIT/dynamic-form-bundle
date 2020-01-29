@@ -10,9 +10,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DynamicFormBundle extends Bundle
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

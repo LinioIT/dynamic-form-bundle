@@ -22,9 +22,6 @@ trait FormlyAware
         return $this->formlyMapper;
     }
 
-    /**
-     * @param FormlyMapper $formlyMapper
-     */
     public function setFormlyMapper(FormlyMapper $formlyMapper): void
     {
         $this->formlyMapper = $formlyMapper;

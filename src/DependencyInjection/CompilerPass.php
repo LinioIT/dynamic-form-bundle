@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container): void
     {
         $this->loadFormlyFields($container);
@@ -21,9 +18,6 @@ class CompilerPass implements CompilerPassInterface
         $this->loadHelpMessageProviders($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function loadFormlyFields(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('container.formly_field')) {
@@ -40,9 +34,6 @@ class CompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function loadDataProviders(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');
@@ -55,9 +46,6 @@ class CompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function loadSubscribers(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');
@@ -70,9 +58,6 @@ class CompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function loadHelpMessageProviders(ContainerBuilder $container): void
     {
         $containerDefinition = $container->getDefinition('dynamic_form.factory');

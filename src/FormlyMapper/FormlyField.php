@@ -16,9 +16,6 @@ abstract class FormlyField implements FormlyFieldInterface
      */
     protected $formlyFieldConfiguration = [];
 
-    /**
-     * @param array $fieldConfiguration
-     */
     public function setFieldConfiguration(array $fieldConfiguration): void
     {
         $this->fieldConfiguration = $fieldConfiguration;
