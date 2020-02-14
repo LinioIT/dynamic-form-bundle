@@ -29,4 +29,9 @@ class HelpMessageTypeExtension extends AbstractTypeExtension
     {
         $view->vars['help'] = $options['help'] ?? '';
     }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
+    }
 }
