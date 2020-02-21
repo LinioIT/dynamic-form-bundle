@@ -10,7 +10,7 @@ Dynamic Form Bundle
 
 Getting Started
 -------
-This plugin requires Symfony `^2.8|^3.0`
+This plugin supports Symfony `^2.8|^3.0|^4.0|^5.0`. Even tough we encorage you to use the latest version because of the Symfony maintained branches itself.
 
 The recommended way to install Linio Dynamic Form Bundle is [through composer](http://getcomposer.org).
 
