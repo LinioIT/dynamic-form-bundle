@@ -82,7 +82,7 @@ class FormFactory
 
     /**
      * @param string $key     The key of the Form in the form configuration
-     * @param array  $data
+     * @param mixed  $data
      * @param array  $options
      * @param string $name    An name for the form. If empty, the key will be used
      *
