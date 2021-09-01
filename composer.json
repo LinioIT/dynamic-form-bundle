@@ -23,5 +23,8 @@
     "psr-4": {
       "Linio\\DynamicFormBundle\\": "tests/"
     }
+  },
+  "scripts": {
+    "phpunit": "vendor/bin/phpunit"
   }
 }
