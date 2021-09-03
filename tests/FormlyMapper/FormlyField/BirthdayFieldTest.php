@@ -105,27 +105,13 @@ class BirthdayFieldTest extends TestCase
      */
     public function testIsAddingYearsRangeInOrderByDefault(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 18;
-        $maxYear = 120;
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
-
-        $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $actual = $this->formlyField->getFormlyFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @dataProvider basicDataProvider
-     */
-    public function testWithBadYearsRangeForWord(array $fieldConfiguration, array $expected): void
-    {
-        $fieldConfiguration['options']['minYear'] = '18a';
-        $fieldConfiguration['options']['maxYear'] = 120;
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -136,10 +122,24 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testWithBadYearsRangeForNegativeNumber(array $fieldConfiguration, array $expected): void
+    public function testWithBadAgeRangeForWord(array $fieldConfiguration, array $expected): void
     {
-        $fieldConfiguration['options']['minYear'] = -2;
-        $fieldConfiguration['options']['maxYear'] = 120;
+        $fieldConfiguration['options']['minAgeAllowed'] = '18a';
+        $fieldConfiguration['options']['maxAgeAllowed'] = 120;
+
+        $this->formlyField->setFieldConfiguration($fieldConfiguration);
+        $actual = $this->formlyField->getFormlyFieldConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @dataProvider basicDataProvider
+     */
+    public function testWithBadAgeRangeForNegativeNumber(array $fieldConfiguration, array $expected): void
+    {
+        $fieldConfiguration['options']['minAgeAllowed'] = -2;
+        $fieldConfiguration['options']['maxAgeAllowed'] = 120;
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -152,32 +152,13 @@ class BirthdayFieldTest extends TestCase
      */
     public function testWithRangeZero(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 0;
-        $maxYear = 0;
+        $minAgeAllowed = 0;
+        $maxAgeAllowed = 0;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
-
-        $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $actual = $this->formlyField->getFormlyFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @dataProvider basicDataProvider
-     */
-    public function testWithMinYearBiggerThanMaxYear(array $fieldConfiguration, array $expected): void
-    {
-        $minYear = 18;
-        $maxYear = 120;
-
-        $fieldConfiguration['options']['minYear'] = $maxYear;
-        $fieldConfiguration['options']['maxYear'] = $minYear;
-
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -188,16 +169,35 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testIsAddingYearsRangeInOrderAsc(array $fieldConfiguration, array $expected): void
+    public function testWithMinAgeAllowedBiggerThanMaxAgeAllowed(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 18;
-        $maxYear = 120;
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $maxAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $minAgeAllowed;
+
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+
+        $this->formlyField->setFieldConfiguration($fieldConfiguration);
+        $actual = $this->formlyField->getFormlyFieldConfiguration();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @dataProvider basicDataProvider
+     */
+    public function testIsAddingAgeRangeInOrderAsc(array $fieldConfiguration, array $expected): void
+    {
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
+
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'asc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$maxYear, date('Y')-$minYear);
+        $expected['templateOptions']['years'] = range(date('Y')-$maxAgeAllowed, date('Y')-$minAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -208,16 +208,16 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testIsAddingYearsRangeOrderDesc(array $fieldConfiguration, array $expected): void
+    public function testIsAddingAgeRangeOrderDesc(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 18;
-        $maxYear = 120;
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'desc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -228,16 +228,16 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testIsAddingYearsRangeWithBadOrderWord(array $fieldConfiguration, array $expected): void
+    public function testIsAddingAgeRangeWithBadOrderWord(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 18;
-        $maxYear = 120;
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'dasc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -261,18 +261,18 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testWithYearsRangeAndSpecificYearsArray(array $fieldConfiguration, array $expected): void
+    public function testWithAgeRangeAndSpecificYearsArray(array $fieldConfiguration, array $expected): void
     {
-        $minYear = 18;
-        $maxYear = 120;
+        $minAgeAllowed = 18;
+        $maxAgeAllowed = 120;
         $years = [2000, 2001, 2002, 2003, 2004, 2005];
 
         $fieldConfiguration['options']['years'] = $years;
 
-        $fieldConfiguration['options']['minYear'] = $minYear;
-        $fieldConfiguration['options']['maxYear'] = $maxYear;
+        $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
+        $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minYear, date('Y')-$maxYear);
+        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();

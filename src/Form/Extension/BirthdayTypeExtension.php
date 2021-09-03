@@ -14,14 +14,14 @@ class BirthdayTypeExtension extends AbstractTypeExtension
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined(['order', 'minYear', 'maxYear']);
+        $resolver->setDefined(['order', 'minAgeAllowed', 'maxAgeAllowed']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['order'] = $options['order'] ?? '';
-        $view->vars['minYear'] = $options['minYear'] ?? '';
-        $view->vars['maxYear'] = $options['maxYear'] ?? '';
+        $view->vars['minAgeAllowed'] = $options['minAgeAllowed'] ?? '';
+        $view->vars['maxAgeAllowed'] = $options['maxAgeAllowed'] ?? '';
     }
 
     public static function getExtendedTypes(): iterable

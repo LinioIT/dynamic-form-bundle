@@ -32,23 +32,23 @@ class BirthdayField extends FormlyField
             unset($this->formlyFieldConfiguration['templateOptions']['order']);
         }
 
-        if(isset($this->fieldConfiguration['options']['minYear']) && isset($this->fieldConfiguration['options']['maxYear'])) {
-            $minYear = $this->fieldConfiguration['options']['minYear'];
-            $maxYear = $this->fieldConfiguration['options']['maxYear'];
-            if(is_numeric($minYear) && ($minYear >= 0) && is_numeric($maxYear) && ($maxYear >= 0)) {
-                if($minYear > $maxYear) {
-                    $tmp = $minYear;
-                    $minYear = $maxYear;
-                    $maxYear = $tmp;
+        if(isset($this->fieldConfiguration['options']['minAgeAllowed']) && isset($this->fieldConfiguration['options']['maxAgeAllowed'])) {
+            $minAgeAllowed = $this->fieldConfiguration['options']['minAgeAllowed'];
+            $maxAgeAllowed = $this->fieldConfiguration['options']['maxAgeAllowed'];
+            if(is_numeric($minAgeAllowed) && ($minAgeAllowed >= 0) && is_numeric($maxAgeAllowed) && ($maxAgeAllowed >= 0)) {
+                if($minAgeAllowed > $maxAgeAllowed) {
+                    $tmp = $minAgeAllowed;
+                    $minAgeAllowed = $maxAgeAllowed;
+                    $maxAgeAllowed = $tmp;
                 }
                 
-                $yearsRange = range(date('Y')-$minYear, date('Y')-$maxYear);
+                $yearsRange = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
 
                 $this->formlyFieldConfiguration['templateOptions']['years'] = ($order == 'asc') ? array_reverse($yearsRange) : $yearsRange;
             }
 
-            unset($this->formlyFieldConfiguration['templateOptions']['minYear']);
-            unset($this->formlyFieldConfiguration['templateOptions']['maxYear']);
+            unset($this->formlyFieldConfiguration['templateOptions']['minAgeAllowed']);
+            unset($this->formlyFieldConfiguration['templateOptions']['maxAgeAllowed']);
         }
     }
 }
