@@ -35,7 +35,7 @@ class BirthdayField extends FormlyField
         if(isset($this->fieldConfiguration['options']['minYear']) && isset($this->fieldConfiguration['options']['maxYear'])) {
             $minYear = $this->fieldConfiguration['options']['minYear'];
             $maxYear = $this->fieldConfiguration['options']['maxYear'];
-            if(is_numeric($minYear) && is_numeric($maxYear)) {
+            if(is_numeric($minYear) && ($minYear >= 0) && is_numeric($maxYear) && ($maxYear >= 0)) {
                 if($minYear > $maxYear) {
                     $tmp = $minYear;
                     $minYear = $maxYear;
