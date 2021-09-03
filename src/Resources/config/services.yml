@@ -15,6 +15,12 @@ services:
     container.formly_field:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory
 
+    formly_field.birthday:
+        class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\BirthdayField
+        lazy: true
+        tags:
+            - {name: formly_field, alias: birthday}
+
     formly_field.choice:
         class: Linio\DynamicFormBundle\FormlyMapper\FormlyField\ChoiceField
         lazy: true
@@ -109,3 +115,8 @@ services:
         class: Linio\DynamicFormBundle\Form\Extension\HelpMessageTypeExtension
         tags:
             - {name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType}
+
+    form.type_extension.birthday:
+        class: Linio\DynamicFormBundle\Form\Extension\BirthdayTypeExtension
+        tags:
+            - {name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\BirthdayType}
