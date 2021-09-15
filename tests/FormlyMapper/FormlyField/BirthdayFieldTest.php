@@ -21,7 +21,7 @@ class BirthdayFieldTest extends TestCase
             'type' => 'birthday',
             'options' => [
                 'required' => true,
-                'label' => 'Borndate'
+                'label' => 'Borndate',
             ],
         ];
 
@@ -31,12 +31,12 @@ class BirthdayFieldTest extends TestCase
             'templateOptions' => [
                 'required' => true,
                 'label' => 'Borndate',
-                'type' => 'birthday'
+                'type' => 'birthday',
             ],
         ];
 
         return [
-            [$config, $expected]
+            [$config, $expected],
         ];
     }
 
@@ -111,7 +111,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -158,7 +158,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -177,7 +177,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['minAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['maxAgeAllowed'] = $minAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -197,7 +197,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'asc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$maxAgeAllowed, date('Y')-$minAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $maxAgeAllowed, date('Y') - $minAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -217,7 +217,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'desc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -237,7 +237,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
         $fieldConfiguration['options']['order'] = 'dasc';
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -272,7 +272,7 @@ class BirthdayFieldTest extends TestCase
         $fieldConfiguration['options']['minAgeAllowed'] = $minAgeAllowed;
         $fieldConfiguration['options']['maxAgeAllowed'] = $maxAgeAllowed;
 
-        $expected['templateOptions']['years'] = range(date('Y')-$minAgeAllowed, date('Y')-$maxAgeAllowed);
+        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
