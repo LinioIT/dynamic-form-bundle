@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\PasswordField;
+use PHPUnit\Framework\TestCase;
 
-class PasswordFieldTest extends \PHPUnit_Framework_TestCase
+class PasswordFieldTest extends TestCase
 {
     /**
      * @var PasswordField

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\DateField;
+use PHPUnit\Framework\TestCase;
 
-class DateFieldTest extends \PHPUnit_Framework_TestCase
+class DateFieldTest extends TestCase
 {
     /**
      * @var DateField

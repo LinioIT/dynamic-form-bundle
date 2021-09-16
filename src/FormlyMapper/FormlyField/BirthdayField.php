@@ -46,7 +46,7 @@ class BirthdayField extends FormlyField
 
         $yearsRange = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
 
-        $this->formlyFieldConfiguration['templateOptions']['years'] = (self::ORDER_ASC == $order)
+        $this->formlyFieldConfiguration['templateOptions']['years'] = ($order == self::ORDER_ASC)
             ? array_reverse($yearsRange)
             : $yearsRange;
 

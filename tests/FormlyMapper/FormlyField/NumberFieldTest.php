@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField;
+use PHPUnit\Framework\TestCase;
 
-class NumberFieldTest extends \PHPUnit_Framework_TestCase
+class NumberFieldTest extends TestCase
 {
     /**
      * @var NumberField

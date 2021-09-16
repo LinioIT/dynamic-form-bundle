@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\SearchField;
+use PHPUnit\Framework\TestCase;
 
-class SearchFieldTest extends \PHPUnit_Framework_TestCase
+class SearchFieldTest extends TestCase
 {
     /**
      * @var SearchField
