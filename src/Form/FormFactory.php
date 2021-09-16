@@ -82,7 +82,7 @@ class FormFactory
 
     /**
      * @param string $key     The key of the Form in the form configuration
-     * @param mixed  $data
+     * @param array  $data
      * @param array  $options
      * @param string $name    An name for the form. If empty, the key will be used
      *
@@ -242,7 +242,7 @@ class FormFactory
      */
     public function getConfiguration($name = null)
     {
-        if (null === $name) {
+        if ($name === null) {
             return $this->configuration;
         }
 

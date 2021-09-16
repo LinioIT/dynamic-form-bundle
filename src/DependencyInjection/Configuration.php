@@ -27,33 +27,27 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->useAttributeAsKey('name')
             ->prototype('array')
-                ->useAttributeAsKey('field')
-                ->prototype('array')
-                    ->children()
-                        ->booleanNode('enabled')
-                            ->defaultTrue()
-                        ->end()
-
-                        ->scalarNode('type')
-                            ->isRequired()
-                        ->end()
-
-                        ->variableNode('options')
-                        ->end()
-
-                        ->variableNode('transformer')
-                        ->end()
-
-                        ->variableNode('validation')
-                        ->end()
-
-                        ->scalarNode('data_provider')
-                        ->end()
-
-                        ->scalarNode('help_message_provider')
-                        ->end()
-                    ->end()
-                ->end()
+            ->useAttributeAsKey('field')
+            ->prototype('array')
+            ->children()
+            ->booleanNode('enabled')
+            ->defaultTrue()
+            ->end()
+            ->scalarNode('type')
+            ->isRequired()
+            ->end()
+            ->variableNode('options')
+            ->end()
+            ->variableNode('transformer')
+            ->end()
+            ->variableNode('validation')
+            ->end()
+            ->scalarNode('data_provider')
+            ->end()
+            ->scalarNode('help_message_provider')
+            ->end()
+            ->end()
+            ->end()
             ->end();
 
         return $treeBuilder;
