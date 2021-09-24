@@ -7,6 +7,7 @@ namespace Linio\DynamicFormBundle\Tests\Form\FormFactoryTest;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\HelpMessageProvider;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -14,7 +15,7 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class FormFactoryTest extends \PHPUnit_Framework_TestCase
+class FormFactoryTest extends TestCase
 {
     /**
      * @var ObjectProphecy
@@ -31,11 +32,10 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected $formFactoryMock;
 
-    /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\NonExistentFormException
-     */
     public function testIsThrowingExceptionWhenCreatingAnInexistentForm(): void
     {
+        $this->expectException(NonExistentFormException::class);
+
         $this->formFactory->setConfiguration(['foo' => []]);
         $this->formFactory->createForm('bar');
     }

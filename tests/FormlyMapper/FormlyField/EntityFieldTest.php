@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\EntityField;
+use PHPUnit\Framework\TestCase;
 
-class EntityFieldTest extends \PHPUnit_Framework_TestCase
+class EntityFieldTest extends TestCase
 {
     /**
      * @var EntityField

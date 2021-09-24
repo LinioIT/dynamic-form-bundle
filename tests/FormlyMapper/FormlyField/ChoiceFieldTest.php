@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\ChoiceField;
+use PHPUnit\Framework\TestCase;
 
-class ChoiceFieldTest extends \PHPUnit_Framework_TestCase
+class ChoiceFieldTest extends TestCase
 {
     /**
      * @var ChoiceField
