@@ -1,0 +1,29 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+      
+    - name: PHP Lint
+      run: vendor/bin/php-cs-fixer fix --dry-run -v
+      
+    - name: PHPUnit Tests
+      uses: php-actions/phpunit@v2
+      with:
+        configuration: phpunit.xml.dist
