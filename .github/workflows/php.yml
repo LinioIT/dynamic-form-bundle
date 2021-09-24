@@ -28,6 +28,4 @@ jobs:
       run: vendor/bin/php-cs-fixer fix --dry-run -v
       
     - name: PHPUnit Tests
-      uses: php-actions/phpunit@v5
-      with:
-        configuration: phpunit.xml.dist
+      run: vendor/bin/phpunit
