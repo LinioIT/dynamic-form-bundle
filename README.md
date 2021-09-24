@@ -4,9 +4,7 @@ Dynamic Form Bundle
 [![Latest Stable Version](https://poser.pugx.org/linio/dynamic-form-bundle/v/stable.svg)](https://packagist.org/packages/linio/dynamic-form-bundle)
 [![License](https://poser.pugx.org/linio/dynamic-form-bundle/license.svg)](https://packagist.org/packages/linio/dynamic-form-bundle)
 [![Build Status](https://travis-ci.org/LinioIT/dynamic-form-bundle.svg?branch=master)](https://travis-ci.org/LinioIT/dynamic-form-bundle)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LinioIT/dynamic-form-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/LinioIT/dynamic-form-bundle/?branch=master)
 
-> Generates symfony forms based on YAML configuration files
 
 Getting Started
 -------
