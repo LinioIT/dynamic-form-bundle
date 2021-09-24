@@ -7,8 +7,9 @@ namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\DefaultField;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\NumberField;
+use PHPUnit\Framework\TestCase;
 
-class FormlyFieldFactoryTest extends \PHPUnit_Framework_TestCase
+class FormlyFieldFactoryTest extends TestCase
 {
     public function testIsHasTheFormlyField(): void
     {

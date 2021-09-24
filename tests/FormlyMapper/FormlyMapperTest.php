@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper;
 
+use Linio\DynamicFormBundle\Exception\FormlyMapperException;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
-class FormlyMapperTest extends \PHPUnit_Framework_TestCase
+class FormlyMapperTest extends TestCase
 {
     /**
      * @var CsrfToken
@@ -113,11 +115,10 @@ class FormlyMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException \Linio\DynamicFormBundle\Exception\FormlyMapperException
-     */
     public function testIsThrowingNonExistentFormException(): void
     {
+        $this->expectException(FormlyMapperException::class);
+
         $formName = 'foo';
 
         $this->formFactoryMock->getConfiguration($formName)
