@@ -23,5 +23,14 @@
     "psr-4": {
       "Linio\\DynamicFormBundle\\": "tests/"
     }
+  },
+  "scripts": {
+    "lint": "vendor/bin/php-cs-fixer fix --verbose --show-progress=dots",
+    "lint:check": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=dots",
+    "phpunit": "vendor/bin/phpunit",
+    "test": [
+      "@lint:check",
+      "@phpunit"
+    ]
   }
 }
