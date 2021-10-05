@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Linio\DynamicFormBundle\Tests\FormlyMapper\FormlyField;
 
+use Linio\DynamicFormBundle\Exception\InvalidConfigurationException;
+use Linio\DynamicFormBundle\Exception\NumberFormatException;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\BirthdayField;
 use PHPUnit\Framework\TestCase;
 
@@ -85,14 +87,24 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testWithNotNumberSpecificYears(array $fieldConfiguration, array $expected): void
+    public function testIsThrowingExceptionWhenYearsArrayHasNonNumericalValues(array $fieldConfiguration, array $expected): void
     {
-        $goodYears = [2000, 2001, 2002, 2003, 2004, 2005];
-        $badYears = ['2000', 2001, '2002', 2003, 2004, 2005];
+        $this->expectException(NumberFormatException::class);
 
+        $badYears = ['2000 ', 2001, '20O2', 2003, 2004, 2005];
         $fieldConfiguration['options']['years'] = $badYears;
 
-        $expected['templateOptions']['years'] = $goodYears;
+        $this->formlyField->setFieldConfiguration($fieldConfiguration);
+        $this->formlyField->getFormlyFieldConfiguration();
+    }
+
+    /**
+     * @dataProvider basicDataProvider
+     */
+    public function testItDoesNotAllowNonNumericalValuesForAllowedAges(array $fieldConfiguration, array $expected): void
+    {
+        $fieldConfiguration['options']['minAgeAllowed'] = '18a';
+        $fieldConfiguration['options']['maxAgeAllowed'] = 120;
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
         $actual = $this->formlyField->getFormlyFieldConfiguration();
@@ -103,7 +115,7 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testIsAddingYearsRangeInOrderByDefault(array $fieldConfiguration, array $expected): void
+    public function testIsAddingYearsRangeInDefaultOrder(array $fieldConfiguration, array $expected): void
     {
         $minAgeAllowed = 18;
         $maxAgeAllowed = 120;
@@ -122,21 +134,7 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testWithBadAgeRangeForWord(array $fieldConfiguration, array $expected): void
-    {
-        $fieldConfiguration['options']['minAgeAllowed'] = '18a';
-        $fieldConfiguration['options']['maxAgeAllowed'] = 120;
-
-        $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $actual = $this->formlyField->getFormlyFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @dataProvider basicDataProvider
-     */
-    public function testWithBadAgeRangeForNegativeNumber(array $fieldConfiguration, array $expected): void
+    public function testItDoesNotAllowNegativeValuesForAllowedAges(array $fieldConfiguration, array $expected): void
     {
         $fieldConfiguration['options']['minAgeAllowed'] = -2;
         $fieldConfiguration['options']['maxAgeAllowed'] = 120;
@@ -169,20 +167,15 @@ class BirthdayFieldTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testWithMinAgeAllowedBiggerThanMaxAgeAllowed(array $fieldConfiguration, array $expected): void
+    public function testIsThrowExceptionWhenMinAgeAllowedValueIsLargerThanMaxAgeAllowed(array $fieldConfiguration, array $expected): void
     {
-        $minAgeAllowed = 18;
-        $maxAgeAllowed = 120;
+        $this->expectException(InvalidConfigurationException::class);
 
-        $fieldConfiguration['options']['minAgeAllowed'] = $maxAgeAllowed;
-        $fieldConfiguration['options']['maxAgeAllowed'] = $minAgeAllowed;
-
-        $expected['templateOptions']['years'] = range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed);
+        $fieldConfiguration['options']['minAgeAllowed'] = 120;
+        $fieldConfiguration['options']['maxAgeAllowed'] = 18;
 
         $this->formlyField->setFieldConfiguration($fieldConfiguration);
-        $actual = $this->formlyField->getFormlyFieldConfiguration();
-
-        $this->assertEquals($expected, $actual);
+        $this->formlyField->getFormlyFieldConfiguration();
     }
 
     /**
