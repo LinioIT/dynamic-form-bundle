@@ -91,6 +91,34 @@ dynamic_form:
 ### Options
 Field options are the same as symfony, refer to the documentation
 
+#### Birthday Type
+
+Supports `Symfony >= 4.4`.
+
+In addition to the own options that the field brings by default ([see documentation](https://symfony.com/doc/current/reference/forms/types/birthday.html)), we added 3 new attributes to make its behavior more flexible.
+
+##### minAgeAllowed and maxAgeAllowed:
+
+These options work together and it is an improvement to the `years` option because it is too strict to only receive an array with the allowed years (and that in our case we should leave static in our Yaml file). With them we can determine (taking the current date) the minimum and maximum number of ages to generate the years that will be displayed in the form. These options only accept whole numbers greater than or equal to zero.
+
+For example, if we want to have a field of type `birthday` but we only want children who have between **5** and **10** years of life to be registered, we would have something like the following:
+
+```yaml
+dynamic_form:
+    new_user:
+        birthday:
+            enabled: true
+            type: birthday
+            options:
+                minAgeAllowed: 5
+                maxAgeAllowed: 10
+```
+
+The above would generate this array of `years` => `[2016, 2015, 2014, 2013, 2012, 2011]` taking into account `2021` as the current year.
+
+##### Order:
+
+This option is used together with `minAgeAllowed` and `maxAgeAllowed` and is for the cases where we want to show our drop-down list of years in one order or another. The accepted values are **`asc`** and **`desc`**, the latter by default.
 
 ### Transformers
 
