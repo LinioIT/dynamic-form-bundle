@@ -10,6 +10,7 @@ use Linio\DynamicFormBundle\HelpMessageProvider;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
@@ -63,6 +64,50 @@ class FormFactoryTest extends TestCase
             ->willReturn('field1_instance');
 
         $this->formBuilderMock->add('field1_instance')
+            ->shouldBeCalled();
+
+        $this->formBuilderMock->getForm()
+            ->willReturn('foo_form');
+
+        $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
+        $this->formFactory->setConfiguration($formConfiguration);
+
+        $actual = $this->formFactory->createForm('foo', ['foo_form_data'], ['foo_form_options']);
+
+        $this->assertEquals('foo_form', $actual);
+    }
+
+    public function testIsCreatingFormWithImprovedBirthdayField(): void
+    {
+        $minAgeAllowed = 0;
+        $maxAgeAllowed = 18;
+
+        $formConfiguration = [
+            'foo' => [
+                'borndate' => [
+                    'enabled' => true,
+                    'type' => 'Symfony\Component\Form\Extension\Core\Type\BirthdayType',
+                    'options' => [
+                        'minAgeAllowed' => $minAgeAllowed,
+                        'maxAgeAllowed' => $maxAgeAllowed,
+                        'order' => 'desc',
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedFieldOptions = [
+            'label' => 'borndate',
+            'years' => range(date('Y') - $minAgeAllowed, date('Y') - $maxAgeAllowed),
+        ];
+
+        $this->formFactoryMock->createNamedBuilder('foo', FormType::class, ['foo_form_data'], ['foo_form_options'])
+            ->willReturn($this->formBuilderMock->reveal());
+
+        $this->formBuilderMock->create('borndate', BirthdayType::class, $expectedFieldOptions)
+            ->willReturn('borndate_instance');
+
+        $this->formBuilderMock->add('borndate_instance')
             ->shouldBeCalled();
 
         $this->formBuilderMock->getForm()
