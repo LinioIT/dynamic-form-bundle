@@ -7,8 +7,10 @@ namespace Linio\DynamicFormBundle\Form;
 use Linio\DynamicFormBundle\DataProvider;
 use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Exception\NotExistentDataProviderException;
+use Linio\DynamicFormBundle\FormlyMapper\FormlyField\BirthdayField;
 use Linio\DynamicFormBundle\HelpMessageProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
@@ -144,6 +146,10 @@ class FormFactory
                 $fieldOptions['constraints'] = $constraints;
             }
 
+            if (isset($fieldConfiguration['type'])) {
+                $fieldOptions = $this->updateFieldOptions($fieldConfiguration['type'], $key, $fieldOptions);
+            }
+
             $field = $formBuilder->create($key, $fieldConfiguration['type'], $fieldOptions);
 
             if (isset($fieldConfiguration['transformer'])) {
@@ -163,6 +169,26 @@ class FormFactory
         }
 
         return $formBuilder;
+    }
+
+    public function updateFieldOptions(string $type, string $key, array $fieldOptions): array
+    {
+        switch ($type) {
+            case BirthdayType::class:
+                $birthdayField = new BirthdayField();
+                $birthdayField->setFieldConfiguration([
+                    'name' => $key,
+                    'type' => $birthdayField->getFieldType(),
+                    'options' => $fieldOptions,
+                ]);
+
+                $fieldOptions = $birthdayField->getFormlyFieldConfiguration()['templateOptions'];
+                $fieldOptions['label'] = lcfirst($fieldOptions['label']);
+                unset($fieldOptions['type']);
+                break;
+        }
+
+        return $fieldOptions;
     }
 
     /**
