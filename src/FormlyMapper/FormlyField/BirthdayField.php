@@ -16,7 +16,7 @@ class BirthdayField extends FormlyField
     /**
      * {@inheritdoc}
      */
-    protected function getFieldType()
+    public function getFieldType()
     {
         return 'birthday';
     }
