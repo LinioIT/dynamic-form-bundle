@@ -77,7 +77,7 @@ class FormFactoryTest extends TestCase
         $this->assertEquals('foo_form', $actual);
     }
 
-    public function testIsCreatingFormWithImprovedBirthdayField(): void
+    public function testIsCreatingFormWithBirthdayFieldWithYearsAllowed(): void
     {
         $minAgeAllowed = 0;
         $maxAgeAllowed = 18;

@@ -173,20 +173,20 @@ class FormFactory
 
     public function updateFieldOptions(string $type, string $key, array $fieldOptions): array
     {
-        switch ($type) {
-            case BirthdayType::class:
-                $birthdayField = new BirthdayField();
-                $birthdayField->setFieldConfiguration([
-                    'name' => $key,
-                    'type' => $birthdayField->getFieldType(),
-                    'options' => $fieldOptions,
-                ]);
-
-                $fieldOptions = $birthdayField->getFormlyFieldConfiguration()['templateOptions'];
-                $fieldOptions['label'] = lcfirst($fieldOptions['label']);
-                unset($fieldOptions['type']);
-                break;
+        if ($type != BirthdayType::class) {
+            return $fieldOptions;
         }
+
+        $birthdayField = new BirthdayField();
+        $birthdayField->setFieldConfiguration([
+            'name' => $key,
+            'type' => $birthdayField->getFieldType(),
+            'options' => $fieldOptions,
+        ]);
+
+        $fieldOptions = $birthdayField->getFormlyFieldConfiguration()['templateOptions'];
+        $fieldOptions['label'] = lcfirst($fieldOptions['label']);
+        unset($fieldOptions['type']);
 
         return $fieldOptions;
     }
