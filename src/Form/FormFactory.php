@@ -147,7 +147,7 @@ class FormFactory
             }
 
             if (isset($fieldConfiguration['type'])) {
-                $fieldOptions = $this->updateFieldOptions($fieldConfiguration['type'], $key, $fieldOptions);
+                $fieldOptions = $this->updateBirthdayFieldOptions($fieldConfiguration['type'], $key, $fieldOptions);
             }
 
             $field = $formBuilder->create($key, $fieldConfiguration['type'], $fieldOptions);
@@ -171,7 +171,7 @@ class FormFactory
         return $formBuilder;
     }
 
-    public function updateFieldOptions(string $type, string $key, array $fieldOptions): array
+    public function updateBirthdayFieldOptions(string $type, string $key, array $fieldOptions): array
     {
         if ($type != BirthdayType::class) {
             return $fieldOptions;
