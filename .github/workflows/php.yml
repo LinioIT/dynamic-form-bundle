@@ -31,3 +31,10 @@ jobs:
       
     - name: PHPUnit Tests
       run: vendor/bin/phpunit --coverage-text
+
+    - name: Check test coverage
+      id: test-coverage
+      uses: johanvanhelden/gha-clover-test-coverage-check@v1
+      with:
+        percentage: "40"
+        filename: "coverage.xml"
