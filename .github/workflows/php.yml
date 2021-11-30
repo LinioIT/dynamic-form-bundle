@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: 7.1
         coverage: xdebug
-        extensions: xdebug
-    - uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -30,11 +31,15 @@ jobs:
       run: composer lint:check
       
     - name: PHPUnit Tests
-      run: vendor/bin/phpunit --coverage-text
+      run: vendor/bin/phpunit --coverage-clover coverage.xml
 
-    - name: Check test coverage
-      id: test-coverage
-      uses: johanvanhelden/gha-clover-test-coverage-check@v1
+    - name: Generate code coverage badge
+      run: vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg
+
+    - name: Commit code coverage badge
+      uses: EndBug/add-and-commit@v5
       with:
-        percentage: "40"
-        filename: "coverage.xml"
+        message: "Commit backend coverage badge"
+        add: ".github/badges/coverage.svg"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
