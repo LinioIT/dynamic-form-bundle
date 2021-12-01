@@ -32,6 +32,9 @@ jobs:
     - name: PHPUnit Tests
       run: vendor/bin/phpunit --coverage-clover coverage.xml
 
+    - name: Code Coverage badge
+      run: vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg
+
     - name: Check test coverage
       id: test-coverage
       uses: johanvanhelden/gha-clover-test-coverage-check@v1
