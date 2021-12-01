@@ -33,9 +33,5 @@ jobs:
     - name: PHPUnit Tests
       run: vendor/bin/phpunit
 
-    - name: Generate test coverage badge
-      uses: ./
-      with:
-        coverage_badge_path: 'badge.svg'
-        push_badge: true
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: phpunit-coverage-badge
+      uses: timkrase/phpunit-coverage-badge@v1.2.0
