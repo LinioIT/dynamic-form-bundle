@@ -18,6 +18,8 @@ jobs:
         php-version: 7.1
         coverage: xdebug
         extensions: xdebug
+      env:
+        update: true
     - uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
@@ -34,10 +36,3 @@ jobs:
 
     - name: Code Coverage badge
       run: vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg
-
-    - name: Check test coverage
-      id: test-coverage
-      uses: johanvanhelden/gha-clover-test-coverage-check@v1
-      with:
-        percentage: "40"
-        filename: "coverage.xml"
