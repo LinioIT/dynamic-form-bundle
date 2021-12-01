@@ -32,4 +32,4 @@ jobs:
       run: vendor/bin/phpunit --coverage-clover coverage.xml
 
     - name: Code Coverage badge
-      run: vendor/bin/php-coverage-badger coverage.xml badge/coverage.svg
+      run: vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg
