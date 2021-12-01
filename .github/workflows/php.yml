@@ -31,7 +31,34 @@ jobs:
       run: composer lint:check
       
     - name: PHPUnit Tests
-      run: vendor/bin/phpunit
+      run: vendor/bin/phpunit --coverage-html coverage --coverage-clover coverage.xml
 
-    - name: phpunit-coverage-badge
-      uses: timkrase/phpunit-coverage-badge@v1.2.0
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - name: Print branch name
+      shell: bash
+      run: echo ${{ steps.extract_branch.outputs.branch }}
+    - name: Create directories for reports
+      uses: appleboy/ssh-action@master
+      env:
+        BRANCH: ${{ steps.extract_branch.outputs.branch }}
+        FILES_PATH: ${{ secrets.GA_FILES_PATH }}
+      with:
+        envs: BRANCH,FILES_PATH
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        passphrase: ''
+        script: mkdir -p $FILES_PATH/$BRANCH/coverage
+    - name: Uploads reports to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        passphrase: ''
+        rm: true
+        source: "coverage"
+        target: ${{ secrets.GA_FILES_PATH }}/${{ steps.extract_branch.outputs.branch }}/coverage
