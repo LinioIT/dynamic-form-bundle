@@ -31,5 +31,5 @@ jobs:
     - name: PHPUnit Tests
       run: vendor/bin/phpunit --coverage-clover coverage.xml
 
-    - name: Code Coverage badge
-      run: vendor/bin/php-coverage-badger coverage.xml .github/badges/coverage.svg
+    - name: phpunit-coverage-badge
+      uses: timkrase/phpunit-coverage-badge@v1.2.0
