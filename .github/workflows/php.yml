@@ -17,9 +17,6 @@ jobs:
       with:
         php-version: 7.1
         coverage: xdebug
-        extensions: xdebug
-      env:
-        update: true
     - uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
