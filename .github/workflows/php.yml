@@ -39,7 +39,7 @@ jobs:
     - name: Commit code coverage badge
       uses: EndBug/add-and-commit@v5
       with:
-        message: "Commit backend coverage badge"
+        message: "[ci skip] feat: commit backend coverage badge"
         add: ".github/badges/coverage.svg"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
