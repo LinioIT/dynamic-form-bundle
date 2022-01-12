@@ -8,6 +8,7 @@ use Linio\DynamicFormBundle\Exception\NonExistentFormException;
 use Linio\DynamicFormBundle\Form\FormFactory;
 use Linio\DynamicFormBundle\HelpMessageProvider;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 
 class FormFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

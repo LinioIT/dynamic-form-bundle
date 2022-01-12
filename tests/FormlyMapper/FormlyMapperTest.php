@@ -11,11 +11,14 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyField\FormlyFieldFactory;
 use Linio\DynamicFormBundle\FormlyMapper\FormlyMapper;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 class FormlyMapperTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var CsrfToken
      */
