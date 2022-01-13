@@ -10,8 +10,8 @@ use Linio\DynamicFormBundle\FormlyMapper\FormlyField;
 
 class BirthdayField extends FormlyField
 {
-    const ORDER_ASC = 'asc';
-    const ORDER_DESC = 'desc';
+    public const ORDER_ASC = 'asc';
+    public const ORDER_DESC = 'desc';
 
     /**
      * {@inheritdoc}
