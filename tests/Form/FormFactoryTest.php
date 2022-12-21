@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
 class FormFactoryTest extends TestCase
@@ -64,20 +65,22 @@ class FormFactoryTest extends TestCase
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', ['field1_options'])
-            ->willReturn('field1_instance');
+            ->willReturn($this->formBuilderMock->reveal());
 
-        $this->formBuilderMock->add('field1_instance')
-            ->shouldBeCalled();
+        $this->formBuilderMock->add($this->formBuilderMock->reveal())
+            ->shouldBeCalled()
+            ->willReturn($this->formBuilderMock->reveal());
 
+        $formInterfaceMock = $this->createMock(FormInterface::class);
         $this->formBuilderMock->getForm()
-            ->willReturn('foo_form');
+            ->willReturn($formInterfaceMock);
 
         $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
         $this->formFactory->setConfiguration($formConfiguration);
 
         $actual = $this->formFactory->createForm('foo', ['foo_form_data'], ['foo_form_options']);
 
-        $this->assertEquals('foo_form', $actual);
+        $this->assertEquals($formInterfaceMock, $actual);
     }
 
     public function testIsCreatingFormWithBirthdayFieldWithYearsAllowed(): void
@@ -108,20 +111,22 @@ class FormFactoryTest extends TestCase
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('borndate', BirthdayType::class, $expectedFieldOptions)
-            ->willReturn('borndate_instance');
+            ->willReturn($this->formBuilderMock->reveal());
 
-        $this->formBuilderMock->add('borndate_instance')
-            ->shouldBeCalled();
+        $this->formBuilderMock->add($this->formBuilderMock->reveal())
+            ->shouldBeCalled()
+            ->willReturn($this->formBuilderMock->reveal());
 
+        $formInterfaceMock = $this->createMock(FormInterface::class);
         $this->formBuilderMock->getForm()
-            ->willReturn('foo_form');
+            ->willReturn($formInterfaceMock);
 
         $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
         $this->formFactory->setConfiguration($formConfiguration);
 
         $actual = $this->formFactory->createForm('foo', ['foo_form_data'], ['foo_form_options']);
 
-        $this->assertEquals('foo_form', $actual);
+        $this->assertEquals($formInterfaceMock, $actual);
     }
 
     public function testIsCreatingFormWithValidators(): void
@@ -150,20 +155,22 @@ class FormFactoryTest extends TestCase
             ->willReturn($this->formBuilderMock->reveal());
 
         $this->formBuilderMock->create('field1', 'field1_type', $expectedFieldOptions)
-            ->willReturn('field1_instance');
+            ->willReturn($this->formBuilderMock->reveal());
 
-        $this->formBuilderMock->add('field1_instance')
-            ->shouldBeCalled();
+        $this->formBuilderMock->add($this->formBuilderMock->reveal())
+            ->shouldBeCalled()
+            ->willReturn($this->formBuilderMock->reveal());
 
+        $formInterfaceMock = $this->createMock(FormInterface::class);
         $this->formBuilderMock->getForm()
-            ->willReturn('foo_form');
+            ->willReturn($formInterfaceMock);
 
         $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
         $this->formFactory->setConfiguration($formConfiguration);
 
         $actual = $this->formFactory->createForm('foo');
 
-        $this->assertEquals('foo_form', $actual);
+        $this->assertEquals($formInterfaceMock, $actual);
     }
 
     public function testIsCreatingFormWithTransformers(): void
@@ -199,20 +206,23 @@ class FormFactoryTest extends TestCase
             ->willReturn($fieldOneMock->reveal());
 
         $fieldOneMock->addModelTransformer($bornDateTransformer)
-            ->shouldBeCalled();
+            ->shouldBeCalled()
+            ->willReturn($fieldOneMock->reveal());
 
         $this->formBuilderMock->add($fieldOneMock->reveal())
-            ->shouldBeCalledTimes(1);
+            ->shouldBeCalledTimes(1)
+            ->willReturn($this->formBuilderMock->reveal());
 
+        $formInterfaceMock = $this->createMock(FormInterface::class);
         $this->formBuilderMock->getForm()
-            ->willReturn('foo_form');
+            ->willReturn($formInterfaceMock);
 
         $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
         $this->formFactory->setConfiguration($formConfiguration);
 
         $actual = $this->formFactory->createForm('foo');
 
-        $this->assertEquals('foo_form', $actual);
+        $this->assertEquals($formInterfaceMock, $actual);
     }
 
     public function testIsCreatingFormWithHelpMessages(): void
@@ -242,14 +252,16 @@ class FormFactoryTest extends TestCase
 
         $this->formBuilderMock->create('field1', 'field1_type', ['help' => 'message'])
             ->shouldBeCalled()
-            ->willReturn('field1_instance');
+            ->willReturn($this->formBuilderMock->reveal());
 
-        $this->formBuilderMock->add('field1_instance')
-            ->shouldBeCalled();
+        $this->formBuilderMock->add($this->formBuilderMock->reveal())
+            ->shouldBeCalled()
+            ->willReturn($this->formBuilderMock->reveal());
 
+        $formInterfaceMock = $this->createMock(FormInterface::class);
         $this->formBuilderMock->getForm()
             ->shouldBeCalled()
-            ->willReturn('foo_form');
+            ->willReturn($formInterfaceMock);
 
         $this->formFactory->setFormFactory($this->formFactoryMock->reveal());
         $this->formFactory->setConfiguration($formConfiguration);
@@ -257,7 +269,7 @@ class FormFactoryTest extends TestCase
 
         $actual = $this->formFactory->createForm('foo', ['foo_form_data'], $formConfiguration);
 
-        $this->assertEquals('foo_form', $actual);
+        $this->assertEquals($formInterfaceMock, $actual);
     }
 
     public function testIsGettingConfiguration(): void
