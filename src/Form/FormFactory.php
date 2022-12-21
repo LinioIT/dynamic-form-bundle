@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\GenericMetadata;
 use Symfony\Component\Validator\Validation;
 
 class FormFactory
@@ -220,7 +222,11 @@ class FormFactory
             }
 
             foreach ($fieldConfiguration['validation'] as $validatorName => $options) {
-                $metadata->addPropertyConstraint($key, new $validatorName($options));
+                if ($metadata instanceof ClassMetadata) {
+                    $metadata->addPropertyConstraint($key, new $validatorName($options));
+                } elseif ($metadata instanceof GenericMetadata) {
+                    $metadata->addConstraint(new $validatorName($options));
+                }
             }
         }
 
