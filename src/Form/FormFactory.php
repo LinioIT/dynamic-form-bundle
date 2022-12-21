@@ -201,14 +201,14 @@ class FormFactory
      *
      * @return ValidatorInterface
      */
-    public function createValidator($key, $object)
+    public function createValidator($key, mixed $object)
     {
         if (!isset($this->configuration[$key])) {
             throw new NonExistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
         $validator = Validation::createValidatorBuilder()->getValidator();
-        $metadata = $validator->getMetadataFor(get_class($object));
+        $metadata = $validator->getMetadataFor($object::class);
 
         foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
             if (!$fieldConfiguration['enabled']) {

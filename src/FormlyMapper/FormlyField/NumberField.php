@@ -24,8 +24,8 @@ class NumberField extends FormlyField
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
-            if (isset($validation['Symfony\Component\Validator\Constraints\Range'])) {
-                $constraint = $validation['Symfony\Component\Validator\Constraints\Range'];
+            if (isset($validation[\Symfony\Component\Validator\Constraints\Range::class])) {
+                $constraint = $validation[\Symfony\Component\Validator\Constraints\Range::class];
 
                 if (isset($constraint['min'])) {
                     $this->formlyFieldConfiguration['templateOptions']['min'] = $constraint['min'];
