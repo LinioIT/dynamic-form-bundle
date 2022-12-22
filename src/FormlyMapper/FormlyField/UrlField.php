@@ -24,8 +24,8 @@ class UrlField extends FormlyField
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
 
-            if (isset($validation['Symfony\Component\Validator\Constraints\Url'])) {
-                $constraint = $validation['Symfony\Component\Validator\Constraints\Url'];
+            if (isset($validation[\Symfony\Component\Validator\Constraints\Url::class])) {
+                $constraint = $validation[\Symfony\Component\Validator\Constraints\Url::class];
                 $this->formlyFieldConfiguration['validation']['messages']['url'] = $constraint['message'] ?? '';
             }
         }

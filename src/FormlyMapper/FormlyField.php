@@ -56,7 +56,7 @@ abstract class FormlyField implements FormlyFieldInterface
 
         if (isset($this->fieldConfiguration['validation'])) {
             $validation = $this->fieldConfiguration['validation'];
-            $notBlankConstraintClass = 'Symfony\Component\Validator\Constraints\NotBlank';
+            $notBlankConstraintClass = \Symfony\Component\Validator\Constraints\NotBlank::class;
 
             if (isset($validation[$notBlankConstraintClass])) {
                 $constraint = $validation[$notBlankConstraintClass];
@@ -66,7 +66,7 @@ abstract class FormlyField implements FormlyFieldInterface
                 }
             }
 
-            $regexConstraintClass = 'Symfony\Component\Validator\Constraints\Regex';
+            $regexConstraintClass = \Symfony\Component\Validator\Constraints\Regex::class;
 
             if (isset($validation[$regexConstraintClass])) {
                 $constraint = $validation[$regexConstraintClass];

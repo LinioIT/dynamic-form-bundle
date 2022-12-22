@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\GenericMetadata;
 use Symfony\Component\Validator\Validation;
 
 class FormFactory
@@ -201,14 +203,14 @@ class FormFactory
      *
      * @return ValidatorInterface
      */
-    public function createValidator($key, $object)
+    public function createValidator($key, mixed $object)
     {
         if (!isset($this->configuration[$key])) {
             throw new NonExistentFormException(sprintf('The form "%s" was not found.', $key));
         }
 
         $validator = Validation::createValidatorBuilder()->getValidator();
-        $metadata = $validator->getMetadataFor(get_class($object));
+        $metadata = $validator->getMetadataFor($object::class);
 
         foreach ($this->configuration[$key] as $key => $fieldConfiguration) {
             if (!$fieldConfiguration['enabled']) {
@@ -220,7 +222,11 @@ class FormFactory
             }
 
             foreach ($fieldConfiguration['validation'] as $validatorName => $options) {
-                $metadata->addPropertyConstraint($key, new $validatorName($options));
+                if ($metadata instanceof ClassMetadata) {
+                    $metadata->addPropertyConstraint($key, new $validatorName($options));
+                } elseif ($metadata instanceof GenericMetadata) {
+                    $metadata->addConstraint(new $validatorName($options));
+                }
             }
         }
 

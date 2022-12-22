@@ -83,7 +83,7 @@ class BirthdayField extends FormlyField
             return;
         }
 
-        if ($options['minAgeAllowed'] > $options['maxAgeAllowed']) {
+        if ((int) $options['minAgeAllowed'] > (int) $options['maxAgeAllowed']) {
             throw new InvalidConfigurationException(sprintf('The value of minAgeAllowed (%s) cannot be greater than maxAgeAllowed (%s).', $options['minAgeAllowed'], $options['maxAgeAllowed']));
         }
     }
